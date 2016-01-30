@@ -9,3 +9,8 @@ If you're a Github user, "Watch" this project to get updates.
 
 You can also join the Google Group:
 https://groups.google.com/forum/#!forum/btr-baseball
+
+## Check out the website
+
+Not much here yet:
+http://bryantrobbins.github.io/baseball/
