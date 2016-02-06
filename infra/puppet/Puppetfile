@@ -1,0 +1,17 @@
+moduledir '/etc/puppet/modules'
+
+mod 'puppetlabs/stdlib'
+mod 'puppetlabs/apt'
+mod 'darin/zypprepo'
+mod 'nanliu/staging'
+mod 'camptocamp/archive'
+mod 'rtyler/jenkins'
+
+mod 'superbuilds',
+  :git => 'https://github.com/bryantrobbins/puppet-superbuilds'
+
+# NOTE: The Puppetlabs java module doesn't work with amazon linux (wtf), so we have to add a fork below
+#mod 'puppetlabs/java'
+mod 'java',
+  :git => 'https://github.com/sladd0175/puppetlabs-java'
+
