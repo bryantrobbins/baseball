@@ -1,8 +1,6 @@
 moduledir '/etc/puppet/modules'
 
 mod 'puppetlabs/stdlib'
-mod 'puppetlabs/apt'
-mod 'darin/zypprepo'
 mod 'nanliu/staging'
 mod 'camptocamp/archive'
 mod 'rtyler/jenkins'
