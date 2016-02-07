@@ -3,6 +3,7 @@ moduledir '/etc/puppet/modules'
 mod 'puppetlabs/stdlib'
 mod 'nanliu/staging'
 mod 'camptocamp/archive'
+mod 'maestrodev/ssh_keygen'
 
 # NOTE: The Puppetlabs java module doesn't work with amazon linux (wtf), so we have to add a fork below
 #mod 'puppetlabs/java'
