@@ -1,0 +1,9 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "rocker/r-base",
+      "export_path": "analyze.tar"
+    }
+  ]
+}
