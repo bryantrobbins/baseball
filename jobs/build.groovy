@@ -50,6 +50,7 @@ job('ui-deploy') {
         }
     }
     steps {
+       copyArtifacts('ui-image')
        shell('pushd ui/build; chmod 700 *.sh; ./deploy.sh') 
     }
 }
