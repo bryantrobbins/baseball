@@ -6,6 +6,6 @@ job('r-baseball') {
       }
     }
     steps {
-       shell('chmod *.sh; ./build.sh') 
+       shell('chmod 700 *.sh; ./build.sh') 
     }
 }
