@@ -1,9 +1,31 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
         <span>Baseball Workbench</span>
-        <span flex></span>
     </div>
 </md-toolbar>
+<h1 class="md-display-7">{{BaseballCtrl.hello}}</h1>
+
 <md-content>
-    <h1 class="md-display-4">{{BaseballCtrl.playBall()}}</h1>
+	<div layout="row" layout-align="center center">
+		<!-- This will be for the autocomplete to be plugged into the controller -->
+		<md-card layout="column">
+			<md-card-content>
+				<h2>Select a data set</h2>
+				<md-autocomplete 
+					md-selected-item="BaseballCtrl.selectedDataSet" 
+					md-search-text="searchText" 
+					md-items="dataset in BaseballCtrl.getDataSets(searchText)" 
+					md-item-text="dataset"
+					placeholder="Select a dataset">
+				  <md-item-template>
+				  	<span md-highlight-text="searchText">{{ dataset }}</span>
+				  </md-item-template>
+				  <!-- This will return only if the search box  -->
+				  <md-not-found>
+				  	404 no matches found
+				  </md-not-found>
+				</md-autocomplete>
+			</md-card-content>
+		</md-card>
+	</div>
 </md-content>
