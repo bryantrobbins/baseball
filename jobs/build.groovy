@@ -11,6 +11,12 @@ job('r-baseball') {
 }
 
 job('worker-image') {
+    scm {
+        git('git://github.com/bryantrobbins/baseball') { node ->
+            node / gitConfigName('Baseball Jenkins Auto')
+            node / gitConfigEmail('bryantrobbins@gmail.com')
+        }
+    }
     steps {
        shell('pushd worker; chmod 700 *.sh; ./import.sh') 
     }
