@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Add js build steps here (npm, etc.)
-npm build
+npm run build
 
 # Build docker image with packer
 packer="/usr/local/bin/packer"
