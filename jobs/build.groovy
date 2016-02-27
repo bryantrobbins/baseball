@@ -33,10 +33,12 @@ job('ui-image') {
     steps {
        shell('pushd ui/build; chmod 700 *.sh; ./build.sh') 
     }
-    archiveArtifacts {
-        pattern('ui/build/frontend.tar')
-        onlyIfSuccessful()
-   }
+    publishers {
+        archiveArtifacts {
+            pattern('ui/build/frontend.tar')
+            onlyIfSuccessful()
+        }
+    }
 }
 
 job('puppet-update') {
