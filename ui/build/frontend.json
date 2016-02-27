@@ -1,0 +1,20 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "image": "nginx",
+      "export_path": "frontend.tar"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["mkdir /workdir"]
+    },
+    {
+      "type": "file",
+      "source": "staging/",
+      "destination": "/usr/share/nginx/html"
+    }
+  ]
+}
