@@ -27,11 +27,16 @@ job('ui-image') {
         git('git://github.com/bryantrobbins/baseball') { node ->
             node / gitConfigName('Baseball Jenkins Auto')
             node / gitConfigEmail('bryantrobbins@gmail.com')
+            wipeOutWorkspace(false)
         }
     }
     steps {
        shell('pushd ui/build; chmod 700 *.sh; ./build.sh') 
     }
+    archiveArtifacts {
+        pattern('ui/build/frontend.tar')
+        onlyIfSuccessful()
+   }
 }
 
 job('puppet-update') {
