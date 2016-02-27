@@ -6,23 +6,13 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>Baseball Workbench</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body ng-app="app" >
-  <ul class="menu">
-    <li><a ui-sref="view1">view1</a></li>
-    <li><a ui-sref="view2">view2</a></li>
-  </ul>
 
-  <!--[if lt IE 11]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
-
-  <div ui-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
+  <div layout="column" layout-fill ui-view></div>
 
   <script src="common.js"></script>
   <script src="libs.js"></script>
