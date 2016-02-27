@@ -8,12 +8,8 @@
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "inline": ["mkdir /workdir"]
-    },
-    {
       "type": "file",
-      "source": "staging/",
+      "source": "../dist/",
       "destination": "/usr/share/nginx/html"
     }
   ]
