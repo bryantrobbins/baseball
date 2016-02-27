@@ -9,3 +9,9 @@ job('r-baseball') {
        shell('chmod 700 *.sh; ./build.sh') 
     }
 }
+
+job('puppet-update') {
+    steps {
+       shell('') 
+    }
+}
