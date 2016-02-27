@@ -22,6 +22,18 @@ job('worker-image') {
     }
 }
 
+job('ui-image') {
+    scm {
+        git('git://github.com/bryantrobbins/baseball') { node ->
+            node / gitConfigName('Baseball Jenkins Auto')
+            node / gitConfigEmail('bryantrobbins@gmail.com')
+        }
+    }
+    steps {
+       shell('pushd ui/build; chmod 700 *.sh; ./build.sh') 
+    }
+}
+
 job('puppet-update') {
     steps {
        shell('') 
