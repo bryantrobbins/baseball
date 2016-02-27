@@ -13,6 +13,8 @@ angular.module('app', [md,state,baseball])
 
         $stateProvider.state('baseball', {
             url: '/baseball',
+            controller: 'BaseballController',
+            controllerAs: 'BaseballCtrl',
             template: require('./components/main/baseball.tpl.html')
         });
 

@@ -1,9 +1,8 @@
 'use strict';
 
-var baseballModule = angular.module('app.main', []);
+import BaseballController from './BaseballController'
 
-function baseballController(){
+var baseballModule = angular.module('app.main', [])
+    .controller('BaseballController', BaseballController);
 
-}
-
-export default baseballModule.controller('baseballController', baseballController).name
+export default baseballModule.name;
