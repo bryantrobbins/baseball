@@ -32,32 +32,32 @@ angular.module('app', [md,state,baseball, mdDataTable, 'ngMockE2E'])
     .run(($httpBackend) => {
         //where shit gets mocked for now
         var tableResponse = ['Steves Baseball', 'BTR3Ball', 'Chaos Sluggers', 'SheppJaks Baseball',
-            'Leema','The Nationals Suck :('];
+            'Leema','The Nationals Suck'];
         var metaResponse = {
-            rowDesc: "Each row is a Team",
+            rowDesc: "Each row is a Player Stint - a set of games that a single player participated in for a single team in a single season. A player may have multiple stints within a single season, and each will have a unique value in the 'stint' column.",
             colMetaData:[
                 {colName:'playerID', colType:'String', colDesc:'The ID'},
                 {colName:'yearID', colType:'Number', colDesc:'The Year'},
-                {colName:'stint', colType:'Number', colDesc:'How long the player played'},
+                {colName:'stint', colType:'Number', colDesc:'ID for this sequence of games (unique to player and year)'},
                 {colName:'teamID', colType:'String', colDesc:'The team of the player'},
-                {colName:'lgID', colType:'String', colDesc:'The Fuck is this?'},
-                {colName:'G',colType:'String',colDesc:'Go'},
-                {colName:'AB', colType:'String', colDesc:'I think this is at bat'},
-                {colName:'R', colType:'Number', colDesc:'Runs'},
-                {colName:'H', colType:'Number', colDesc:'Hits'},
-                {colName:'2B', colType:'Number', colDesc:'Doubles'},
-                {colName:'3B', colType:'Number', colDesc:'Triples'},
-                {colName:'HR', colType:'Number', colDesc:'Home Runs'},
-                {colName:'RBI', colType:'Number', colDesc:'Runs Batted In'},
-                {colName:'SB', colType:'Number', colDesc:'Stolen Bases'},
-                {colName:'CS', colType:'Number', colDesc:'Caught Stealing'},
-                {colName:'BB', colType:'Number', colDesc:'Big Balls'},
-                {colName:'SO', colType:'Number', colDesc:'Significant Others'},
-                {colName:'IBB',colType:'Number', colDesc:'In Before Baseball'},
-                {colName:'HBP',colType:'Number', colDesc:'Hello Big Puppy'},
-                {colName:'SH',colType:'Number', colDesc:'Shits Taken'},
-                {colName:'SF',colType:'Number', colDesc:'Shits Farted'},
-                {colName:'GIDP', colType:'Number', colDesc:'Giddy P'}]};
+                {colName:'lgID', colType:'String', colDesc:'League ID'},
+                {colName:'G',colType:'Count',colDesc:'Games'},
+                {colName:'AB', colType:'Count', colDesc:'At Bats'},
+                {colName:'R', colType:'Count', colDesc:'Runs'},
+                {colName:'H', colType:'Count', colDesc:'Hits'},
+                {colName:'2B', colType:'Count', colDesc:'Doubles'},
+                {colName:'3B', colType:'Count', colDesc:'Triples'},
+                {colName:'HR', colType:'Count', colDesc:'Home Runs'},
+                {colName:'RBI', colType:'Count', colDesc:'Runs Batted In'},
+                {colName:'SB', colType:'Count', colDesc:'Stolen Bases'},
+                {colName:'CS', colType:'Count', colDesc:'Caught Stealing'},
+                {colName:'BB', colType:'Count', colDesc:'Walks (Base on Balls)'},
+                {colName:'SO', colType:'Count', colDesc:'Strikeouts'},
+                {colName:'IBB',colType:'Count', colDesc:'Intentional Walks'},
+                {colName:'HBP',colType:'Count', colDesc:'Hit By Pitch'},
+                {colName:'SH',colType:'Count', colDesc:'Sacrifice Hits'},
+                {colName:'SF',colType:'Count', colDesc:'Sacrifice Flies'},
+                {colName:'GIDP', colType:'Count', colDesc:'Grounded Into Double Play'}]};
 
         $httpBackend.whenGET(/.*\.tpl\.html/).passThrough();
         $httpBackend.whenGET(/.*\.svg/).passThrough();
