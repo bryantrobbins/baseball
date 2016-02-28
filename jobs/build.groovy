@@ -42,7 +42,9 @@ job('ui-image') {
             onlyIfSuccessful()
         }
         slackNotifications {
-            projectChannel('Dev Team A')
+            projectChannel('general')
+            notifySuccess()
+            notifyBuildStarted()
             notifyAborted()
             notifyFailure()
             notifyNotBuilt()
@@ -66,7 +68,9 @@ job('ui-deploy') {
     }
     publishers {
         slackNotifications {
-            projectChannel('Dev Team A')
+            projectChannel('general')
+            notifySuccess()
+            notifyBuildStarted()
             notifyAborted()
             notifyFailure()
             notifyNotBuilt()
