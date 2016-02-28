@@ -1,12 +1,12 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <span>Baseball Workbench</span>
+		<span>Baseball Workbench</span>
     </div>
 </md-toolbar>
 <h1 class="md-display-7">{{BaseballCtrl.hello}}</h1>
 
 <md-content>
-	<div layout="row" layout-align="center center">
+	<div layout="row" layout-align="start start">
 		<!-- This will be for the autocomplete to be plugged into the controller -->
 		<md-card layout="column">
 			<md-card-content>
@@ -27,13 +27,15 @@
 				</md-autocomplete>
 			</md-card-content>
 		</md-card>
-        <md-card layout="column">
-            <md-card-content>
-                    <md-input-container>
-                        <label>Input a Formula</label>
-                        <input name= "formula" ng-model="BaseballCtrl.formula" required />
-                    </md-input-container>
-            </md-card-content>
-        </md-card>
+	</div>
+	<div layout="row" layout-align="start start">
+		<md-card layout="column">
+			<md-card-content>
+				<md-input-container>
+					<label>Input a Formula</label>
+					<input name= "formula" ng-model="BaseballCtrl.formula" required />
+				</md-input-container>
+			</md-card-content>
+		</md-card>
 	</div>
 </md-content>
