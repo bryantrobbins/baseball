@@ -23,6 +23,9 @@ job('worker-image') {
 }
 
 job('ui-image') {
+    wrappers {
+        preBuildCleanup()
+    }
     scm {
         git('git://github.com/bryantrobbins/baseball') { node ->
             node / gitConfigName('Baseball Jenkins Auto')
