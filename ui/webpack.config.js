@@ -32,7 +32,9 @@ module.exports = {
         loaders: [
             { test: /\.js$/, loader: "babel!imports?angular", include: /app|test/},
             { test: /\.css$/, loader: "style!css" },
-            { test: /\.tpl\.html$/, loader: "raw" }
+            { test: /\.tpl\.html$/, loader: "raw" },
+            { test: /\.png$/, loader: 'url-loader?limit=100000&mimetype=image/png'},
+
 
         ]
     },
