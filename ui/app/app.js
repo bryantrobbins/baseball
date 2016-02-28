@@ -3,10 +3,15 @@
 import md from 'angular-material';
 import state from 'angular-ui-router';
 import baseball from './components/main/baseball.js';
+import  mdDataTable from  'angular-material-data-table';
+
 import 'angular-material/angular-material.min.css';
 
+import 'angular-material-data-table/dist/md-data-table.min.css';
+
+
 // Declare app level module which depends on views, and components
-angular.module('app', [md,state,baseball, 'ngMockE2E'])
+angular.module('app', [md,state,baseball, mdDataTable, 'ngMockE2E'])
     .config(($stateProvider, $urlRouterProvider, $mdThemingProvider)  => {
 
         $urlRouterProvider.otherwise('/baseball');
