@@ -38,14 +38,17 @@
 		</md-card>
 	</div>
 	<md-table-container>
-  		<table md-table md-row-select>
+  		<table md-table>
     		<thead md-head>
       			<tr md-row>
-        			<th md-column><span>Metadata</span></th>
+        			<th md-column><span>Column</span></th>
+        			<th md-column><span>Data Type</span></th>
+        			<th md-column><span>Description</span></th>
+
       			</tr>
     		</thead>
   	 		<tbody md-body>
-     			<tr md-row  md-auto-select ng-repeat="item in BaseballCtrl.metadata.colMetaData">
+     			<tr md-row ng-repeat="item in BaseballCtrl.metadata.colMetaData">
               		<td md-cell>{{item.colName}}</td>
               		<td md-cell>{{item.colType}}</td>
               		<td md-cell>{{item.colDesc}}</td>
