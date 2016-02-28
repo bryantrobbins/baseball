@@ -31,6 +31,17 @@ class BaseballController {
     // Empty array will indicate that nothing is found
     getDataSets() {
     }
+
+    getFormula(){
+        if(this.formula == undefined)
+        {
+           return "Please enter in a formula.";
+        }
+        else
+        {
+            return this.formula;
+        }
+    }
 }
 
 BaseballController.$inject = ['BaseballDataFactory'];
