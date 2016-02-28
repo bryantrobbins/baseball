@@ -3,7 +3,7 @@
 import md from 'angular-material';
 import state from 'angular-ui-router';
 import baseball from './components/main/baseball.js';
-import  mdDataTable from  'angular-material-data-table';
+import mdDataTable from 'angular-material-data-table';
 
 import 'angular-material/angular-material.min.css';
 
