@@ -29,8 +29,6 @@ class BaseballController {
     // Return the set of datasets 
     // Expecting a return of an array 
     // Empty array will indicate that nothing is found
-    getDataSets() {
-    }
 
     getFormula(){
         if(this.formula == undefined)
