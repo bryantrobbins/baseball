@@ -9,7 +9,7 @@ class BaseballDataService{
         return HTTP.get(this).get('/getDataSetNames');
     }
 
-    getTableMetadata(){
+    getTableMetadata(table){
         return HTTP.get(this).get('/getDataSetMetadata');
     }
 
