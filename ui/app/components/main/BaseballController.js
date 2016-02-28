@@ -29,6 +29,17 @@ class BaseballController {
     		return [];
     	return ["blah1", "blah2", "blah3"];
     }
+
+    getFormula(){
+        if(this.formula == undefined)
+        {
+           return "Please enter in a formula.";
+        }
+        else
+        {
+            return this.formula;
+        }
+    }
 }
 
 export default BaseballController;
