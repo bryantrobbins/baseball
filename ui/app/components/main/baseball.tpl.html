@@ -1,24 +1,26 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
-		<span>Baseball Workbench</span>
+		<h1>Baseball Workbench</h1>
     </div>
 </md-toolbar>
-<h1 class="md-display-7">{{BaseballCtrl.hello}}</h1>
-
-<md-content>
+<md-content layout-padding>
+	<h1 class="md-display-1">Welcome to the Baseball Workbench</h1>
 	<div layout="row" layout-align="start start">
 		<!-- This will be for the autocomplete to be plugged into the controller -->
 		<md-card>
+			<md-card-header>
+				<md-card-header-text>
+					<span class="md-title">Select a data set</span>
+				</md-card-header-text>
+			</md-card-header>
 			<md-card-content >
-				<div layout="row">
-					<h2 layout="row" >Select a data set</h2>
-				</div>
 				<div layout="row">
 					<div layout="column">
 						<md-autocomplete
+								md-min-length="0"
 								md-selected-item="BaseballCtrl.selectedDataSet"
-								md-search-text="BaseballCtrl.searchText"
-								md-items="dataset in BaseballCtrl.dataSets | filter:BaseballCtrl.searchText"
+								md-search-text="searchText"
+								md-items="dataset in BaseballCtrl.dataSets | BaseballFilter:searchText"
 								md-item-text="dataset"
 								placeholder="Select a dataset">
 							<md-item-template>
@@ -31,33 +33,46 @@
 						</md-autocomplete>
 					</div>
 					<div layout="column">
-						<md-button layout="column" ng-click="BaseballCtrl.getMetadata()"> Go </md-button>
+						<md-button layout="column" ng-click="BaseballCtrl.fetchMetadata()"> Go </md-button>
 					</div>
 				</div>
 			</md-card-content>
 		</md-card>
 	</div>
-	<md-table-container>
-  		<table md-table>
-    		<thead md-head>
-      			<tr md-row>
-        			<th md-column><span>Column</span></th>
-        			<th md-column><span>Data Type</span></th>
-        			<th md-column><span>Description</span></th>
+	<md-card flex="50">
+		<md-card-header>
+			<md-card-header-text>
+				<span class="md-title">Available Data</span>
+				<span ng-if="BaseballCtrl.metadata" class="md-subhead">{{BaseballCtrl.selectedDataSet}}</span>
+				<span ng-if="!BaseballCtrl.metadata" class="md-subhead">Choose a data set above to see available data</span>
+			</md-card-header-text>
+		</md-card-header>
+		<md-card-content ng-if="BaseballCtrl.metadata">
+			<md-input-container>
+				<label>Search Metadata</label>
+				<input ng-model="metadataSearch" type="text">
+			</md-input-container>
+			<md-table-container >
+				<table md-table>
+					<thead md-head>
+					<tr md-row>
+						<th md-column><span>Column</span></th>
+						<th md-column><span>Data Type</span></th>
+						<th md-column><span>Description</span></th>
 
-      			</tr>
-    		</thead>
-  	 		<tbody md-body>
-     			<tr md-row ng-repeat="item in BaseballCtrl.metadata.colMetaData">
-              		<td md-cell>{{item.colName}}</td>
-              		<td md-cell>{{item.colType}}</td>
-              		<td md-cell>{{item.colDesc}}</td>
-
-      			</tr>
-    		</tbody>
-		</table>
-	</md-table-container>
-
+					</tr>
+					</thead>
+					<tbody md-body>
+					<tr md-row ng-repeat="item in BaseballCtrl.metadata.colMetaData | filter:metadataSearch">
+						<td md-cell>{{item.colName}}</td>
+						<td md-cell>{{item.colType}}</td>
+						<td md-cell>{{item.colDesc}}</td>
+					</tr>
+					</tbody>
+				</table>
+			</md-table-container>
+		</md-card-content>
+	</md-card>
 	
 <!-- Disabling this element for the MVP
 	<div layout="row" layout-align="start start">
