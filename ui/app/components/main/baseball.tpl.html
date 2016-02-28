@@ -8,23 +8,32 @@
 <md-content>
 	<div layout="row" layout-align="start start">
 		<!-- This will be for the autocomplete to be plugged into the controller -->
-		<md-card layout="column">
-			<md-card-content>
-				<h2>Select a data set</h2>
-				<md-autocomplete 
-					md-selected-item="BaseballCtrl.selectedDataSet" 
-					md-search-text="searchText" 
-					md-items="dataset in BaseballCtrl.dataSets | filter:searchText"
-					md-item-text="dataset"
-					placeholder="Select a dataset">
-				  <md-item-template>
-					  <span md-highlight-text="searchText">{{ dataset }}</span>
-				  </md-item-template>
-				  <!-- This will return only if the search box  -->
-				  <md-not-found>
-					  <span>No tables match your search criteria</span>
-				  </md-not-found>
-				</md-autocomplete>
+		<md-card>
+			<md-card-content >
+				<div layout="row">
+					<h2 layout="row" >Select a data set</h2>
+				</div>
+				<div layout="row">
+					<div layout="column">
+						<md-autocomplete
+								md-selected-item="BaseballCtrl.selectedDataSet"
+								md-search-text="BaseballCtrl.searchText"
+								md-items="dataset in BaseballCtrl.dataSets | filter:BaseballCtrl.searchText"
+								md-item-text="dataset"
+								placeholder="Select a dataset">
+							<md-item-template>
+								<span md-highlight-text="searchText">{{ dataset }}</span>
+							</md-item-template>
+							<!-- This will return only if the search box  -->
+							<md-not-found>
+								<span>No tables match your search criteria</span>
+							</md-not-found>
+						</md-autocomplete>
+					</div>
+					<div layout="column">
+						<md-button layout="column" ng-click="BaseballCtrl.getMetadata()"> Go </md-button>
+					</div>
+				</div>
 			</md-card-content>
 		</md-card>
 	</div>
@@ -38,4 +47,5 @@
 			</md-card-content>
 		</md-card>
 	</div>
+	{{BaseballCtrl.metadata}}
 </md-content>

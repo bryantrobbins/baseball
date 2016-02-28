@@ -2,26 +2,23 @@ const BASEBALL = new WeakMap();
 
 class BaseballController {
     constructor(BaseballDataFactory){
-        console.info(BaseballDataFactory);
         BASEBALL.set(this, BaseballDataFactory);
-        this.hello = "Welcome to the BaseBall Workbench where all your primal needs will be satisfied";
-        this.selectedDataSet = undefined;
+        this.hello = "Welcome to the Baseball Workbench";
         BaseballDataFactory.getTables().success((resp) => {
             this.dataSets = resp;
-        })
-
+        });
     }
 
-    playBall(){
-        return "PLAY BALL!";
-    }
-
-    getListOfDataSets(){
-
+    getMetadata(){
+        if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
+            BASEBALL.get(this).getTableMetadata(this.selectedDataSet).success((resp) => {
+                this.metadata = resp;
+            });
+        }
     }
 
     getCurrentSelectedDataSet(){
-    	if (this.selectedDataSet == undefined)
+    	if (this.selectedDataSet === undefined)
     		return "Nothing is selected yet";
        	return this.selectedDataSet;
     }
@@ -31,7 +28,7 @@ class BaseballController {
     // Empty array will indicate that nothing is found
 
     getFormula(){
-        if(this.formula == undefined)
+        if(this.formula === undefined)
         {
            return "Please enter in a formula.";
         }
