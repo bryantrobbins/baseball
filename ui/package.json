@@ -45,9 +45,9 @@
   "scripts": {
     "postinstall": "",
     "prebuild": "npm install",
-    "build": "node_modules/.bin/webpack && cp app/index.html dist",
+    "build": "node_modules/.bin/webpack --progress --colors -p && cp app/index.html dist",
     "prestart": "npm install",
-    "start": "node_modules/.bin/webpack-dev-server --hot --color --content-base app/",
+    "start": "node_modules/.bin/webpack-dev-server --hot --progress --color --content-base app/",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run"
