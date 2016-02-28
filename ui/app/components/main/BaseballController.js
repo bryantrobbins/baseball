@@ -1,15 +1,35 @@
+import _ from 'lodash';
+
+
 const BASEBALL = new WeakMap();
+const FILTER = new WeakMap();
 
 class BaseballController {
-    constructor(BaseballDataFactory){
-        BASEBALL.set(this, BaseballDataFactory);
-        this.hello = "Welcome to the Baseball Workbench";
-        BaseballDataFactory.getTables().success((resp) => {
+    /*@ngInject*/
+    constructor($filter, BaseballDataService){
+        BASEBALL.set(this, BaseballDataService);
+        FILTER.set(this, $filter);
+        BaseballDataService.getTables().success((resp) => {
             this.dataSets = resp;
         });
+
+        this.query = {
+            order: 'column'
+        };
     }
 
-    getMetadata(){
+
+    static BaseballFilter($filter){
+        return function(values, input){
+            if(!input || input.trim() === ''){
+                return values;
+            }else{
+                return $filter('filter')(values,input);
+            }
+        };
+    }
+
+    fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
             BASEBALL.get(this).getTableMetadata(this.selectedDataSet).success((resp) => {
                 this.metadata = resp;
@@ -37,8 +57,16 @@ class BaseballController {
             return this.formula;
         }
     }
+
+    sortData(){
+        console.info("reorder was called");
+        this.metadata.colMetaData = _.sortBy(this.metadata.colMetaData, (element)=>{
+            return element.colName;
+        });
+    }
 }
 
-BaseballController.$inject = ['BaseballDataFactory'];
+//This is such a hack.
+BaseballController.BaseballFilter.$inject = ['$filter'];
 
 export default BaseballController;

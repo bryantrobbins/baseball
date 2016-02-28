@@ -1,8 +1,9 @@
 const HTTP = new WeakMap();
 
 class BaseballDataService{
+    /*@ngInject*/
     constructor($http){
-        HTTP.set(this, $http)
+        HTTP.set(this, $http);
     }
 
     getTables(){
@@ -12,12 +13,6 @@ class BaseballDataService{
     getTableMetadata(table){
         return HTTP.get(this).get('/getDataSetMetadata');
     }
-
-    static BaseballDataFactory($http){
-        return new BaseballDataService($http);
-    }
 }
-
-BaseballDataService.$inject = ['$http'];
 
 export default BaseballDataService;
