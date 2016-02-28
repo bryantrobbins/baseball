@@ -41,6 +41,14 @@ job('ui-image') {
             pattern('ui/build/frontend.tar')
             onlyIfSuccessful()
         }
+        slackNotifications {
+            projectChannel('Dev Team A')
+            notifyAborted()
+            notifyFailure()
+            notifyNotBuilt()
+            notifyUnstable()
+            notifyBackToNormal()
+        }
     }
 }
 
@@ -55,6 +63,16 @@ job('ui-deploy') {
     steps {
        copyArtifacts('ui-image')
        shell('pushd ui/build; chmod 700 *.sh; ./deploy.sh') 
+    }
+    publishers {
+        slackNotifications {
+            projectChannel('Dev Team A')
+            notifyAborted()
+            notifyFailure()
+            notifyNotBuilt()
+            notifyUnstable()
+            notifyBackToNormal()
+        }
     }
 }
 
