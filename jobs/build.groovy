@@ -44,7 +44,7 @@ job('ui-image') {
         slackNotifications {
             projectChannel('general')
             notifySuccess()
-            notifyBuildStarted()
+            notifyBuildStart()
             notifyAborted()
             notifyFailure()
             notifyNotBuilt()
@@ -70,7 +70,7 @@ job('ui-deploy') {
         slackNotifications {
             projectChannel('general')
             notifySuccess()
-            notifyBuildStarted()
+            notifyBuildStart()
             notifyAborted()
             notifyFailure()
             notifyNotBuilt()
