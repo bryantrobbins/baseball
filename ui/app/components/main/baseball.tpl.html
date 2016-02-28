@@ -14,15 +14,15 @@
 				<md-autocomplete 
 					md-selected-item="BaseballCtrl.selectedDataSet" 
 					md-search-text="searchText" 
-					md-items="dataset in BaseballCtrl.getDataSets(searchText)" 
+					md-items="dataset in BaseballCtrl.dataSets | filter:searchText"
 					md-item-text="dataset"
 					placeholder="Select a dataset">
 				  <md-item-template>
-				  	<span md-highlight-text="searchText">{{ dataset }}</span>
+					  <span md-highlight-text="searchText">{{ dataset }}</span>
 				  </md-item-template>
 				  <!-- This will return only if the search box  -->
 				  <md-not-found>
-				  	404 no matches found
+					  <span>No tables match your search criteria</span>
 				  </md-not-found>
 				</md-autocomplete>
 			</md-card-content>
