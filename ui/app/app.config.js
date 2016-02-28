@@ -10,9 +10,9 @@ export default function config($stateProvider, $urlRouterProvider, $mdThemingPro
         });
 
         $mdThemingProvider.theme('default')
-            .primaryPalette('green')
+            .primaryPalette('light-blue')
             // If you specify less than all of the keys, it will inherit from the
             // default shades
-            .accentPalette('purple');
+            .accentPalette('grey');
 }
 
