@@ -1,7 +1,15 @@
+const BASEBALL = new WeakMap();
+
 class BaseballController {
-    constructor(){
+    constructor(BaseballDataFactory){
+        console.info(BaseballDataFactory);
+        BASEBALL.set(this, BaseballDataFactory);
         this.hello = "Welcome to the BaseBall Workbench where all your primal needs will be satisfied";
         this.selectedDataSet = undefined;
+        BaseballDataFactory.getTables().success((resp) => {
+            this.dataSets = resp;
+        })
+
     }
 
     playBall(){
@@ -21,14 +29,6 @@ class BaseballController {
     // Return the set of datasets 
     // Expecting a return of an array 
     // Empty array will indicate that nothing is found
-    getDataSets(searchText)
-    {
-    	if (searchText === "blah")
-    		return ["blah"];
-    	else if (searchText === "undefined")
-    		return [];
-    	return ["blah1", "blah2", "blah3"];
-    }
 
     getFormula(){
         if(this.formula == undefined)
@@ -41,5 +41,7 @@ class BaseballController {
         }
     }
 }
+
+BaseballController.$inject = ['BaseballDataFactory'];
 
 export default BaseballController;
