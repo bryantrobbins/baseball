@@ -13,14 +13,20 @@ class SortableTableController{
         this.selectedColumns = [];
         this.filters = {};
     }
+}
 
-    static ColumnarFilter(){
-        return function(values, input){
-            if(_.size(input) === 0 ){
+class ColumnarFilter{
+    constructor(){
+
+    }
+
+    static Filter() {
+        return function (values, input) {
+            if (_.size(input) === 0) {
                 return values;
-            }else{
+            } else {
                 var result = values;
-                _.forEach(input, (value, column) =>{
+                _.forEach(input, (value, column) => {
                     result = _.intersection(result, _.filter(values, (o) => {
                             return o[column].indexOf(value) !== -1;
                         })
@@ -48,5 +54,5 @@ class SortableTableDirective{
 //yeah i'm pretty sure there's a better way of doing this...
 export default {
     SortableTableDirective:SortableTableDirective,
-    SortableTableController:SortableTableController
+    ColumnarFilter:ColumnarFilter
 };
