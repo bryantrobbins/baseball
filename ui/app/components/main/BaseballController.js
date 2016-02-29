@@ -3,6 +3,12 @@ import _ from 'lodash';
 
 const BASEBALL = new WeakMap();
 const FILTER = new WeakMap();
+const MESSAGES = {
+    NOTHING_SELECTED:"Nothing is selected yet",
+    ENTER_FORMULA:"Please enter in a formula."
+};
+
+const METADATA_TABLE_HEADERS = [{id: 'colName', displayVal: 'Column'},{id: 'colType', displayVal: 'Data Type'}, {id: 'colDesc', displayVal:'Description'}];
 
 class BaseballController {
     /*@ngInject*/
@@ -13,8 +19,13 @@ class BaseballController {
             this.dataSets = resp;
         });
 
-        this.query = {
-            order: 'column'
+        this.metadataTable = {
+            filterable:true,
+            columns: METADATA_TABLE_HEADERS,
+            data: [],
+            query:{
+                order: 'column'
+            }
         };
     }
 
@@ -32,30 +43,26 @@ class BaseballController {
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
             BASEBALL.get(this).getTableMetadata(this.selectedDataSet).success((resp) => {
-                this.metadata = resp;
+                this.metadataTable.data = resp.colMetaData;
             });
         }
     }
 
     getCurrentSelectedDataSet(){
-    	if (this.selectedDataSet === undefined)
-    		return "Nothing is selected yet";
+    	if (this.selectedDataSet === undefined) {
+            return MESSAGES.NOTHING_SELECTED;
+        }
        	return this.selectedDataSet;
     }
 
     // Return the set of datasets 
     // Expecting a return of an array 
     // Empty array will indicate that nothing is found
-
     getFormula(){
-        if(this.formula === undefined)
-        {
-           return "Please enter in a formula.";
+        if(this.formula === undefined || this.formula.trim().length === 0) {
+           return MESSAGES.ENTER_FORMULA;
         }
-        else
-        {
-            return this.formula;
-        }
+        return this.formula;
     }
 
     sortData(){
