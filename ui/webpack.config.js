@@ -2,7 +2,6 @@
 
 var path = require("path");
 var webpack = require("webpack");
-var ngAnnotatePlugin = require("ng-annotate-webpack-plugin");
 
 //var BowerWebpackPlugin = require("bower-webpack-plugin");
 
@@ -18,9 +17,6 @@ var libs = [
 ];
 
 var plugins = [
-    new ngAnnotatePlugin({
-        add:true
-    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.CommonsChunkPlugin('common', 'common.js')

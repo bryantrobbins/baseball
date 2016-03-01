@@ -7,8 +7,8 @@ import _ from 'lodash';
 const FILTER = new WeakMap();
 
 class SortableTableController{
-    /*@ngInject*/
     constructor($filter){
+        'ngInject';
         FILTER.set($filter);
         this.selectedColumns = [];
         this.filters = {};
@@ -39,8 +39,8 @@ class ColumnarFilter{
 }
 
 class SortableTableDirective{
-    /*@ngInject*/
     constructor(){
+        'ngInject';
         this.template = require('./sortableTable.tpl.html');
         this.restrict = 'E';
         this.scope = {
