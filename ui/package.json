@@ -22,8 +22,6 @@
     "karma-jasmine": "*",
     "karma-junit-reporter": "*",
     "karma-sauce-launcher": "*",
-    "ng-annotate": "^1.2.1",
-    "ng-annotate-webpack-plugin": "^0.1.2",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",
@@ -47,7 +45,7 @@
     "prebuild": "npm install",
     "build": "node_modules/.bin/webpack --progress --colors -p && cp app/index.html dist",
     "prestart": "npm install",
-    "start": "node_modules/.bin/webpack-dev-server --hot --progress --color --content-base app/",
+    "start": "node_modules/.bin/webpack-dev-server --inline --hot --progress --color --content-base app/",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run"

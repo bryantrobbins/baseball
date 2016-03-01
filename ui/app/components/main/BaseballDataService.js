@@ -1,17 +1,17 @@
-const HTTP = new WeakMap();
+const HTTP = Symbol();
 
 class BaseballDataService{
-    /*@ngInject*/
     constructor($http){
-        HTTP.set(this, $http);
+        'ngInject';
+        this[HTTP] = $http;
     }
 
     getTables(){
-        return HTTP.get(this).get('/getDataSetNames');
+        return this[HTTP].get('/getDataSetNames');
     }
 
     getTableMetadata(table){
-        return HTTP.get(this).get('/getDataSetMetadata');
+        return this[HTTP].get('/getDataSetMetadata');
     }
 }
 

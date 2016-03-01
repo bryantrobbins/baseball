@@ -47,30 +47,8 @@
 				<span ng-if="!BaseballCtrl.metadata" class="md-subhead">Choose a data set above to see available data</span>
 			</md-card-header-text>
 		</md-card-header>
-		<md-card-content ng-if="BaseballCtrl.metadata">
-			<md-input-container>
-				<label>Search Metadata</label>
-				<input ng-model="metadataSearch" type="text">
-			</md-input-container>
-			<md-table-container >
-				<table md-table>
-					<thead md-head>
-					<tr md-row>
-						<th md-column><span>Column</span></th>
-						<th md-column><span>Data Type</span></th>
-						<th md-column><span>Description</span></th>
-
-					</tr>
-					</thead>
-					<tbody md-body>
-					<tr md-row ng-repeat="item in BaseballCtrl.metadata.colMetaData | filter:metadataSearch">
-						<td md-cell>{{item.colName}}</td>
-						<td md-cell>{{item.colType}}</td>
-						<td md-cell>{{item.colDesc}}</td>
-					</tr>
-					</tbody>
-				</table>
-			</md-table-container>
+		<md-card-content ng-if="BaseballCtrl.metadataTable.data.length > 0">
+			<sortable-table config="BaseballCtrl.metadataTable"></sortable-table>
 		</md-card-content>
 	</md-card>
 	
