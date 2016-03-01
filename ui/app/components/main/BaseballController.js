@@ -11,8 +11,8 @@ const MESSAGES = {
 const METADATA_TABLE_HEADERS = [{id: 'colName', displayVal: 'Column'},{id: 'colType', displayVal: 'Data Type'}, {id: 'colDesc', displayVal:'Description'}];
 
 class BaseballController {
-    /*@ngInject*/
     constructor($filter, BaseballDataService){
+        'ngInject';
         BASEBALL.set(this, BaseballDataService);
         FILTER.set(this, $filter);
         BaseballDataService.getTables().success((resp) => {
@@ -31,6 +31,7 @@ class BaseballController {
 
 
     static BaseballFilter($filter){
+        'ngInject';
         return function(values, input){
             if(!input || input.trim() === ''){
                 return values;
@@ -64,16 +65,6 @@ class BaseballController {
         }
         return this.formula;
     }
-
-    sortData(){
-        console.info("reorder was called");
-        this.metadata.colMetaData = _.sortBy(this.metadata.colMetaData, (element)=>{
-            return element.colName;
-        });
-    }
 }
-
-//This is such a hack.
-BaseballController.BaseballFilter.$inject = ['$filter'];
 
 export default BaseballController;
