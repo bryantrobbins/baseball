@@ -1,6 +1,6 @@
 call npm install -g hubot coffee-script
 call npm install -g yo generator-hubot
-call rm -rf batboy
+call rd /s /q batboy
 mkdir batboy
 cd batboy
 call npm install hubot-slack
