@@ -2,7 +2,6 @@ const HTTP = Symbol();
 
 class BaseballDataService{
     constructor($http){
-        'ngInject';
         this[HTTP] = $http;
     }
 

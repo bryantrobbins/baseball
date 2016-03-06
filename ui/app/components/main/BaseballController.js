@@ -1,8 +1,7 @@
 import _ from 'lodash';
 
 
-const BASEBALL = new WeakMap();
-const FILTER = new WeakMap();
+const BASEBALL = Symbol();
 const MESSAGES = {
     NOTHING_SELECTED:"Nothing is selected yet",
     ENTER_FORMULA:"Please enter in a formula."
@@ -11,15 +10,15 @@ const MESSAGES = {
 const METADATA_TABLE_HEADERS = [{id: 'colName', displayVal: 'Column'},{id: 'colType', displayVal: 'Data Type'}, {id: 'colDesc', displayVal:'Description'}];
 
 class BaseballController {
-    constructor($filter, BaseballDataService){
-        'ngInject';
-        BASEBALL.set(this, BaseballDataService);
-        FILTER.set(this, $filter);
+    constructor(BaseballDataService){
+        this[BASEBALL] = BaseballDataService;
         BaseballDataService.getTables().success((resp) => {
             this.dataSets = resp;
         });
 
         this.metadataTable = {
+            title: 'Available Data',
+            subTitle: '',
             filterable:true,
             columns: METADATA_TABLE_HEADERS,
             data: [],
@@ -31,7 +30,6 @@ class BaseballController {
 
 
     static BaseballFilter($filter){
-        'ngInject';
         return function(values, input){
             if(!input || input.trim() === ''){
                 return values;
@@ -43,7 +41,7 @@ class BaseballController {
 
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
-            BASEBALL.get(this).getTableMetadata(this.selectedDataSet).success((resp) => {
+            this[BASEBALL].getTableMetadata(this.selectedDataSet).success((resp) => {
                 this.metadataTable.data = resp.colMetaData;
             });
         }
