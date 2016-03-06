@@ -28,3 +28,9 @@
   content: "";
   padding: 0;
 }
+
+#tableColFilter {
+  width:90%;
+  margin: 0 0;
+  margin-bottom:-30px;
+}
