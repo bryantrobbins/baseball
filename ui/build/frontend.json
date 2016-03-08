@@ -22,7 +22,7 @@
     [
       {
         "type": "docker-import",
-        "repository": "{{user `aws_ecs_server`}}/baseball",
+        "repository": "{{user `aws_ecs_server`}}/btr-s-image-1xca0ttssxj9z",
         "tag": "0.1"
       },
       {
