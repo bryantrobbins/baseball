@@ -21,7 +21,7 @@
   "post-processors": [
     [
       {
-        "type": "docker-tag",
+        "type": "docker-import",
         "repository": "{{user `aws_ecs_server`}}/baseball",
         "tag": "0.1"
       },
