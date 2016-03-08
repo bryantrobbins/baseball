@@ -21,7 +21,7 @@
   "post-processors": [
     [
       {
-        "type": "baseball-ui",
+        "type": "docker-tag",
         "repository": "{{user `aws_ecs_server`}}/baseball",
         "tag": "0.1"
       },
