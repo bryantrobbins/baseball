@@ -7,7 +7,8 @@
   "builders": [
     {
       "type": "docker",
-      "image": "nginx"
+      "image": "nginx",
+      "export_path": "frontend.tar"
     }
   ],
   "provisioners": [
