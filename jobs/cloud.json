@@ -10,12 +10,16 @@
   "Resources" : {
     "UIRepository": {
       "Type": "AWS::ECR::Repository",
-      "Name": "baseball-ui"
+      "Properties": {
+        "RepositoryName": "baseball-ui"
+      }
     }, 
     "HubotRepository": {
       "Type": "AWS::ECR::Repository",
-      "Name": "baseball-hubot"
-    }
+      "Properties": {
+        "RepositoryName": "baseball-hubot"
+      }
+    } 
   },
 
   "Outputs" : {
