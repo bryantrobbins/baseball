@@ -1,27 +1,28 @@
+<md-toolbar class="md-table-toolbar md-accent" >
+    <div class="md-toolbar-tools">
+        <span>{{title}}</span>
+        <span flex></span>
+        <md-button ng-click="showFilters=!showFilters" class="md-icon-button">
+            <md-icon>filter_list</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
 <md-table-container >
-    <div layout="row" layout-padding>
-        <div layout="column">
-            <md-select multiple="true" aria-label="Filter by column(s)" placeholder="Filter by column(s)" ng-model="ctrl.selectedColumns">
-                <md-option ng-value="column.id" ng-repeat="column in config.columns">{{ ::column.displayVal }}</md-option>
-            </md-select>
-        </div>
-    </div>
-    <div layout="row">
-        <div layout="column" ng-if="ctrl.selectedColumns && ctrl.selectedColumns.indexOf(column.id) !== -1" ng-repeat="column in config.columns">
-            <md-input-container>
-                <label>Filter by {{column.displayVal}}</label>
-                <input ng-model="ctrl.filters[column.id]" type="text">
-            </md-input-container>
-        </div>
-    </div>
-    <div layout="row">
-        <table md-table>
+    <table md-table>
             <thead md-head md-order="query.order">
-            <tr md-row>
-                <th md-column ng-repeat="column in config.columns" md-order-by="{{column.id}}">
-                    <span>{{::column.displayVal}}</span>
-                </th>
-            </tr>
+                <tr md-row ng-if="!showFilters" >
+                    <th md-column ng-repeat="column in config.columns" md-order-by="{{column.id}}">
+                        <span ng-if="!showFilters" >{{::column.displayVal}}</span>
+                    </th>
+                </tr>
+                <tr md-row ng-if="showFilters">
+                    <th md-column ng-repeat="column in config.columns" md-order-by="{{column.id}}">
+                        <md-input-container id="tableColFilter" layout-padding">
+                            <label>{{column.displayVal}}</label>
+                            <input ng-model="ctrl.filters[column.id]" type="text">
+                        </md-input-container>
+                    </th>
+                </tr>
             </thead>
             <tbody md-body>
             <tr md-row ng-repeat="item in config.data | columnarFilter:ctrl.filters | orderBy: query.order">
@@ -29,5 +30,4 @@
             </tr>
             </tbody>
         </table>
-    </div>
 </md-table-container>

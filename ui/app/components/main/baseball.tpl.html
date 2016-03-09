@@ -7,7 +7,7 @@
 	<h1 class="md-display-1">Welcome to the Baseball Workbench</h1>
 	<div layout="row" layout-align="start start">
 		<!-- This will be for the autocomplete to be plugged into the controller -->
-		<md-card>
+		<md-card flex="25">
 			<md-card-header>
 				<md-card-header-text>
 					<span class="md-title">Select a data set</span>
@@ -19,6 +19,7 @@
 						<md-autocomplete
 								md-min-length="0"
 								md-selected-item="BaseballCtrl.selectedDataSet"
+								md-selected-item-change="BaseballCtrl.fetchMetadata()"
 								md-search-text="searchText"
 								md-items="dataset in BaseballCtrl.dataSets | BaseballFilter:searchText"
 								md-item-text="dataset"
@@ -32,23 +33,15 @@
 							</md-not-found>
 						</md-autocomplete>
 					</div>
-					<div layout="column">
-						<md-button layout="column" ng-click="BaseballCtrl.fetchMetadata()"> Go </md-button>
-					</div>
 				</div>
 			</md-card-content>
 		</md-card>
 	</div>
 	<md-card flex="50">
-		<md-card-header>
-			<md-card-header-text>
-				<span class="md-title">Available Data</span>
-				<span ng-if="BaseballCtrl.metadata" class="md-subhead">{{BaseballCtrl.selectedDataSet}}</span>
-				<span ng-if="!BaseballCtrl.metadata" class="md-subhead">Choose a data set above to see available data</span>
-			</md-card-header-text>
-		</md-card-header>
-		<md-card-content ng-if="BaseballCtrl.metadataTable.data.length > 0">
-			<sortable-table config="BaseballCtrl.metadataTable"></sortable-table>
+		<md-card-content >
+			<span class="md-title" ng-if="!BaseballCtrl.selectedDataSet" class="md-title">Choose a data set above to see available data</span>
+			<sortable-table ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
+							title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable"></sortable-table>
 		</md-card-content>
 	</md-card>
 	

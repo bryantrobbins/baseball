@@ -1,4 +1,9 @@
 {
+  "variables": {
+    "aws_ecs_repository": "",
+    "aws_ecs_password": "",
+    "aws_ecs_server": ""
+  },
   "builders": [
     {
       "type": "docker",
@@ -12,5 +17,22 @@
       "source": "../dist/",
       "destination": "/usr/share/nginx/html"
     }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-import",
+        "repository": "{{user `aws_ecs_server`}}/btr-s-image-1xca0ttssxj9z",
+        "tag": "0.1"
+      },
+      {
+        "type": "docker-push",
+        "login": true,
+        "login_email": "none",
+        "login_username": "AWS",
+        "login_password": "{{user `aws_ecs_passowrd`}}",
+        "login_server": "{{user `aws_ecs_server`}}"
+      }
+    ]
   ]
 }
