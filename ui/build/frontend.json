@@ -23,7 +23,8 @@
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
-        "tag": "0.2"
+        "tag": "{{user `image_version`}}",
+	"force": true
       },
       {
         "type": "docker-push",
@@ -31,7 +32,7 @@
         "login_email": "none",
         "login_username": "AWS",
         "login_password": "{{user `aws_ecs_password`}}",
-        "login_server": "{{user `aws_ecs_server}}"
+        "login_server": "{{user `aws_ecs_server`}}"
       }
     ]
   ]
