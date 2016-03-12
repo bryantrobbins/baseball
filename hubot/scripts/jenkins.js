@@ -2,8 +2,18 @@ var jenkinsapi = require('jenkins-api');
 var url = process.env.jenkinsUrl;
 var jenkins = jenkinsapi.init(url);
 var colorMap = {'red':'Failed', 'blue':'Passed', 'yellow':'Unstable', 'notbuilt':'Never built', 'aborted':'Aborted'}
-
+var port='8080';
 module.exports = function(robot){
+	
+	robot.hear(/set jenkins (ip|url)\s*=\s*([^\s]*)\s?(port\s*=\s*(.*))?/i,function(res){
+		if(typeof res.match[4] != 'undefined'){
+			port = res.match[4];
+		}
+		url = 'http://'+ res.match[2] +':'+port+'/';
+		jenkins = jenkinsapi.init(url);
+		res.send('url set to: ' + url);
+	});
+	
 	robot.hear(/list jobs/i,function(res){
 		jenkins.all_jobs(function(err,data){
 			if(err){
@@ -21,18 +31,21 @@ module.exports = function(robot){
 			
 				jobs.forEach(function(job){
 					var color = job.color.replace('_anime','');
-
+					var building ='';
+					if((job.color.indexOf('_anime')>-1)){
+						building =" (Currently Building)"
+					}
 					
 					jobNames.value+='<' + job.url + '|'+job.name+'>\n';
-					builds.value+=colorMap[color]+'\n';
-					inProg.value+=(job.color.indexOf('_anime')>-1)+'\n';
+					builds.value+=colorMap[color]+building+'\n';
+					//inProg.value+=+'\n';
 					
 				});
 				fields.push(jobNames);
 				fields.push(builds);
-				fields.push(inProg);
+			//	fields.push(inProg);
 				var attachments=[];
-				var content = {"fallback":"Builds", "color": "#36a64f", "pretext": "Here are all the jobs",
+				var content = {"fallback":"Builds", "pretext": "Here are all the jobs",
 "fields":fields}
 				attachments.push(content);
 				var payload ={"message":res.message,"content":attachments, "channel":  "#general"
