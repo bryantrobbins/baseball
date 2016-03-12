@@ -1,0 +1,5 @@
+All Data in this package was updated 02/20/2016 from the source websites listed below.
+
+The Lahman Database data is included from http://www.seanlahman.com/baseball-archive/statistics/, under the terms of the Creative Commons Attribution-ShareAlike 3.0 Unported License -  http://creativecommons.org/licenses/by-sa/3.0/ .
+
+The Retrosheet Game Logs data is included from Retrosheet.org. The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at "www.retrosheet.org".
