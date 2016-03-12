@@ -22,6 +22,7 @@ class BaseballController {
             filterable:true,
             columns: METADATA_TABLE_HEADERS,
             data: [],
+            selected: [],
             query:{
                 order: 'column'
             }

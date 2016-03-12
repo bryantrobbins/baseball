@@ -13,6 +13,6 @@ export default function config($stateProvider, $urlRouterProvider, $mdThemingPro
         .primaryPalette('light-blue')
         // If you specify less than all of the keys, it will inherit from the
         // default shades
-        .accentPalette('grey');
+        .accentPalette('red');
 }
 
