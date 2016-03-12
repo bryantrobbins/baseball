@@ -1,0 +1,28 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This is the baseball project CF template",
+
+  "Parameters" : {
+
+  },
+
+  "Resources" : {
+    "UIRepository": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "RepositoryName": "baseball-ui"
+      }
+    }, 
+    "HubotRepository": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "RepositoryName": "baseball-hubot"
+      }
+    } 
+  },
+
+  "Outputs" : {
+  }
+}
+

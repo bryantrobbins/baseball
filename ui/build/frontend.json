@@ -1,9 +1,14 @@
 {
+  "variables": {
+    "aws_ecs_repo": "",
+    "aws_ecs_password": "",
+    "aws_ecs_server": ""
+  },
   "builders": [
     {
       "type": "docker",
       "image": "nginx",
-      "export_path": "frontend.tar"
+      "commit": "true"
     }
   ],
   "provisioners": [
@@ -12,5 +17,23 @@
       "source": "../dist/",
       "destination": "/usr/share/nginx/html"
     }
+  ],
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "{{user `aws_ecs_repo`}}",
+        "tag": "{{user `image_version`}}",
+	"force": true
+      },
+      {
+        "type": "docker-push",
+        "login": true,
+        "login_email": "none",
+        "login_username": "AWS",
+        "login_password": "{{user `aws_ecs_password`}}",
+        "login_server": "{{user `aws_ecs_server`}}"
+      }
+    ]
   ]
 }
