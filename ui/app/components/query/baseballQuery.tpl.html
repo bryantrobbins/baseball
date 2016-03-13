@@ -1,0 +1,61 @@
+<md-card style="height:500px">
+    <md-toolbar class="md-table-toolbar md-primary md-hue-2" >
+        <div class="md-toolbar-tools">
+            <span>Query Builder</span>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-card-content>
+            <span ng-if="BaseballCtrl.metadataTable.selected.length === 0" class="md-title">No Columns Selected, Select columns from the {{BaseballCtrl.metadataTable.title}} table</span>
+            <div layout="column" ng-if="BaseballCtrl.metadataTable.selected.length > 0">
+                <div layout="row" layout-padding>
+                    <span layout="row" class="md-title">Grouping/Ordering</span>
+                </div>
+                <div layout="row">
+                    <div layout="column" ng-if="BaseballCtrl.metadataTable.selected.length > 0" flex="25" ng-repeat="(key, obj) in BaseballCtrl.filters" layout-padding>
+                        <md-input-container layout-fill >
+                            <label>{{obj.desc}}</label>
+                            <md-select ng-model="obj.value">
+                                <md-option ng-value="opt.colName" ng-repeat="opt in BaseballCtrl.metadataTable.selected">{{ opt.colName }}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+                <div layout="row" layout-padding>
+                    <span layout="row" class="md-title">Filter Selected Column(s)</span>
+                </div>
+                <md-list>
+                    <md-list-item style="height:75px;" class="md-2-line" ng-repeat="item in BaseballCtrl.metadataTable.selected">
+                        <div class="md-list-item-text">
+                            <h3>{{item.colName}}</h3>
+                            <p>{{item.colType}}</p>
+                        </div>
+                        <div flex="80">
+                            <div ng-if="item.colType === 'String'" layout-padding>
+                                <md-input-container>
+                                    <label>Filter by {{item.colName}}</label>
+                                    <input type="text" ng-model="item.filter.contains">
+                                </md-input-container>
+                            </div>
+                            <div layout="row" ng-if="item.colType === 'Count' || item.colType === 'Number'" >
+                                <div layout="column" layout-padding>
+                                    <md-input-container>
+                                        <label>{{item.colName}} Greater Than</label>
+                                        <input type="number" ng-model="item.filter.lessThan">
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" layout-padding>
+                                    <md-input-container>
+                                        <label>{{item.colName}} Less Than</label>
+                                        <input type="number" ng-model="item.filter.greaterThan">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-card-content>
+    </md-content>
+</md-card>
