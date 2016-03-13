@@ -1,39 +1,25 @@
-<md-card style="height:500px">
-    <md-toolbar class="md-table-toolbar md-primary md-hue-2" >
-        <div class="md-toolbar-tools">
-            <span>{{title}}</span>
-            <span flex></span>
-            <md-button ng-click="showFilters=!showFilters" class="md-icon-button">
-                <md-icon>filter_list</md-icon>
-            </md-button>
-        </div>
-    </md-toolbar>
-    <md-content layout-padding>
-        <md-card-content>
-            <md-table-container >
-                <table md-table md-row-select ng-model="config.selected">
-                    <thead md-head md-order="query.order">
-                        <tr md-row ng-show="showFilters">
-                            <th md-column ng-repeat="column in config.columns">
-                                <md-input-container id="tableColFilter" layout-padding">
-                                <label>{{column.displayVal}}</label>
-                                <input ng-model="ctrl.filters[column.id]" type="text">
-                                </md-input-container>
-                            </th>
-                        </tr>
-                        <tr md-row ng-show="!showFilters" >
-                            <th md-column ng-repeat="column in config.columns" md-order-by="{{column.id}}">
-                                <span ng-show="!showFilters" >{{::column.displayVal}}</span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody md-body>
-                    <tr md-select="item" md-row ng-repeat="item in config.data | columnarFilter:ctrl.filters | orderBy: query.order">
-                        <td ng-repeat="col in config.columns" md-cell>{{item[col.id]}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </md-table-container>
-        </md-card-content>
-    </md-content>
-</md-card>
+<md-table-container >
+    <table md-table md-row-select ng-model="config.selected">
+        <thead md-head md-order="query.order">
+        <tr md-row ng-show="config.showFilters">
+            <th md-column ng-repeat="column in config.columns">
+                <md-input-container id="tableColFilter" layout-padding">
+                <label>{{column.displayVal}}</label>
+                <input ng-model="ctrl.filters[column.id]" type="text">
+                </md-input-container>
+            </th>
+        </tr>
+        <tr md-row ng-show="!config.showFilters" >
+            <th md-column ng-repeat="column in config.columns" md-order-by="{{column.id}}">
+                <span ng-show="!showFilters" >{{::column.displayVal}}</span>
+            </th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-select="item" md-row ng-repeat="item in config.data | columnarFilter:ctrl.filters | orderBy: query.order">
+            <td ng-repeat="col in config.columns" md-cell>{{item[col.id]}}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>
+
