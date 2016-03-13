@@ -12,6 +12,10 @@ class BaseballDataService{
     getTableMetadata(table){
         return this[HTTP].get('/getDataSetMetadata');
     }
+
+    getExportData(){
+        return this[HTTP].get('/getExportData');
+    }
 }
 
 export default BaseballDataService;

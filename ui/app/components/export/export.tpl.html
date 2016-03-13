@@ -1,0 +1,33 @@
+<md-dialog style="width:50%" aria-label="List dialog">
+    <md-toolbar class="md-table-toolbar md-primary md-hue-2" >
+        <div layout="column" class="md-toolbar-tools">
+            <span>Select what you want</span>
+            <span flex></span>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <div layout="row" layout-fill>
+            <div flex="25" sortable-table layout="column" title="dialogCtrl.exportsTable.title" config="dialogCtrl.exportsTable"></div>
+            <div flex="75">
+                <span class="md-title" layout-padding >Configure Exports:</span>
+                <md-list layout="column">
+                    <md-list-item style="height:75px;" class="md-2-line" ng-repeat="item in dialogCtrl.exportsTable.selected" layout-padding>
+                        <span class="md-title">{{item.name}}</span>
+                        <md-input-container layout-fill ng-repeat="obj in item.fields">
+                            <label>{{obj.name}}</label>
+                            <md-select ng-model="obj.value">
+                                <!-- Find a better way to manage these.. -->
+                                <md-option ng-if="obj.values === 'selected'" ng-value="opt.colName" ng-repeat="opt in dialogCtrl.selectedMetadata">{{ opt.colName }}</md-option>
+                                <md-option ng-if="obj.values !== 'selected'" ng-value="opt.id" ng-repeat="opt in obj.values">{{ opt.name }}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button ng-click="dialogCtrl.closeDialog()" class="md-raised md-accent">CANCEL!</md-button>
+        <md-button ng-click="dialogCtrl.closeDialog()" class="md-raised md-primary">OK!</md-button>
+    </md-dialog-actions>
+</md-dialog>
