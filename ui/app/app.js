@@ -1,6 +1,6 @@
 import md from 'angular-material';
 import state from 'angular-ui-router';
-import baseball from './components/main/baseball.js';
+import baseball from './components/baseball.js';
 import baseballUtil from './components/util/util';
 import mdDataTable from 'angular-material-data-table';
 import config from './app.config';
