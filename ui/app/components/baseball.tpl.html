@@ -39,12 +39,11 @@
 	</div>
 	<!-- TODO: The scrollbar this produces should show up under the toolbar.. #MINORforNOW -->
 	<div layout="row" layout-align="start start">
-		<md-card layout="row" ng-if="!BaseballCtrl.selectedDataSet" flex="100" layout-fill layout-align="center center">
-			<md-card-content >
-				<span class="md-title"  class="md-title">Choose a data set above to see available data</span>
-			</md-card-content>
-		</md-card>
+		<span class="md-title" layout="row" ng-if="!BaseballCtrl.selectedDataSet" flex="100" layout-fill layout-align="start start">Choose a data set above to see available data</span>
 		<div flex="50" layout="column" sortable-table ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
+			 title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable">
+		</div>
+		<div flex="50" layout="column" baseball-query ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
 			 title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable">
 		</div>
 	</div>
