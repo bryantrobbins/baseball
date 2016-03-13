@@ -42,13 +42,13 @@
                                 <div layout="column" layout-padding>
                                     <md-input-container>
                                         <label>{{item.colName}} Greater Than</label>
-                                        <input type="number" ng-model="item.filter.lessThan">
+                                        <input min="" max="{{ item.filter.lessThan ? item.filter.lessThan : '' }}" type="number" ng-model="item.filter.greaterThan">
                                     </md-input-container>
                                 </div>
                                 <div layout="column" layout-padding>
                                     <md-input-container>
                                         <label>{{item.colName}} Less Than</label>
-                                        <input type="number" ng-model="item.filter.greaterThan">
+                                        <input min="{{item.filter.greaterThan ? item.filter.greaterThan : '' }}" max="" type="number" ng-model="item.filter.lessThan">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -58,4 +58,9 @@
             </div>
         </md-card-content>
     </md-content>
+    <md-card-footer>
+        <md-card-actions ng-if="BaseballCtrl.metadataTable.selected.length > 0" layout="row" layout-align="end center">
+            <md-button class="md-raised md-primary md-accent" ng-click="BaseballCtrl.runQuery()">Export</md-button>
+        </md-card-actions>
+    </md-card-footer>
 </md-card>
