@@ -22,6 +22,7 @@ job('worker-image') {
     }
 }
 
+
 job('ui-image') {
     wrappers {
         preBuildCleanup()
@@ -40,8 +41,23 @@ job('ui-image') {
     }
 }
 
-job('puppet-update') {
+job('deploy-DEV') {
+    parameters {
+      textParam('UI_DESIRED_COUNT', '1', 'Number of UI containers to deploy')
+      textParam('UI_VERSION', 'latest', 'Version of UI container to deploy')
+    }
+    wrappers {
+        preBuildCleanup()
+    }
+    scm {
+        git('git://github.com/bryantrobbins/baseball') { node ->
+            node / gitConfigName('Baseball Jenkins Auto')
+            node / gitConfigEmail('bryantrobbins@gmail.com')
+        }
+    }
     steps {
-       shell('') 
+       shell('pushd infra/stacks; chmod 700 *.sh; echo "UIDesiredCount=${UI_DESIRED_COUNT}" >> dev.properties; echo "UIVersion=${UI_VERSION}" >> dev.properties; ./update.sh dev')
+    }
+    publishers {
     }
 }
