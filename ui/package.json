@@ -37,8 +37,10 @@
     "angular-material-data-table": "*",
     "angular-messages": "*",
     "angular-mocks": "*",
+    "angular-resource": "^1.5.0",
     "angular-ui-router": "^0.2.18",
-    "lodash": "^4.5.1"
+    "lodash": "^4.5.1",
+    "q": "^1.4.1"
   },
   "scripts": {
     "postinstall": "",
