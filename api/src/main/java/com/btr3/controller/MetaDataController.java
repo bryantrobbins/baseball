@@ -21,8 +21,33 @@ public class MetaDataController {
 	public String[] getTables(){
 		return new String[] {"Pitching", "Running", "Stealing", "Games", "Player","Teams"};
 	}
-    
-    @CrossOrigin(origins = "http://localhost:8080")
+
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping("/getExportData")
+	@ResponseBody
+	public String getExports(){
+		return new String("[{\n" +
+				"        \"name\": \"table\",\n" +
+				"        \"fields\": [\n" +
+				"            {\n" +
+				"                \"name\": \"orderBy\",\n" +
+				"                \"desc\": \"Order By\",\n" +
+				"                \"values\":\"selected\"\n" +
+				"            },\n" +
+				"            {\n" +
+				"                \"name\":\"direction\",\n" +
+				"                \"desc\":\"Direction\",\n" +
+				"                \"values\":[\n" +
+				"                    {\"id\":\"desc\", \"name\": \"Descending\"},\n" +
+				"                    {\"id\":\"asc\", \"name\":\"Ascending\"}\n" +
+				"                ]\n" +
+				"            }\n" +
+				"        ]\n" +
+				"    }]") ;
+	}
+
+
+	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/metadata")
 	@ResponseBody
 	public Map<String,List<Map<String,String>>> getMetaData(){

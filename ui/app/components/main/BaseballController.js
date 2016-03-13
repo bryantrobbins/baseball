@@ -1,7 +1,8 @@
 import _ from 'lodash';
-
+import ExportController from '../export/ExportController';
 
 const BASEBALL = Symbol();
+const DIALOG = Symbol();
 const MESSAGES = {
     NOTHING_SELECTED:"Nothing is selected yet",
     ENTER_FORMULA:"Please enter in a formula."
@@ -10,18 +11,20 @@ const MESSAGES = {
 const METADATA_TABLE_HEADERS = [{id: 'colName', displayVal: 'Column'},{id: 'colType', displayVal: 'Data Type'}, {id: 'colDesc', displayVal:'Description'}];
 
 class BaseballController {
-    constructor(BaseballDataService){
+    constructor($mdDialog, BaseballDataService){
         this[BASEBALL] = BaseballDataService;
+        this[DIALOG] = $mdDialog;
+
 		BaseballDataService.getTables().then((resp) => {
-			this.dataSets = resp.data;
+            this.dataSets = resp.data;
         });
         this.filters = {
             groupBy: {
                 desc: "Group By"
             },
-            orderBy: {
-                desc: "Order By"
-            }
+            //orderBy: {
+            //    desc: "Order By"
+            //}
 
         };
 
@@ -52,10 +55,11 @@ class BaseballController {
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
           this[BASEBALL].getTableMetadata(this.selectedDataSet).then((resp) => {
-                this.metadataTable.data = resp.data.colMetaData;
+              this.metadataTable.selected = [];
+              this.metadataTable.data = resp.data.colMetaData;
             });
-			
-			
+
+
         }
     }
 
@@ -74,6 +78,21 @@ class BaseballController {
            return MESSAGES.ENTER_FORMULA;
         }
         return this.formula;
+    }
+
+    runQuery() {
+        var parentEl = angular.element(document.body);
+        this[DIALOG].show({
+            parent: parentEl,
+            template: require('../export/export.tpl.html'),
+            controller: ExportController,
+            controllerAs: 'dialogCtrl',
+            bindToController: true,
+            locals: {
+                selectedMetadata:this.metadataTable.selected,
+                selectedDataSet: this.selectedDataSet
+            }
+        });
     }
 }
 
