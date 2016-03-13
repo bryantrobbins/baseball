@@ -34,7 +34,7 @@ job('ui-image') {
         }
     }
     steps {
-       shell('pushd ui/build; chmod 700 *.sh; ./build.sh') 
+       shell('pushd ui/build; chmod 700 *.sh; now=`date +%Y%m%d%H%M%S`; ./build.sh $now')
     }
     publishers {
     }
