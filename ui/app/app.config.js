@@ -6,7 +6,7 @@ export default function config($stateProvider, $urlRouterProvider, $mdThemingPro
         url: '/baseball',
         controller: 'BaseballController',
         controllerAs: 'BaseballCtrl',
-        template: require('./components/main/baseball.tpl.html')
+        template: require('./components/baseball.tpl.html')
     });
 
     $mdThemingProvider.theme('default')

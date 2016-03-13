@@ -16,6 +16,16 @@ class BaseballController {
             this.dataSets = resp;
         });
 
+        this.filters = {
+            groupBy: {
+                desc: "Group By"
+            },
+            orderBy: {
+                desc: "Order By"
+            }
+
+        };
+
         this.metadataTable = {
             title: 'Available Data',
             subTitle: '',
