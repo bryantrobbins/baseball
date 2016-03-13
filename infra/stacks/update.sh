@@ -7,7 +7,7 @@ pname="${stack}.properties"
 tfile="$(cd "$(dirname "${tname}")"; pwd)/$(basename "${tname}")"
 
 # Get ECSCluster parameter
-cluster=`aws cloudformation describe-stack-resources --stack-name BTR-standard | jq -r '.StackResources[] | select(.LogicalResourceId == "ECSCluster") | .PhysicalResourceId'`
+cluster=`aws cloudformation describe-stack-resources --stack-name BTR-standard --region us-east-1 | jq -r '.StackResources[] | select(.LogicalResourceId == "ECSCluster") | .PhysicalResourceId'`
 
 cmd="aws cloudformation update-stack --stack-name baseball-$stack --template-body file:///${tfile} --region us-east-1"
 
