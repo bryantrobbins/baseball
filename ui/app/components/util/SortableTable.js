@@ -42,6 +42,18 @@ class SortableTableDirective{
         this.template = require('./sortableTable.tpl.html');
         this.restrict = 'EA';
         this.scope = {
+            config:"="
+        };
+        this.controller = SortableTableController;
+        this.controllerAs = 'ctrl';
+    }
+}
+
+class SortableTableCardDirective{
+    constructor(){
+        this.template = require('./cardSortableTable.tpl.html');
+        this.restrict = 'EA';
+        this.scope = {
             title:"=",
             config:"="
         };
@@ -52,6 +64,7 @@ class SortableTableDirective{
 
 //yeah i'm pretty sure there's a better way of doing this...
 export default {
+    SortableTableCardDirective:SortableTableCardDirective,
     SortableTableDirective:SortableTableDirective,
     ColumnarFilter:ColumnarFilter
 };

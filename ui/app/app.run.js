@@ -32,6 +32,24 @@ function runMocked($httpBackend){
             {colName:'SH',colType:'Count', colDesc:'Sacrifice Hits'},
             {colName:'SF',colType:'Count', colDesc:'Sacrifice Flies'},
             {colName:'GIDP', colType:'Count', colDesc:'Grounded Into Double Play'}]};
+    var exportResponse = [{
+        name: 'table',
+        fields: [
+            {
+                name: 'orderBy',
+                desc: 'Order By',
+                values:'selected'
+            },
+            {
+                name:'direction',
+                desc:'Direction',
+                values:[
+                    {id:'desc', name: 'Descending'},
+                    {id:'asc', name:'Ascending'}
+                ]
+            }
+        ]
+    }];
 
     $httpBackend.whenGET(/.*\.tpl\.html/).passThrough();
     $httpBackend.whenGET(/.*\.svg/).passThrough();
@@ -39,6 +57,8 @@ function runMocked($httpBackend){
 
     $httpBackend.whenGET('/getDataSetNames').respond(tableResponse);
     $httpBackend.whenGET('/getDataSetMetadata').respond(metaResponse);
+    $httpBackend.whenGET('/getExportData').respond(exportResponse);
+
 }
 
 var run = {
