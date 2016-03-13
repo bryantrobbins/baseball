@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import $q from 'q';
 
 
 const BASEBALL = Symbol();
@@ -13,10 +12,8 @@ const METADATA_TABLE_HEADERS = [{id: 'colName', displayVal: 'Column'},{id: 'colT
 class BaseballController {
     constructor(BaseballDataService){
         this[BASEBALL] = BaseballDataService;
-        //Add this back in with Spring
-		//this.dataSets = BaseballDataService.getTables();
-		BaseballDataService.getTables().success((resp) => {
-            this.dataSets = resp;
+		BaseballDataService.getTables().then((resp) => {
+			this.dataSets = resp.data;
         });
         this.filters = {
             groupBy: {
@@ -54,15 +51,10 @@ class BaseballController {
 
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
-			//Add back in when httpBackend is switched to Boot
-          /**  this[BASEBALL].getTableMetadata(this.selectedDataSet).then((resp) => {
+          this[BASEBALL].getTableMetadata(this.selectedDataSet).then((resp) => {
                 this.metadataTable.data = resp.colMetaData;
-				console.log(this.metadataTable);
-            });**/
-			 this[BASEBALL].getTableMetadata(this.selectedDataSet).success((resp) => {
-                this.metadataTable.data = resp.colMetaData;
-				console.log(this.metadataTable);
             });
+			
 			
         }
     }
