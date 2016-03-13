@@ -1,0 +1,16 @@
+<md-card style="height:500px">
+    <md-toolbar class="md-table-toolbar md-primary md-hue-2" >
+        <div class="md-toolbar-tools">
+            <span>{{title}}</span>
+            <span flex></span>
+            <md-button ng-click="config.showFilters=!config.showFilters" class="md-icon-button">
+                <md-icon>filter_list</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding>
+        <md-card-content>
+            <div sortable-table layout="column" ng-if="config.data.length > 0" config="config" layout-fill></div>
+        </md-card-content>
+    </md-content>
+</md-card>
