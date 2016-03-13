@@ -12,10 +12,9 @@ const METADATA_TABLE_HEADERS = [{id: 'colName', displayVal: 'Column'},{id: 'colT
 class BaseballController {
     constructor(BaseballDataService){
         this[BASEBALL] = BaseballDataService;
-        BaseballDataService.getTables().success((resp) => {
-            this.dataSets = resp;
+		BaseballDataService.getTables().then((resp) => {
+			this.dataSets = resp.data;
         });
-
         this.filters = {
             groupBy: {
                 desc: "Group By"
@@ -52,9 +51,11 @@ class BaseballController {
 
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
-            this[BASEBALL].getTableMetadata(this.selectedDataSet).success((resp) => {
-                this.metadataTable.data = resp.colMetaData;
+          this[BASEBALL].getTableMetadata(this.selectedDataSet).then((resp) => {
+                this.metadataTable.data = resp.data.colMetaData;
             });
+			
+			
         }
     }
 
