@@ -52,7 +52,7 @@ class BaseballController {
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
           this[BASEBALL].getTableMetadata(this.selectedDataSet).then((resp) => {
-                this.metadataTable.data = resp.colMetaData;
+                this.metadataTable.data = resp.data.colMetaData;
             });
 			
 			
