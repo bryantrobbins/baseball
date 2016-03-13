@@ -40,7 +40,7 @@ class ColumnarFilter{
 class SortableTableDirective{
     constructor(){
         this.template = require('./sortableTable.tpl.html');
-        this.restrict = 'E';
+        this.restrict = 'EA';
         this.scope = {
             title:"=",
             config:"="

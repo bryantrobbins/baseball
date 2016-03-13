@@ -3,7 +3,7 @@
 		<h1>Baseball Workbench</h1>
     </div>
 </md-toolbar>
-<md-content layout-padding>
+<div layout-padding>
 	<h1 class="md-display-1">Welcome to the Baseball Workbench</h1>
 	<div layout="row" layout-align="start start">
 		<!-- This will be for the autocomplete to be plugged into the controller -->
@@ -37,13 +37,18 @@
 			</md-card-content>
 		</md-card>
 	</div>
-	<md-card flex="50">
-		<md-card-content >
-			<span class="md-title" ng-if="!BaseballCtrl.selectedDataSet" class="md-title">Choose a data set above to see available data</span>
-			<sortable-table ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
-							title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable"></sortable-table>
-		</md-card-content>
-	</md-card>
+	<!-- TODO: The scrollbar this produces should show up under the toolbar.. #MINORforNOW -->
+	<div layout="row" layout-align="start start">
+		<span class="md-title" layout="row" ng-if="!BaseballCtrl.selectedDataSet" flex="100" layout-fill layout-align="start start">Choose a data set above to see available data</span>
+		<div flex="50" layout="column" sortable-table ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
+			 title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable">
+		</div>
+		<div flex="50" layout="column" baseball-query ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
+			 title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable">
+		</div>
+	</div>
+
+
 	
 <!-- Disabling this element for the MVP
 	<div layout="row" layout-align="start start">
@@ -57,4 +62,4 @@
 		</md-card>
 	</div>
 -->
-</md-content>
+</div>
