@@ -1,7 +1,6 @@
 {
   "AWSTemplateFormatVersion" : "2010-09-09",
-
-  "Description" : "This is the baseball project CF template",
+  "Description" : "This is the baseball project base template",
 
   "Parameters" : {
 
@@ -25,4 +24,3 @@
   "Outputs" : {
   }
 }
-
