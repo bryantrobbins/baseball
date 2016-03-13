@@ -1,5 +1,8 @@
 const HTTP = Symbol();
 
+/**
+ * TODO the endpoints need to be updated
+ */
 class BaseballDataService{
     constructor($http){
 		this[HTTP] = $http;
@@ -16,7 +19,7 @@ class BaseballDataService{
     }
 
     getExportData(){
-        return this[HTTP].get('/getExportData');
+        return this[HTTP].get('http://localhost:8004/getExportData');
     }
 }
 
