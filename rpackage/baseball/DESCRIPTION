@@ -1,0 +1,8 @@
+Package: baseball
+Title: Baseball Workbench - Data and Tools for Baseball Research
+Version: 1.0.0
+Authors@R: person("Bryan", "Robbins", email = "bryantrobbins@gmail.com", role = c("aut", "cre"))
+Description: Incorporates trusted statistical data sources from Lahman and Retrosheet. Provides high-level functions for aggregating, generating, and charting baseball statistics compiled from these sources.
+Depends: R (>= 3.2.3)
+License: What license is it under? Apache v2
+LazyData: true
