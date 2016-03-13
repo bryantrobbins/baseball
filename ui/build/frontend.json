@@ -23,8 +23,13 @@
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
+	      "force": true
+      },
+      {
+        "type": "docker-tag",
+        "repository": "{{user `aws_ecs_repo`}}",
         "tag": "{{user `image_version`}}",
-	"force": true
+	      "force": true
       },
       {
         "type": "docker-push",
