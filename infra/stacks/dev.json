@@ -1,0 +1,57 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "This is the baseball dev environment",
+
+  "Parameters" : {
+    "ECSCluster": {
+      "Type": "String",
+      "Description": "The name of the ECS Cluster to use for services"
+    },
+    "UIDesiredCount": {
+      "Type": "Number",
+      "Default" : "1",
+      "Description": "Number of container instances desired"
+    },
+    "UIVersion": {
+      "Type": "String",
+      "Description": "Version of the UI container to deploy"
+    }
+  },
+
+  "Resources" : {
+    "UITaskDefinition": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "Properties" : {
+        "ContainerDefinitions" : [
+          {
+            "Name": "baseball-ui",
+            "Image": { "Fn::Join": [ "", [ "baseball-ui:", { "Ref": "UIVersion" } ] ] },
+            "Cpu": "10",
+            "Memory":"500",
+            "Essential": "true",
+            "Command": [
+              "/usr/sbin/nginx -g 'daemon off;'"
+            ],
+            "PortMappings": [
+              {
+                "ContainerPort": 80
+              }
+            ]
+          },
+        ]
+      }
+    },
+    "UIService": {
+      "Type": "AWS::ECS::Service",
+      "Properties" : {
+        "Cluster": { "Ref": "ECSCluster" },
+        "DesiredCount": { "Ref": "UIDesiredCount" },
+        "TaskDefinition" : { "Ref":"UITaskDefinition" }
+      }
+    }
+  },
+
+  "Outputs" : {
+  }
+}
