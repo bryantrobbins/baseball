@@ -14,8 +14,6 @@ class BaseballDataService{
 
     getTableMetadata(table){
         return this[HTTP].get('http://localhost:8004/metadata');
-
-		
     }
 
     getExportData(){

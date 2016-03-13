@@ -16,7 +16,7 @@ class BaseballController {
         this[DIALOG] = $mdDialog;
 
 		BaseballDataService.getTables().then((resp) => {
-			this.dataSets = resp.data;
+            this.dataSets = resp.data;
         });
         this.filters = {
             groupBy: {
@@ -55,7 +55,8 @@ class BaseballController {
     fetchMetadata(){
         if(this.dataSets && this.dataSets.indexOf(this.selectedDataSet) !== -1) {
           this[BASEBALL].getTableMetadata(this.selectedDataSet).then((resp) => {
-                this.metadataTable.data = resp.data.colMetaData;
+              this.metadataTable.selected = [];
+              this.metadataTable.data = resp.data.colMetaData;
             });
 
 
