@@ -8,6 +8,10 @@
       "Type": "String",
       "Description": "The name of the ECS Cluster to use for services"
     },
+    "RepoPrefix": {
+      "Type": "String",
+      "Description": "Prefix to use for ECR repositories"
+    },
     "UIDesiredCount": {
       "Type": "Number",
       "Default" : "1",
@@ -26,7 +30,7 @@
         "ContainerDefinitions" : [
           {
             "Name": "baseball-ui",
-            "Image": { "Fn::Join": [ "", [ "baseball-ui:", { "Ref": "UIVersion" } ] ] },
+            "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-ui:", { "Ref": "UIVersion" } ] ] },
             "Cpu": "10",
             "Memory":"500",
             "Essential": "true",
