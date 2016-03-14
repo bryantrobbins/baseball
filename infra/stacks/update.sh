@@ -10,7 +10,7 @@ tfile="$(cd "$(dirname "${tname}")"; pwd)/$(basename "${tname}")"
 cluster=`aws cloudformation describe-stack-resources --stack-name BTR-standard --region us-east-1 | jq -r '.StackResources[] | select(.LogicalResourceId == "ECSCluster") | .PhysicalResourceId'`
 
 # See if stack already exists (determing update vs. create)
-aws cloudformation describe-stacks --stack-name baseball-$stack > dscontent
+aws cloudformation describe-stacks --stack-name baseball-$stack --region us-east-1 > dscontent
 
 if [[ -s dscontent ]]; then
   cmd="aws cloudformation update-stack --stack-name baseball-$stack --template-body file:///${tfile} --region us-east-1"
