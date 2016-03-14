@@ -96,4 +96,8 @@ class BaseballController {
     }
 }
 
+BaseballController.$inject = ['$mdDialog', 'BaseballDataService'];
+BaseballController.BaseballFilter.$inject = ['$filter'];
+
+
 export default BaseballController;
