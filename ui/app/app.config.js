@@ -16,3 +16,5 @@ export default function config($stateProvider, $urlRouterProvider, $mdThemingPro
         .accentPalette('red');
 }
 
+config.$inject =  ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider'];
+
