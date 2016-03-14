@@ -18,6 +18,11 @@ else
   cmd="aws cloudformation create-stack --stack-name baseball-$stack --template-body file:///${tfile} --region us-east-1"
 fi
 
+# Get repo prefix from login api call
+login=`aws ecr --region us-east-1 get-login`
+set $login
+repoPrefix=$9
+repoPrefix=${repoPrefix:8}
 
 # Build parameters list
 pargs=""
@@ -26,6 +31,8 @@ if [[ -a $pname ]]; then
     key=`echo $p | tr "=" " " | awk '{print $1}'`
     if [[ "$key" == "ECSCluster" ]]; then
       value=$cluster
+    elif [[ "$key" == "RepoPrefix" ]]; then
+      value=$repoPrefix 
     else
       value=`echo $p | tr "=" " " | awk '{print $2}'`
     fi
