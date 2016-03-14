@@ -1,3 +1,4 @@
+/*@ngInject*/
 export default function config($stateProvider, $urlRouterProvider, $mdThemingProvider){
     require('./css/app.css');
     $urlRouterProvider.otherwise('/baseball');
@@ -15,4 +16,6 @@ export default function config($stateProvider, $urlRouterProvider, $mdThemingPro
         // default shades
         .accentPalette('red');
 }
+
+config.$inject =  ['$stateProvider', '$urlRouterProvider', '$mdThemingProvider'];
 
