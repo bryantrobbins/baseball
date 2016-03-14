@@ -1,4 +1,3 @@
-/*@ngInject*/
 export default function config($stateProvider, $urlRouterProvider, $mdThemingProvider){
     require('./css/app.css');
     $urlRouterProvider.otherwise('/baseball');
