@@ -14,6 +14,8 @@ class SortableTableController{
     }
 }
 
+SortableTableController.$inject = ['$filter'];
+
 class ColumnarFilter{
     constructor(){
 
