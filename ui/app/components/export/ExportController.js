@@ -24,4 +24,6 @@ class ExportController {
     }
 }
 
+ExportController.$inject = ['$mdDialog', 'BaseballDataService'];
+
 export default ExportController;
