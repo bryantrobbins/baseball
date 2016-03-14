@@ -9,7 +9,15 @@ tfile="$(cd "$(dirname "${tname}")"; pwd)/$(basename "${tname}")"
 # Get ECSCluster parameter
 cluster=`aws cloudformation describe-stack-resources --stack-name BTR-standard --region us-east-1 | jq -r '.StackResources[] | select(.LogicalResourceId == "ECSCluster") | .PhysicalResourceId'`
 
-cmd="aws cloudformation update-stack --stack-name baseball-$stack --template-body file:///${tfile} --region us-east-1"
+# See if stack already exists (determing update vs. create)
+aws cloudformation describe-stack --stack-name baseball-$stack > dscontent
+
+if [[ -s dscontent ]]; then
+  cmd="aws cloudformation update-stack --stack-name baseball-$stack --template-body file:///${tfile} --region us-east-1"
+else
+  cmd="aws cloudformation create-stack --stack-name baseball-$stack --template-body file:///${tfile} --region us-east-1"
+fi
+
 
 # Build parameters list
 pargs=""
