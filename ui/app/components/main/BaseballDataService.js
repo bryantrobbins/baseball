@@ -21,4 +21,6 @@ class BaseballDataService{
     }
 }
 
+BaseballDataService.$inject = ['$http'];
+
 export default BaseballDataService;
