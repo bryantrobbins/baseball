@@ -72,7 +72,7 @@ job('deploy-BASE') {
         }
     }
     steps {
-       shell('pushd infra/stacks; chmod 700 *.sh; ./update.sh ')
+       shell('pushd infra/stacks; chmod 700 *.sh; ./update.sh base')
     }
     publishers {
     }
