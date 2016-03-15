@@ -62,8 +62,6 @@ job('deploy-DEV') {
     }
 }
 job('deploy-BASE') {
-    parameters {
-    }
     wrappers {
         preBuildCleanup()
     }
