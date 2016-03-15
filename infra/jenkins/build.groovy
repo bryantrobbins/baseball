@@ -61,3 +61,21 @@ job('deploy-DEV') {
     publishers {
     }
 }
+job('deploy-BASE') {
+    parameters {
+    }
+    wrappers {
+        preBuildCleanup()
+    }
+    scm {
+        git('git://github.com/bryantrobbins/baseball') { node ->
+            node / gitConfigName('Baseball Jenkins Auto')
+            node / gitConfigEmail('bryantrobbins@gmail.com')
+        }
+    }
+    steps {
+       shell('pushd infra/stacks; chmod 700 *.sh; ./update.sh ')
+    }
+    publishers {
+    }
+}
