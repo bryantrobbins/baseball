@@ -7,15 +7,15 @@
   "builders": [
     {
       "type": "docker",
-      "image": "nginx",
+      "image": "anapsix/alpine-java",
       "commit": "true"
     }
   ],
   "provisioners": [
     {
       "type": "file",
-      "source": "../dist/",
-      "destination": "/usr/share/nginx/html"
+      "source": "../build/libs/baseball-0.0.1-SNAPSHOT.jar",
+      "destination": "app.jar"
     }
   ],
   "post-processors": [
@@ -23,13 +23,13 @@
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
-	      "force": true
+              "force": true
       },
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
         "tag": "{{user `image_version`}}",
-	      "force": true
+              "force": true
       },
       {
         "type": "docker-push",
