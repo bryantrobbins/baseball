@@ -9,11 +9,11 @@ class BaseballDataService{
     }
 
     getTables(){
-        return this[HTTP].get('/api/tables');
+        return this[HTTP].get('/api/getTables');
     }
 
     getTableMetadata(table){
-        return this[HTTP].get('/api/metadata');
+        return this[HTTP].get('/api/getMetadata/'+table);
     }
 
     getExportData(){

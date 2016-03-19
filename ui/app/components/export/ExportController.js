@@ -2,7 +2,6 @@
 const DIALOG = Symbol();
 const EXPORT_TABLE_HEADERS = [{id: 'name', displayVal: 'Export Type'}];
 
-
 class ExportController {
     constructor($mdDialog, BaseballDataService){
         this[DIALOG] = $mdDialog;

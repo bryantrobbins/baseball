@@ -1,29 +1,118 @@
 <md-dialog style="width:50%" aria-label="List dialog">
     <md-toolbar class="md-table-toolbar md-primary md-hue-2" >
         <div layout="column" class="md-toolbar-tools">
-            <span>Select what you want</span>
+            <span class="md-display-2">Export Data: {{dialogCtrl.selectedDataSet}}</span>
             <span flex></span>
         </div>
     </md-toolbar>
     <md-dialog-content>
+        <md-card id="exportCardTop" flex="100">
+            <md-toolbar class="md-accent md-hue-3" layout-padding>
+                <div layout="column" class="md-toolbar-tools" layout-align="start start">
+                    <span layout="row" class="md-title">Selected Metadata</span>
+                    <span layout="row" class="md-subhead" ng-if="!dialogCtrl.selectedGroupBy.value">Ungrouped</span>
+                    <span layout="row" class="md-subhead" ng-if="dialogCtrl.selectedGroupBy.value">Grouped By: {{dialogCtrl.selectedGroupBy.value}}</span>
+                </div>
+            </md-toolbar>
+            <md-content style="height:300px">
+                <div layout="row">
+                    <md-table-container layout-fill>
+                        <table md-table ng-model="dialogCtrl.selectedMetadata">
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column><span>Column</span></th>
+                                <th md-column><span>Type </span></th>
+                                <th md-column><span>Applied Filter(s)</span></th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="metadata in dialogCtrl.selectedMetadata">
+                                <td md-cell>{{metadata.colName}}</td>
+                                <td md-cell>{{metadata.colType}}</td>
+                                <td md-cell>
+                                        <span ng-if="!metadata.filter">
+                                            Unfiltered
+                                        </span>
+                                        <span ng-if="metadata.colType === 'String' && metadata.filter.contains">
+                                            Containing: {{metadata.filter.contains}}
+                                        </span>
+                                        <span ng-if="(metadata.colType === 'Count' || metadata.colType === 'Number') && metadata.filter.greaterThan">
+                                            Greater Than: {{metadata.filter.greaterThan}}
+                                        </span>
+                                        <span ng-if="(metadata.colType === 'Count' || metadata.colType === 'Number') && metadata.filter.lessThan">
+                                            Less Than: {{metadata.filter.lessThan}}
+                                        </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </md-table-container>
+                </div>
+            </md-content>
+        </md-card>
         <div layout="row" layout-fill>
-            <div flex="25" sortable-table layout="column" title="dialogCtrl.exportsTable.title" config="dialogCtrl.exportsTable"></div>
-            <div flex="75">
-                <span class="md-title" layout-padding >Configure Exports:</span>
-                <md-list layout="column">
-                    <md-list-item style="height:75px;" class="md-2-line" ng-repeat="item in dialogCtrl.exportsTable.selected" layout-padding>
-                        <span class="md-title">{{item.name}}</span>
-                        <md-input-container layout-fill ng-repeat="obj in item.fields">
-                            <label>{{obj.name}}</label>
-                            <md-select ng-model="obj.value">
-                                <!-- Find a better way to manage these.. -->
-                                <md-option ng-if="obj.values === 'selected'" ng-value="opt.colName" ng-repeat="opt in dialogCtrl.selectedMetadata">{{ opt.colName }}</md-option>
-                                <md-option ng-if="obj.values !== 'selected'" ng-value="opt.id" ng-repeat="opt in obj.values">{{ opt.name }}</md-option>
-                            </md-select>
-                        </md-input-container>
-                    </md-list-item>
-                </md-list>
-            </div>
+            <md-card flex="25" >
+                <md-toolbar class="md-accent md-hue-3" layout-padding>
+                    <div layout="column" class="md-toolbar-tools" layout-align="center start">
+                        <span class="md-title">Choose Format(s)</span>
+                        <span flex></span>
+                    </div>
+                </md-toolbar>
+                <div sortable-table layout="column" title="dialogCtrl.exportsTable.title" config="dialogCtrl.exportsTable"></div>
+            </md-card>
+            <md-card flex="75">
+                <md-toolbar class="md-accent md-hue-3" layout-padding>
+                    <div layout="column" class="md-toolbar-tools" layout-align="center start">
+                        <span class="md-title">Configure Export(s)</span>
+                        <span flex></span>
+                    </div>
+                </md-toolbar>
+                <md-table-container layout-fill>
+                    <table md-table ng-model="dialogCtrl.selectedMetadata">
+                        <thead md-head>
+                        <tr md-row>
+                            <th md-column flex="25"><span>Selected Item</span></th>
+                            <th md-column><span>Preferences</span></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="item in dialogCtrl.exportsTable.selected">
+                            <td md-cell flex="25">{{item.name}}</td>
+                            <td md-cell>{{item.colType}}
+                                <div layout="column">
+                                    <div layout="row">
+                                        <div layout="column" flex="grow" ng-repeat="obj in item.fields">
+                                            <md-input-container >
+                                                <label>{{obj.name}}</label>
+                                                    <md-select ng-model="obj.value">
+                                                    <!-- Find a better way to manage these.. -->
+                                                    <md-option ng-if="obj.values === 'selected'" ng-value="opt.colName" ng-repeat="opt in dialogCtrl.selectedMetadata">{{ opt.colName }}</md-option>
+                                                    <md-option ng-if="obj.values !== 'selected'" ng-value="opt.id" ng-repeat="opt in obj.values">{{ opt.name }}</md-option>
+                                                </md-select>
+                                            </md-input-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+                <!--<md-list layout="column">-->
+                    <!--<md-list-item style="height:75px;" class="md-2-line" ng-repeat="item in dialogCtrl.exportsTable.selected" layout-padding>-->
+                        <!--<span class="md-title">{{item.name}}</span>-->
+                        <!--<md-input-container layout-fill ng-repeat="obj in item.fields">-->
+                            <!--<label>{{obj.name}}</label>-->
+                            <!--<md-select ng-model="obj.value">-->
+                                <!--&lt;!&ndash; Find a better way to manage these.. &ndash;&gt;-->
+                                <!--<md-option ng-if="obj.values === 'selected'" ng-value="opt.colName" ng-repeat="opt in dialogCtrl.selectedMetadata">{{ opt.colName }}</md-option>-->
+                                <!--<md-option ng-if="obj.values !== 'selected'" ng-value="opt.id" ng-repeat="opt in obj.values">{{ opt.name }}</md-option>-->
+                            <!--</md-select>-->
+                        <!--</md-input-container>-->
+                    <!--</md-list-item>-->
+                <!--</md-list>-->
+            </md-card>
         </div>
     </md-dialog-content>
     <md-dialog-actions>
