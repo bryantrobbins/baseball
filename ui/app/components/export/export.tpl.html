@@ -1,12 +1,13 @@
 <md-dialog style="width:50%" aria-label="List dialog">
-    <md-toolbar class="md-table-toolbar md-primary md-hue-2" >
+    <md-toolbar class="md-table-toolbar md-primary md-hue-2">
         <div layout="column" class="md-toolbar-tools">
-            <span class="md-display-2">Export Data: {{dialogCtrl.selectedDataSet}}</span>
+            <span class="md-display-1">Export Data: {{dialogCtrl.selectedDataSet.name}}</span>
             <span flex></span>
         </div>
     </md-toolbar>
-    <md-dialog-content>
-        <md-card id="exportCardTop" flex="100">
+    <md-progress-linear id="baseballLoader" ng-if="dialogCtrl.submitted && !dialogCtrl.link" md-mode="query"></md-progress-linear>
+    <md-dialog-content ng-if="!dialogCtrl.submitted">
+        <md-card  id="exportCardTop" flex="100">
             <md-toolbar class="md-accent md-hue-3" layout-padding>
                 <div layout="column" class="md-toolbar-tools" layout-align="start start">
                     <span layout="row" class="md-title">Selected Metadata</span>
@@ -102,8 +103,14 @@
             </md-card>
         </div>
     </md-dialog-content>
+    <md-dialog-content ng-if="dialogCtrl.submitted">
+        <div layout-align="center center">
+            <span class="md-headline" layout="row" layout-align="center center" layout-padding>Please wait, this may take a few moments.</span>
+            <span class="md-headline" layout="row" layout-align="center center" layout-padding>You can find the data <a href="{{dialogCtrl.link}}" layout-padding>Here</a></span>
+        </div>
+    </md-dialog-content>
     <md-dialog-actions>
-        <md-button ng-click="dialogCtrl.closeDialog()" class="md-raised md-accent">CANCEL!</md-button>
-        <md-button ng-click="dialogCtrl.submitQuery()" class="md-raised md-primary">OK!</md-button>
+        <md-button ng-click="dialogCtrl.closeDialog()" class="md-raised md-accent">CANCEL</md-button>
+        <md-button ng-disabled="dialogCtrl.submitted" ng-click="dialogCtrl.submitQuery()" class="md-raised md-primary">OK</md-button>
     </md-dialog-actions>
 </md-dialog>
