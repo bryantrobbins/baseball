@@ -9,15 +9,15 @@ class BaseballDataService{
     }
 
     getTables(){
-        return this[HTTP].get('http://localhost:8004/tables');
+        return this[HTTP].get('/api/tables');
     }
 
     getTableMetadata(table){
-        return this[HTTP].get('http://localhost:8004/metadata');
+        return this[HTTP].get('/api/metadata');
     }
 
     getExportData(){
-        return this[HTTP].get('http://localhost:8004/getExportData');
+        return this[HTTP].get('/api/getExportData');
     }
 }
 
