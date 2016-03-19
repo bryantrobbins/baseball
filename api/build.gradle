@@ -6,13 +6,17 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 		
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 	
+		classpath("io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE")
+			
 	}
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'spring-boot' 
+apply plugin: "io.spring.dependency-management"
+
 
 jar {
 	baseName = 'baseball'
@@ -33,6 +37,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-logging')	
 	compile('org.springframework.boot:spring-boot-actuator-docs')	
 	compile('org.json:json:20160212')
+	compile('com.amazonaws:aws-java-sdk:1.10.61')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test') 
 	
@@ -41,6 +46,8 @@ dependencies {
 dependencyManagement {
 	imports { 
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.M5" 
+		mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.47'
+		
 	}
 }
 

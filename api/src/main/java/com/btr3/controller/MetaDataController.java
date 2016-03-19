@@ -12,9 +12,20 @@ import org.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.amazonaws.services.cloudformation.AmazonCloudFormationClient;
+import com.amazonaws.services.cloudformation.model.DescribeStackResourceRequest;
+import com.amazonaws.services.ecs.AmazonECSClient;
+import com.amazonaws.services.ecs.model.ContainerOverride;
+import com.amazonaws.services.ecs.model.RunTaskRequest;
+import com.amazonaws.services.ecs.model.TaskOverride;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+//import com.amazonaws.services.cloudformation.*;
 
 @Controller
 public class MetaDataController {
@@ -23,23 +34,42 @@ public class MetaDataController {
 	private String[] ids = { "lahman-batting-career", "lahman-batting-player-team", "lahman-batting-player-year",
 			"lahman-batting-team-year", "lahman-pitching-career", "lahman-pitching-player-team",
 			"lahman-pitching-player-year", "lahman-pitching-team-year" };
-	
-	private String[] names = { "Lahman: Batting (Career)", "Lahman: Batting (Player/Team)", "Lahman: Batting (Player/Year)",
-			"Lahman: Batting (Team/Year)", "Lahman: Pitching (Career)", "Lahman: Pitching (Player/Team)",
-			"Lahman: Pitching (Player/Year)", "Lahman: Pitching (Team/Year)"};
+
+	private String[] names = { "Lahman: Batting (Career)", "Lahman: Batting (Player/Team)",
+			"Lahman: Batting (Player/Year)", "Lahman: Batting (Team/Year)", "Lahman: Pitching (Career)",
+			"Lahman: Pitching (Player/Team)", "Lahman: Pitching (Player/Year)", "Lahman: Pitching (Team/Year)" };
+	private AmazonECSClient escClient;
+	private String workerTaskId = "";
+	private String clusterId = "";
 	private static List<Map<String, String>> sources;
-	{
+	{	
+		setCloudformationIds();
+		
 		sources = new ArrayList<Map<String, String>>();
-		for(int x=0; x<ids.length;x++)
-		{	Map<String,String> source = new HashMap<String,String>();
+		for (int x = 0; x < ids.length; x++) {
+			Map<String, String> source = new HashMap<String, String>();
 			source.put("id", ids[x]);
 			source.put("name", names[x]);
 			sources.add(source);
 			metaData.put(source.get("id"), constructMetaObject(source.get("id")));
 		}
-			
-		
 
+	}
+	
+
+	private void setCloudformationIds() {
+		AmazonCloudFormationClient cloudformationClient = new AmazonCloudFormationClient();
+
+		DescribeStackResourceRequest dsrr = new DescribeStackResourceRequest().withStackName("baseball-dev")
+				.withLogicalResourceId("WorkerTaskDefinition");
+		workerTaskId = cloudformationClient.describeStackResource(dsrr).getStackResourceDetail()
+				.getPhysicalResourceId();
+
+		DescribeStackResourceRequest dsrr2 = new DescribeStackResourceRequest().withStackName("BTR-standard")
+				.withLogicalResourceId("ECSCluster");
+		clusterId = cloudformationClient.describeStackResource(dsrr2).getStackResourceDetail().getPhysicalResourceId();
+		escClient = new AmazonECSClient(dsrr.getRequestCredentials());
+		
 	}
 
 	private Map<String, List<Map<String, String>>> constructMetaObject(String source) {
@@ -102,5 +132,21 @@ public class MetaDataController {
 	@ResponseBody
 	public Map<String, List<Map<String, String>>> getMetaData(@PathVariable("source") String source) {
 		return metaData.get(source);
+	}
+
+	@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping( path = "/submitJob")
+	public void submitJob(String jobDetails) {
+		// Base64 encode
+
+		ContainerOverride cor = new ContainerOverride().withCommand("/bin/bash", "-c", jobDetails);
+
+		TaskOverride tor = new TaskOverride().withContainerOverrides(cor);
+
+		RunTaskRequest rtr = new RunTaskRequest();
+		rtr.withTaskDefinition(workerTaskId);
+		rtr.withCluster(clusterId);
+		rtr.setOverrides(tor);
+		escClient.runTask(rtr);
 	}
 }
