@@ -7,7 +7,7 @@
   "builders": [
     {
       "type": "docker",
-      "image": "frolvlad/alpine-oraclejdk8:slim",
+      "image": "anapsix/alpine-java",
       "commit": "true"
     }
   ],
