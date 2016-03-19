@@ -1,7 +1,7 @@
 #!/bin/bash -v
 
 # Add js build steps here (npm, etc.)
-gradle build
+/opt/gradle/bin/gradle build
 
 # Fetch AWS ECR variables
 version=$1
