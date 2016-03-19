@@ -76,7 +76,7 @@ job('deploy-DEV') {
         }
     }
     steps {
-       shell('pushd infra/stacks; chmod 700 *.sh; echo "UIDesiredCount=${UI_DESIRED_COUNT}" >> dev.properties; echo "UIVersion=${UI_VERSION}" >> dev.properties; echo "APIDesiredCount=${API_DESIRED_COUNT}"; echo "APIVersion=${API_Version}"; ./update.sh dev')
+       shell('pushd infra/stacks; chmod 700 *.sh; echo "UIDesiredCount=${UI_DESIRED_COUNT}" >> dev.properties; echo "UIVersion=${UI_VERSION}" >> dev.properties; echo "APIDesiredCount=${API_DESIRED_COUNT}"; echo "APIVersion=${API_VERSION}"; ./update.sh dev')
     }
     publishers {
     }
