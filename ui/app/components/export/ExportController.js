@@ -21,13 +21,17 @@ class ExportController {
     }
 
     submitQuery(){
+        this.submitted = true;
         var bundle = {
             table: this.selectedDataSet,
             metadata: this.selectedMetadata,
             exports: this.exportsTable.data
         };
 
-        this[DATA_SVC].submitQuery(bundle);
+        var ctrl = this;
+        this[DATA_SVC].submitQuery(bundle).then(function(response){
+            ctrl.link = response.data
+        });
     }
 
     closeDialog(){
