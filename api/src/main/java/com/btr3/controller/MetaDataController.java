@@ -59,12 +59,8 @@ public class MetaDataController {
 		} catch (IOException e) {
 			System.out.println("SOMEONE FUCKED UP");
 		}
-		JSONObject json=null;
-		try{
-		json = new JSONObject(responseText.toString());
-		}catch (Exception e){
-			throw new RuntimeException("Error dealing with " + jsonResponse.getFilename());
-		}
+		JSONObject json = new JSONObject(responseText.toString());
+
 		JSONArray jsonArray = (JSONArray) json.get("colMetaData");
 		Map<String, List<Map<String, String>>> result = new HashMap<String, List<Map<String, String>>>();
 		List<Map<String, String>> content = new ArrayList<Map<String, String>>();
