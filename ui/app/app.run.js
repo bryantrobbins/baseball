@@ -55,9 +55,9 @@ function runMocked($httpBackend){
     $httpBackend.whenGET(/.*\.svg/).passThrough();
     $httpBackend.whenGET(/.*\.css/).passThrough();
 
-    $httpBackend.whenGET('/getDataSetNames').respond(tableResponse);
-    $httpBackend.whenGET('/getDataSetMetadata').respond(metaResponse);
-    $httpBackend.whenGET('/getExportData').respond(exportResponse);
+    $httpBackend.whenGET('/api/getTables').respond(tableResponse);
+    $httpBackend.whenGET('/api/getMetadata').respond(metaResponse);
+    $httpBackend.whenGET('/api/getExportData').respond(exportResponse);
 
 }
 
