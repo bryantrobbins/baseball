@@ -6,7 +6,7 @@ function runWithBackend(){
 /*@ngInject*/
 function runMocked($httpBackend){
 
-    var tableResponse = ['Pitching', 'Running', 'Stealing', 'Games', 'Players','Teams'];
+    var tableResponse = [{"name":"Lahman: Batting (Career)","id":"lahman-batting-career"},{"name":"Lahman: Batting (Player/Team)","id":"lahman-batting-player-team"},{"name":"Lahman: Batting (Player/Year)","id":"lahman-batting-player-year"},{"name":"Lahman: Batting (Team/Year)","id":"lahman-batting-team-year"},{"name":"Lahman: Pitching (Career)","id":"lahman-pitching-career"},{"name":"Lahman: Pitching (Player/Team)","id":"lahman-pitching-player-team"},{"name":"Lahman: Pitching (Player/Year)","id":"lahman-pitching-player-year"},{"name":"Lahman: Pitching (Team/Year)","id":"lahman-pitching-team-year"}];
     var metaResponse = {
         rowDesc: "Each row is a Player Stint - a set of games that a single player participated in for a single team in a single season. A player may have multiple stints within a single season, and each will have a unique value in the 'stint' column.",
         colMetaData:[

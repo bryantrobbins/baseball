@@ -38,3 +38,7 @@
 #exportCardTop {
   margin-top:10px;
 }
+
+md-progress-linear div div:nth-child(3){
+  background-color:red !important;
+}
