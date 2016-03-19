@@ -30,6 +30,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
+	compile('org.springframework.boot:spring-boot-starter-logging')	
 	compile('org.springframework.boot:spring-boot-actuator-docs')	
 	compile('org.json:json:20160212')
 	compile('org.springframework.boot:spring-boot-starter-web')
