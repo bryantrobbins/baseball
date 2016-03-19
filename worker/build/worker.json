@@ -23,7 +23,7 @@
     },
     {
       "type": "shell",
-      "inline": ["Rscript /workdir/prepare.R"]
+      "inline": ["yum install -y python", "pip install awscli", "Rscript /workdir/prepare.R"]
     }
   ],
   "post-processors": [
