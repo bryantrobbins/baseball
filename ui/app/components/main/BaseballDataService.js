@@ -19,6 +19,11 @@ class BaseballDataService{
     getExportData(){
         return this[HTTP].get('/api/getExportData');
     }
+
+    submitQuery(bundle){
+        console.info(JSON.stringify(bundle));
+        return this[HTTP].post('/api/submitJob', bundle);
+    }
 }
 
 BaseballDataService.$inject = ['$http'];
