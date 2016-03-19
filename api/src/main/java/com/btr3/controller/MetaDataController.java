@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
@@ -21,21 +20,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class MetaDataController {
 
 	private Map<String, Map<String, List<Map<String, String>>>> metaData = new HashMap<String, Map<String, List<Map<String, String>>>>();
+	private String[] ids = { "lahman-batting-career", "lahman-batting-player-team", "lahman-batting-player-year",
+			"lahman-batting-team-year", "lahman-pitching-career", "lahman-pitching-player-team",
+			"lahman-pitching-player-year", "lahman-pitching-team-year" };
+	
+	private String[] names = { "Lahman: Batting (Career)", "Lahman: Batting (Player/Team)", "Lahman: Batting (Player/Year)",
+			"Lahman: Batting (Team/Year)", "Lahman: Pitching (Career)", "Lahman: Pitching (Player/Team)",
+			"Lahman: Pitching (Player/Year)", "Lahman: Pitching (Team/Year)"};
 	private static List<Map<String, String>> sources;
-	{ 
+	{
 		sources = new ArrayList<Map<String, String>>();
-		Map<String,String> firstSource  = new HashMap<String,String>();
-		firstSource.put("id", "lahman");
-		firstSource.put("name", "Pitching");
-		sources.add(firstSource);
-		for(Map<String, String>source : sources){
-			metaData.put(source.get("id"),constructMetaObject(source.get("id")));
+		for(int x=0; x<ids.length;x++)
+		{	Map<String,String> source = new HashMap<String,String>();
+			source.put("id", ids[x]);
+			source.put("name", names[x]);
+			sources.add(source);
+			metaData.put(source.get("id"), constructMetaObject(source.get("id")));
 		}
+			
 		
+
 	}
-	
-	
-	private Map<String, List<Map<String, String>>> constructMetaObject(String source){
+
+	private Map<String, List<Map<String, String>>> constructMetaObject(String source) {
 		ClassPathResource jsonResponse = new ClassPathResource(source + ".json");
 		InputStream input = null;
 		StringBuffer responseText = null;
@@ -53,6 +60,7 @@ public class MetaDataController {
 			System.out.println("SOMEONE FUCKED UP");
 		}
 		JSONObject json = new JSONObject(responseText.toString());
+
 		JSONArray jsonArray = (JSONArray) json.get("colMetaData");
 		Map<String, List<Map<String, String>>> result = new HashMap<String, List<Map<String, String>>>();
 		List<Map<String, String>> content = new ArrayList<Map<String, String>>();
@@ -67,12 +75,11 @@ public class MetaDataController {
 		result.put("colMetaData", content);
 		return result;
 	}
-	
-	
+
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/getTables")
 	@ResponseBody
-	public List<Map<String, String>> getTables() {		
+	public List<Map<String, String>> getTables() {
 		return sources;
 	}
 

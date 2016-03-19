@@ -99,24 +99,11 @@
                         </tbody>
                     </table>
                 </md-table-container>
-                <!--<md-list layout="column">-->
-                    <!--<md-list-item style="height:75px;" class="md-2-line" ng-repeat="item in dialogCtrl.exportsTable.selected" layout-padding>-->
-                        <!--<span class="md-title">{{item.name}}</span>-->
-                        <!--<md-input-container layout-fill ng-repeat="obj in item.fields">-->
-                            <!--<label>{{obj.name}}</label>-->
-                            <!--<md-select ng-model="obj.value">-->
-                                <!--&lt;!&ndash; Find a better way to manage these.. &ndash;&gt;-->
-                                <!--<md-option ng-if="obj.values === 'selected'" ng-value="opt.colName" ng-repeat="opt in dialogCtrl.selectedMetadata">{{ opt.colName }}</md-option>-->
-                                <!--<md-option ng-if="obj.values !== 'selected'" ng-value="opt.id" ng-repeat="opt in obj.values">{{ opt.name }}</md-option>-->
-                            <!--</md-select>-->
-                        <!--</md-input-container>-->
-                    <!--</md-list-item>-->
-                <!--</md-list>-->
             </md-card>
         </div>
     </md-dialog-content>
     <md-dialog-actions>
         <md-button ng-click="dialogCtrl.closeDialog()" class="md-raised md-accent">CANCEL!</md-button>
-        <md-button ng-click="dialogCtrl.closeDialog()" class="md-raised md-primary">OK!</md-button>
+        <md-button ng-click="dialogCtrl.submitQuery()" class="md-raised md-primary">OK!</md-button>
     </md-dialog-actions>
 </md-dialog>

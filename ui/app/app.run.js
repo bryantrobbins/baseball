@@ -55,10 +55,11 @@ function runMocked($httpBackend){
     $httpBackend.whenGET(/.*\.svg/).passThrough();
     $httpBackend.whenGET(/.*\.css/).passThrough();
 
-    $httpBackend.whenGET('/api/getTables').respond(tableResponse);
-    $httpBackend.whenGET('/api/getMetadata').respond(metaResponse);
+    $httpBackend.whenGET(/api\/getTables/).respond(tableResponse);
+    $httpBackend.whenGET(/api\/getMetadata\/.+/).respond(metaResponse);
     $httpBackend.whenGET('/api/getExportData').respond(exportResponse);
 
+    $httpBackend.whenPOST('/api/submitJob').respond("cool");
 }
 
 var run = {
