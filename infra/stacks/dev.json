@@ -21,6 +21,10 @@
       "Type": "String",
       "Description": "Version of the API container to deploy"
     },
+    "WorkerVersion": {
+      "Type": "String",
+      "Description": "Version of the Worker container to deploy"
+    },
     "UIDesiredCount": {
       "Type": "Number",
       "Default" : "1",
@@ -53,6 +57,20 @@
                 "ContainerPort": 80
               }
             ]
+          }
+        ]
+      }
+    },
+    "WorkerTaskDefinition": {
+      "Type": "AWS::ECS::TaskDefinition",
+      "Properties" : {
+        "ContainerDefinitions" : [
+          {
+            "Name": "baseball-worker",
+            "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-worker:", { "Ref": "WorkerVersion" } ] ] },
+            "Cpu": "20",
+            "Memory":"300",
+            "Essential": "true"
           }
         ]
       }
