@@ -13,6 +13,12 @@
         "RepositoryName": "baseball-ui"
       }
     }, 
+    "APIRepository": {
+      "Type": "AWS::ECR::Repository",
+      "Properties": {
+        "RepositoryName": "baseball-api"
+      }
+    }, 
     "HubotRepository": {
       "Type": "AWS::ECR::Repository",
       "Properties": {
