@@ -22,7 +22,7 @@
 								md-selected-item-change="BaseballCtrl.fetchMetadata()"
 								md-search-text="searchText"
 								md-items="dataset in BaseballCtrl.dataSets | BaseballFilter:searchText"
-								md-item-text="dataset"
+								md-item-text="dataset.name"
 								placeholder="Select a dataset">
 							<md-item-template>
 								<span md-highlight-text="searchText">{{ dataset.name }}</span>
