@@ -13,7 +13,7 @@ class BaseballDataService{
     }
 
     getTableMetadata(table){
-        return this[HTTP].get('/api/getMetadata/'+table);
+        return this[HTTP].get('/api/getMetadata/'+table.id);
     }
 
     getExportData(){
