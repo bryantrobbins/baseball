@@ -1,0 +1,393 @@
+{
+	rowDesc: "BattingTeamYear (batting data, 1 row per unique team-year combo)",
+	colMetaData: [{
+		colName: 'playerID',
+		colType: 'String',
+		colDesc: 'PlayerId',
+		
+	},
+	{
+		colName: 'yearID',
+		colType: 'String',
+		colDesc: 'YearId',
+		
+	},
+	{
+		colName: 'teamID',
+		colType: 'String',
+		colDesc: 'TeamId',
+		
+	},
+	{
+		colName: 'stint',
+		colType: 'String',
+		colDesc: 'Stint',
+		
+	},
+	{
+		colName: 'lgID',
+		colType: 'String',
+		colDesc: 'LeagueId',
+		
+	},
+	{
+		colName: 'G',
+		colType: 'String',
+		colDesc: 'Games',
+		
+	},
+	{
+		colName: 'AB',
+		colType: 'String',
+		colDesc: 'AtBat',
+		
+	},
+	{
+		colName: 'R',
+		colType: 'String',
+		colDesc: 'Runsscored',
+		
+	},
+	{
+		colName: 'H',
+		colType: 'String',
+		colDesc: 'Hits',
+		
+	},
+	{
+		colName: 'X2B',
+		colType: 'String',
+		colDesc: 'Doubles',
+		
+	},
+	{
+		colName: 'X3B',
+		colType: 'String',
+		colDesc: 'Triples',
+		
+	},
+	{
+		colName: 'HR',
+		colType: 'String',
+		colDesc: 'HomeRuns',
+		
+	},
+	{
+		colName: 'RBI',
+		colType: 'String',
+		colDesc: 'RunsBattedIn',
+		
+	},
+	{
+		colName: 'SB',
+		colType: 'String',
+		colDesc: 'StolenBases',
+		
+	},
+	{
+		colName: 'CS',
+		colType: 'String',
+		colDesc: 'CaughtStolen',
+		
+	},
+	{
+		colName: 'BB',
+		colType: 'String',
+		colDesc: 'Baseonballs',
+		
+	},
+	{
+		colName: 'SO',
+		colType: 'String',
+		colDesc: 'Strikeouts',
+		
+	},
+	{
+		colName: 'IBB',
+		colType: 'String',
+		colDesc: 'Intentionalwalks',
+		
+	},
+	{
+		colName: 'HBP',
+		colType: 'String',
+		colDesc: 'Hitbypitch',
+		
+	},
+	{
+		colName: 'SH',
+		colType: 'String',
+		colDesc: 'Sacrificehits',
+		
+	},
+	{
+		colName: 'SF',
+		colType: 'String',
+		colDesc: 'Sacrificeflies',
+		
+	},
+	{
+		colName: 'GIDP',
+		colType: 'String',
+		colDesc: 'Groundedintodoubleplays',
+		
+	},
+	{
+		colName: 'SS',
+		colType: 'String',
+		colDesc: 'Shortstop',
+		
+	},
+	{
+		colName: '2B',
+		colType: 'String',
+		colDesc: '2ndBase',
+		
+	},
+	{
+		colName: 'OF',
+		colType: 'String',
+		colDesc: 'Outfield',
+		
+	},
+	{
+		colName: 'C',
+		colType: 'String',
+		colDesc: 'Catcher',
+		
+	},
+	{
+		colName: '1B',
+		colType: 'String',
+		colDesc: 'Firstbase',
+		
+	},
+	{
+		colName: '3B',
+		colType: 'String',
+		colDesc: 'Thirdbase',
+		
+	},
+	{
+		colName: 'P',
+		colType: 'String',
+		colDesc: 'Pitcher',
+		
+	},
+	{
+		colName: 'LF',
+		colType: 'String',
+		colDesc: 'LeftField',
+		
+	},
+	{
+		colName: 'RF',
+		colType: 'String',
+		colDesc: 'RightField',
+		
+	},
+	{
+		colName: 'CF',
+		colType: 'String',
+		colDesc: 'CenterField',
+		
+	},
+	{
+		colName: 'DH',
+		colType: 'String',
+		colDesc: 'DesignatedHitter',
+		
+	},
+	{
+		colName: 'X1B',
+		colType: 'String',
+		colDesc: 'Single',
+		
+	},
+	{
+		colName: 'AVG',
+		colType: 'String',
+		colDesc: 'Average',
+		
+	},
+	{
+		colName: 'PA',
+		colType: 'String',
+		colDesc: 'PlateAppearance',
+		
+	},
+	{
+		colName: 'OBP',
+		colType: 'String',
+		colDesc: 'OnBasePercent',
+		
+	},
+	{
+		colName: 'SLG',
+		colType: 'String',
+		colDesc: 'Sluggingpercent',
+		
+	},
+	{
+		colName: 'SBPCT',
+		colType: 'String',
+		colDesc: 'StolenBasepercent',
+		
+	},
+	{
+		colName: 'POS',
+		colType: 'String',
+		colDesc: 'Position',
+		
+	},
+	{
+		colName: 'birthYear',
+		colType: 'String',
+		colDesc: 'YearofBirth',
+		
+	},
+	{
+		colName: 'birthMonth',
+		colType: 'String',
+		colDesc: 'MonthofBirth',
+		
+	},
+	{
+		colName: 'birthDay',
+		colType: 'String',
+		colDesc: 'DayofBirth',
+		
+	},
+	{
+		colName: 'birthCountry',
+		colType: 'String',
+		colDesc: 'CountryofBirth',
+		
+	},
+	{
+		colName: 'birthState',
+		colType: 'String',
+		colDesc: 'StateofBirth',
+		
+	},
+	{
+		colName: 'birthCity',
+		colType: 'String',
+		colDesc: 'CityofBirth',
+		
+	},
+	{
+		colName: 'deathYear',
+		colType: 'String',
+		colDesc: 'YearofDeath',
+		
+	},
+	{
+		colName: 'deathMonth',
+		colType: 'String',
+		colDesc: 'MonthofDeath',
+		
+	},
+	{
+		colName: 'deathDay',
+		colType: 'String',
+		colDesc: 'DayofDeath',
+		
+	},
+	{
+		colName: 'deathCountry',
+		colType: 'String',
+		colDesc: 'CountryofDeath',
+		
+	},
+	{
+		colName: 'deathState',
+		colType: 'String',
+		colDesc: 'StateofDeath',
+		
+	},
+	{
+		colName: 'deathCity',
+		colType: 'String',
+		colDesc: 'CityofDeath',
+		
+	},
+	{
+		colName: 'nameFirst',
+		colType: 'String',
+		colDesc: 'Firstname',
+		
+	},
+	{
+		colName: 'nameLast',
+		colType: 'String',
+		colDesc: 'Lastname',
+		
+	},
+	{
+		colName: 'nameGiven',
+		colType: 'String',
+		colDesc: 'Nickname',
+		
+	},
+	{
+		colName: 'weight',
+		colType: 'String',
+		colDesc: 'Weight',
+		
+	},
+	{
+		colName: 'height',
+		colType: 'String',
+		colDesc: 'Hieght',
+		
+	},
+	{
+		colName: 'bats',
+		colType: 'String',
+		colDesc: 'Bats',
+		
+	},
+	{
+		colName: 'throws',
+		colType: 'String',
+		colDesc: 'Throws',
+		
+	},
+	{
+		colName: 'debut',
+		colType: 'String',
+		colDesc: 'DateofDebut',
+		
+	},
+	{
+		colName: 'finalGame',
+		colType: 'String',
+		colDesc: 'DateofFinalGame',
+		
+	},
+	{
+		colName: 'retroID',
+		colType: 'String',
+		colDesc: 'RetrosheetId'
+		
+	},
+	{
+		colName: 'bbrefID',
+		colType: 'String',
+		colDesc: 'Baseball Ref Id'
+		
+	},
+	{
+		colName: 'deathDate',
+		colType: 'String',
+		colDesc: 'DateofDeath',
+		
+	},
+	{
+		colName: 'birthDate',
+		colType: 'String',
+		colDesc: 'DateofBirth',
+		
+	}]
+}
