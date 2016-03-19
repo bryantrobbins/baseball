@@ -88,7 +88,7 @@
         "DesiredCount": { "Ref": "UIDesiredCount" },
         "TaskDefinition" : { "Ref":"UITaskDefinition" }
       }
-    }
+    },
     "APIService": {
       "Type": "AWS::ECS::Service",
       "Properties" : {
