@@ -89,6 +89,7 @@ class BaseballController {
             controllerAs: 'dialogCtrl',
             bindToController: true,
             locals: {
+                selectedGroupBy : this.filters.groupBy,
                 selectedMetadata:this.metadataTable.selected,
                 selectedDataSet: this.selectedDataSet
             }
