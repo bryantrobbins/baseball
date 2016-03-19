@@ -11,7 +11,7 @@ import 'angular-material-data-table/dist/md-data-table.min.css';
 
 
 // Declare app level module which depends on views, and components
-var mainModule = angular.module('app', [md,state,baseball, baseballUtil, mdDataTable]);
+var mainModule = angular.module('app', [md,state,baseball, baseballUtil, mdDataTable, 'ngMockE2E']);
 mainModule.config(config);
 //mainModule.run(run.runMocked);
 
