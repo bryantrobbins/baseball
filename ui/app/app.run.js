@@ -59,7 +59,7 @@ function runMocked($httpBackend){
     $httpBackend.whenGET(/api\/getMetadata\/.+/).respond(metaResponse);
     $httpBackend.whenGET('/api/getExportData').respond(exportResponse);
 
-    $httpBackend.whenPOST('/api/submitJob').respond("cool");
+    $httpBackend.whenPOST('/api/submitJob').respond("http://imgur.com");
 }
 
 var run = {
