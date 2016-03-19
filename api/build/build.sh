@@ -1,7 +1,7 @@
 #!/bin/bash -v
 
 # Add js build steps here (npm, etc.)
-pushd ../api
+pushd ..
 /opt/gradle/bin/gradle build
 popd
 
