@@ -12,10 +12,19 @@
       "Type": "String",
       "Description": "Prefix to use for ECR repositories"
     },
+    "APIDesiredCount": {
+      "Type": "Number",
+      "Default" : "1",
+      "Description": "Number of container instances desired for API"
+    },
+    "APIVersion": {
+      "Type": "String",
+      "Description": "Version of the API container to deploy"
+    },
     "UIDesiredCount": {
       "Type": "Number",
       "Default" : "1",
-      "Description": "Number of container instances desired"
+      "Description": "Number of container instances desired for UI"
     },
     "UIVersion": {
       "Type": "String",
