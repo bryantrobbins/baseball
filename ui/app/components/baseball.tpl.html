@@ -14,18 +14,18 @@
 				</md-card-header-text>
 			</md-card-header>
 			<md-card-content >
-				<div layout="row">
-					<div layout="column">
+				<div layout="row" flex="100">
+					<div layout="column" layout-fill>
 						<md-autocomplete
 								md-min-length="0"
 								md-selected-item="BaseballCtrl.selectedDataSet"
 								md-selected-item-change="BaseballCtrl.fetchMetadata()"
 								md-search-text="searchText"
 								md-items="dataset in BaseballCtrl.dataSets | BaseballFilter:searchText"
-								md-item-text="dataset"
+								md-item-text="dataset.name"
 								placeholder="Select a dataset">
 							<md-item-template>
-								<span md-highlight-text="searchText">{{ dataset }}</span>
+								<span md-highlight-text="searchText">{{ dataset.name }}</span>
 							</md-item-template>
 							<!-- This will return only if the search box  -->
 							<md-not-found>
@@ -41,10 +41,10 @@
 	<div layout="row" layout-align="start start">
 		<span class="md-title" layout="row" ng-if="!BaseballCtrl.selectedDataSet" flex="100" layout-fill layout-align="start start">Choose a data set above to see available data</span>
 		<div flex="50" layout="column" card-sortable-table ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
-			 title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable">
+			 title="BaseballCtrl.selectedDataSet.name" config="BaseballCtrl.metadataTable">
 		</div>
 		<div flex="50" layout="column" baseball-query ng-if="BaseballCtrl.selectedDataSet && BaseballCtrl.metadataTable.data.length > 0"
-			 title="BaseballCtrl.selectedDataSet" config="BaseballCtrl.metadataTable">
+			 title="BaseballCtrl.selectedDataSet.name" config="BaseballCtrl.metadataTable">
 		</div>
 	</div>
 </div>

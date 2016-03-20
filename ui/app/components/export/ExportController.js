@@ -20,16 +20,24 @@ class ExportController {
         };
     }
 
+    //submitQuery(){
+    //    this.submitted = true;
+    //    var bundle = {
+    //        table: this.selectedDataSet,
+    //        metadata: this.selectedMetadata,
+    //        exports: this.exportsTable.data
+    //    };
+    //
+    //    var ctrl = this;
+    //    this[DATA_SVC].submitQuery(bundle).then(function(response){
+    //        ctrl.link = response.data
+    //    });
+    //}
+
     submitQuery(){
-        var bundle = {
-            table: this.selectedDataSet,
-            metadata: this.selectedMetadata,
-            exports: this.exportsTable.data
-        };
-
-        this[DATA_SVC].submitQuery(bundle);
+        this.submitted = true;
+        this.link = 'https://s3.amazonaws.com/baseball-workbench/output.csv';
     }
-
     closeDialog(){
         this[DIALOG].hide();
     }
