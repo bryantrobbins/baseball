@@ -38,6 +38,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-actuator-docs')	
 	compile('org.json:json:20160212')
 	compile('com.amazonaws:aws-java-sdk:1.10.61')
+	compile('commons-io:commons-io:2.4')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	testCompile('org.springframework.boot:spring-boot-starter-test') 
 	
@@ -46,8 +47,7 @@ dependencies {
 dependencyManagement {
 	imports { 
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:Brixton.M5" 
-		mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.47'
-		
+		mavenBom 'com.amazonaws:aws-java-sdk-bom:1.10.47'		
 	}
 }
 

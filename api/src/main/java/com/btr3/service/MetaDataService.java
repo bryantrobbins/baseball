@@ -7,16 +7,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.core.io.ClassPathResource;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.log4j.Logger;
 
 public class MetaDataService {
 	private static Logger log = Logger.getLogger(Log4JLogger.class.getName());
-	
-	private Map<String, Map<String, List<Map<String, String>>>> metaData = new HashMap<String, Map<String, List<Map<String, String>>>>();
+
+	private Map<String, Map<String, Object>> metaData = new HashMap<String, Map<String, Object>>();
 	private String[] ids = { "lahman-batting-career", "lahman-batting-player-team", "lahman-batting-player-year",
 			"lahman-batting-team-year", "lahman-pitching-career", "lahman-pitching-player-team",
 			"lahman-pitching-player-year", "lahman-pitching-team-year" };
@@ -37,52 +41,34 @@ public class MetaDataService {
 
 	}
 
-	
-	public List<Map<String,String>> getSources(){
+	public List<Map<String, String>> getSources() {
 		return sources;
 	}
-	
-	public Map<String, List<Map<String, String>>>  getMetaData(String source){
+
+	public Map<String, Object> getMetaData(String source) {
 		return metaData.get(source);
 	}
-	
-	private Map<String, List<Map<String, String>>> constructMetaObject(String source) {
-		ClassPathResource jsonResponse = new ClassPathResource(source + ".json");
-		InputStream input = null;
-		StringBuffer responseText = null;
+
+	private Map<String, Object> constructMetaObject(String source) {
+		ClassPathResource responseFile = new ClassPathResource(source + ".json");
+		Map<String, Object> map = new HashMap<String, Object>();
+
 		try {
-			input = jsonResponse.getInputStream();
-			responseText = new StringBuffer();
-			int charactersRead = 0;
-			byte[] charArray = new byte[1024];
+			InputStream is = responseFile.getInputStream();
+			String responseText = IOUtils.toString(is, "utf-8"); 
+			JSONObject jsonResponse = new JSONObject(responseText);
+			log.info(jsonResponse.toString());
+			ObjectMapper mapper = new ObjectMapper();
 
-			while ((charactersRead = input.read(charArray, 0, 1024)) != -1) {
-				responseText.append(new String(charArray), 0, charactersRead);
-			}
+			map = mapper.readValue(jsonResponse.toString(),
+					new TypeReference<Map<String, Object>>() {
+					});
+			return map;
+		} catch (IOException e1) {
+			log.error("Error encountered reading in json file: " + responseFile.getFilename(), e1);
 
-		} catch (IOException e) {
-			log.error("Error encountered reading in json file: " + jsonResponse.getFilename(), e);
 		}
-
-		
-		JSONObject json = new JSONObject(responseText.toString());
-
-		JSONArray jsonArray = (JSONArray) json.get("colMetaData");
-		Map<String, List<Map<String, String>>> result = new HashMap<String, List<Map<String, String>>>();
-		List<Map<String, String>> content = new ArrayList<Map<String, String>>();
-		for (int x = 0; x < jsonArray.length(); x++) {
-			JSONObject option = jsonArray.getJSONObject(x);
-			Map<String, String> r = new HashMap<String, String>();
-			for (String key : option.keySet()) {
-				r.put(key, option.getString(key));
-			}
-			content.add(r);
-		}
-		result.put("colMetaData", content);
-		return result;
+		return map;
 	}
 
-
-
-	
 }
