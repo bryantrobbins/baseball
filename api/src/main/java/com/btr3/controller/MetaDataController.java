@@ -29,7 +29,7 @@ public class MetaDataController {
 	@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/getMetadata/{source}")
 	@ResponseBody
-	public Map<String, List<Map<String, String>>> getMetaData(@PathVariable("source") String source) {
+	public Map<String, Object> getMetaData(@PathVariable("source") String source) {
 		log.info("Request made for: " + source);
 		return service.getMetaData(source);
 	}
