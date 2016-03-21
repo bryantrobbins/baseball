@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Base64;
+import java.io.UnsupportedEncodingException;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormationClient;
 import com.amazonaws.services.cloudformation.model.DescribeStackResourceRequest;
@@ -48,12 +49,19 @@ public class ExportService {
 	
 	public Map<String,String> submitJob(String jobDetails) {
 		log.info("Job submitted with the criteria: " + jobDetails);
+		Map<String,String> jobResult = new HashMap<String,String>();
 
     // Get a unique id for this job
     String jobId = "stupid.csv";
 
 		// Base64 encode the job details
-    String encoded = Base64.getEncoder().encodeToString(jobDetails.getBytes("utf-8"));
+    try {
+      String encoded = Base64.getEncoder().encodeToString(jobDetails.getBytes("utf-8"));
+    } catch(UnsupportedEncodingException e){
+        log.error("Could not encode:" + e.getMessage());
+			  jobResult.put("Status", "Failed");
+        return jobResult;
+    }
 
 		ContainerOverride cor = new ContainerOverride().withCommand("/bin/bash", "-c", "stupid.csv", encoded);
 		TaskOverride tor = new TaskOverride().withContainerOverrides(cor);
@@ -66,7 +74,6 @@ public class ExportService {
 		RunTaskResult result = ecsClient.runTask(rtr);
 		List<Failure> failures = result.getFailures();
 		
-		Map<String,String> jobResult = new HashMap<String,String>();
 		if(failures.size()>0){
 			jobResult.put("Status", "Failed");
 			StringBuilder errors = new StringBuilder();
