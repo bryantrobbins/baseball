@@ -5,6 +5,7 @@
 #./extract.sh
 #popd
 #Rscript Build.R
+#mv baseball/staging
 
 # Fetch AWS ECR variables
 version=$1
