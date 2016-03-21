@@ -55,8 +55,9 @@ public class ExportService {
     String jobId = "stupid.csv";
 
 		// Base64 encode the job details
+    String encoded = "";
     try {
-      String encoded = Base64.getEncoder().encodeToString(jobDetails.getBytes("utf-8"));
+      encoded = Base64.getEncoder().encodeToString(jobDetails.getBytes("utf-8"));
     } catch(UnsupportedEncodingException e){
         log.error("Could not encode:" + e.getMessage());
 			  jobResult.put("Status", "Failed");
