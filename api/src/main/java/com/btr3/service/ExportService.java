@@ -3,7 +3,7 @@ package com.btr3.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Base64;
 
 import com.amazonaws.services.cloudformation.AmazonCloudFormationClient;
 import com.amazonaws.services.cloudformation.model.DescribeStackResourceRequest;
@@ -19,29 +19,20 @@ import org.apache.log4j.Logger;
 
 public class ExportService {
 	private static Logger log = Logger.getLogger(Log4JLogger.class.getName());
-	private AmazonECSClient escClient;
-	private String workerTaskId = "";
-	private String clusterId = "";
-	static{
-//		setCloudformationIds();
+	private AmazonECSClient ecsClient = new AmazonECSClient();
+	private AmazonCloudFormationClient cloudformationClient = new AmazonCloudFormationClient();
 
-
+	private String getClusterId() {
+		DescribeStackResourceRequest dsrr = new DescribeStackResourceRequest().withStackName("BTR-standard")
+				.withLogicalResourceId("ECSCluster");
+		return cloudformationClient.describeStackResource(dsrr).getStackResourceDetail().getPhysicalResourceId();
 	}
-
-	private void setCloudformationIds() {
-
-		AmazonCloudFormationClient cloudformationClient = new AmazonCloudFormationClient();
-
+	
+	private String getWorkerTaskId() {
 		DescribeStackResourceRequest dsrr = new DescribeStackResourceRequest().withStackName("baseball-dev")
 				.withLogicalResourceId("WorkerTaskDefinition");
-		workerTaskId = cloudformationClient.describeStackResource(dsrr).getStackResourceDetail()
+		return cloudformationClient.describeStackResource(dsrr).getStackResourceDetail()
 				.getPhysicalResourceId();
-
-		DescribeStackResourceRequest dsrr2 = new DescribeStackResourceRequest().withStackName("BTR-standard")
-				.withLogicalResourceId("ECSCluster");
-		clusterId = cloudformationClient.describeStackResource(dsrr2).getStackResourceDetail().getPhysicalResourceId();
-		escClient = new AmazonECSClient(dsrr.getRequestCredentials());
-
 	}
 	
 	public String getExportMetadata() {
@@ -55,20 +46,27 @@ public class ExportService {
 				+ "            }\n" + "        ]\n" + "    }]");
 	}
 	
-	
 	public Map<String,String> submitJob(String jobDetails) {
 		log.info("Job submitted with the criteria: " + jobDetails);
-		// Base64 encode
-		Map<String,String> jobResult = new HashMap<String,String>();
-		ContainerOverride cor = new ContainerOverride().withCommand("/bin/bash", "-c", jobDetails);
+
+    // Get a unique id for this job
+    String jobId = "stupid.csv";
+
+		// Base64 encode the job details
+    String encoded = Base64.getEncoder().encodeToString(jobDetails.getBytes("utf-8"));
+
+		ContainerOverride cor = new ContainerOverride().withCommand("/bin/bash", "-c", "stupid.csv", encoded);
 		TaskOverride tor = new TaskOverride().withContainerOverrides(cor);
+
 		RunTaskRequest rtr = new RunTaskRequest();
-		rtr.withTaskDefinition(workerTaskId);
-		rtr.withCluster(clusterId);
+		rtr.withTaskDefinition(getWorkerTaskId());
+		rtr.withCluster(getClusterId());
 		rtr.setOverrides(tor);
-		RunTaskResult result = escClient.runTask(rtr);
+
+		RunTaskResult result = ecsClient.runTask(rtr);
 		List<Failure> failures = result.getFailures();
 		
+		Map<String,String> jobResult = new HashMap<String,String>();
 		if(failures.size()>0){
 			jobResult.put("Status", "Failed");
 			StringBuilder errors = new StringBuilder();
@@ -79,6 +77,7 @@ public class ExportService {
 			log.error(errors.toString());
 			return jobResult;
 		}
+
 		jobResult.put("Status", "Success");
 		return jobResult;
 
