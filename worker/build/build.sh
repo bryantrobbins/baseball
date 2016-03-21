@@ -2,8 +2,10 @@
 
 # Add R build steps here (if any)
 
-pushd ../extract
+pushd extract
 ./extract.sh
+popd
+#Rscript Build.R
 
 # Fetch AWS ECR variables
 #version=$1
