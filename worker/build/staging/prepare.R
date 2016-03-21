@@ -1,4 +1,5 @@
 cran <- "http://cran.rstudio.com/"
 libloc <- "."
 plist <- c("plyr", "jsonlite")
-install.packages(plist, repos=cran, lib=libloc)
+# Comment out for now, to make builds faster
+#install.packages(plist, repos=cran, lib=libloc)
