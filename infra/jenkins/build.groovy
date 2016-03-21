@@ -10,19 +10,6 @@ job('r-baseball') {
     }
 }
 
-job('worker-image') {
-    scm {
-        git('git://github.com/bryantrobbins/baseball') { node ->
-            node / gitConfigName('Baseball Jenkins Auto')
-            node / gitConfigEmail('bryantrobbins@gmail.com')
-        }
-    }
-    steps {
-       shell('pushd worker; chmod 700 *.sh; ./import.sh') 
-    }
-}
-
-
 job('ui-image') {
     wrappers {
         preBuildCleanup()
@@ -36,6 +23,24 @@ job('ui-image') {
     }
     steps {
        shell('pushd ui/build; chmod 700 *.sh; now=`date +%Y%m%d%H%M%S`; ./build.sh $now')
+    }
+    publishers {
+    }
+}
+
+job('worker-image') {
+    wrappers {
+        preBuildCleanup()
+    }
+    scm {
+        git('git://github.com/bryantrobbins/baseball') { node ->
+            node / gitConfigName('Baseball Jenkins Auto')
+            node / gitConfigEmail('bryantrobbins@gmail.com')
+            wipeOutWorkspace(false)
+        }
+    }
+    steps {
+       shell('pushd worker/build; chmod 700 *.sh; now=`date +%Y%m%d%H%M%S`; ./build.sh $now')
     }
     publishers {
     }
