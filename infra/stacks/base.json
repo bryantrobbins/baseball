@@ -19,10 +19,10 @@
         "RepositoryName": "baseball-api"
       }
     }, 
-    "HubotRepository": {
+    "WorkerRepository": {
       "Type": "AWS::ECR::Repository",
       "Properties": {
-        "RepositoryName": "baseball-hubot"
+        "RepositoryName": "baseball-worker"
       }
     } 
   },
