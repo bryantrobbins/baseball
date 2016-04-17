@@ -45,7 +45,7 @@
             "Name": "baseball-ui",
             "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-ui:", { "Ref": "UIVersion" } ] ] },
             "Cpu": "10",
-            "Memory":"500",
+            "Memory":"100",
             "Essential": "true",
             "Command": [
               "/usr/sbin/nginx",
@@ -69,7 +69,7 @@
             "Name": "baseball-worker",
             "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-worker:", { "Ref": "WorkerVersion" } ] ] },
             "Cpu": "20",
-            "Memory":"300",
+            "Memory":"100",
             "Essential": "true"
           }
         ]
@@ -83,7 +83,7 @@
             "Name": "baseball-api",
             "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-api:", { "Ref": "APIVersion" } ] ] },
             "Cpu": "20",
-            "Memory":"300",
+            "Memory":"100",
             "Essential": "true",
             "Command": [
               "java",
