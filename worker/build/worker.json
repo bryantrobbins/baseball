@@ -31,7 +31,7 @@
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
-	      "force": true
+	      "force": false
       },
       {
         "type": "docker-tag",
