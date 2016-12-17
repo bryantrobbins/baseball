@@ -14,7 +14,7 @@ wget $purl
 unzip packer_${pversion}_linux_amd64.zip
 
 # Fetch AWS ECR variables
-version=$1
+version=${IMAGE_VERSION}
 chmod 700 fetch.sh
 ./fetch.sh $version > variables.json
 
