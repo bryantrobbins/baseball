@@ -240,7 +240,7 @@
                 		"s3:PutObjectVersionAcl"
             			],
             			"Resource": [
-                		"arn:aws:s3:::baseball-workbench/*"
+                		"arn:aws:s3:::baseball-workbench-*/*"
             			]
         				}
     					]

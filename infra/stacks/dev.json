@@ -29,7 +29,7 @@
             "Cpu": "20",
             "Memory":"256",
             "Essential": "true",
-						"[\"./entry.sh\"]"
+						"Command": ["/workdir/entry.sh"]
           }
         ]
       }
