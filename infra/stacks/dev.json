@@ -28,7 +28,8 @@
             "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-worker:", { "Ref": "WorkerVersion" } ] ] },
             "Cpu": "20",
             "Memory":"256",
-            "Essential": "true"
+            "Essential": "true",
+						"[\"./entry.sh\"]"
           }
         ]
       }
