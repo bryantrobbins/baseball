@@ -12,55 +12,13 @@
       "Type": "String",
       "Description": "Prefix to use for ECR repositories"
     },
-    "APIDesiredCount": {
-      "Type": "Number",
-      "Default" : "1",
-      "Description": "Number of container instances desired for API"
-    },
-    "APIVersion": {
-      "Type": "String",
-      "Description": "Version of the API container to deploy"
-    },
     "WorkerVersion": {
       "Type": "String",
       "Description": "Version of the Worker container to deploy"
-    },
-    "UIDesiredCount": {
-      "Type": "Number",
-      "Default" : "1",
-      "Description": "Number of container instances desired for UI"
-    },
-    "UIVersion": {
-      "Type": "String",
-      "Description": "Version of the UI container to deploy"
     }
   },
 
   "Resources" : {
-    "UITaskDefinition": {
-      "Type": "AWS::ECS::TaskDefinition",
-      "Properties" : {
-        "ContainerDefinitions" : [
-          {
-            "Name": "baseball-ui",
-            "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-ui:", { "Ref": "UIVersion" } ] ] },
-            "Cpu": "10",
-            "Memory":"100",
-            "Essential": "true",
-            "Command": [
-              "/usr/sbin/nginx",
-              "-g",
-              "daemon off;"
-            ],
-            "PortMappings": [
-              {
-                "ContainerPort": 80
-              }
-            ]
-          }
-        ]
-      }
-    },
     "WorkerTaskDefinition": {
       "Type": "AWS::ECS::TaskDefinition",
       "Properties" : {
@@ -73,46 +31,6 @@
             "Essential": "true"
           }
         ]
-      }
-    },
-    "APITaskDefinition": {
-      "Type": "AWS::ECS::TaskDefinition",
-      "Properties" : {
-        "ContainerDefinitions" : [
-          {
-            "Name": "baseball-api",
-            "Image": { "Fn::Join": [ "", [ {"Ref": "RepoPrefix"}, "/", "baseball-api:", { "Ref": "APIVersion" } ] ] },
-            "Cpu": "20",
-            "Memory":"256",
-            "Essential": "true",
-            "Command": [
-              "java",
-              "-jar",
-              "app.jar"
-            ],
-            "PortMappings": [
-              {
-                "ContainerPort": 8004
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "UIService": {
-      "Type": "AWS::ECS::Service",
-      "Properties" : {
-        "Cluster": { "Ref": "ECSCluster" },
-        "DesiredCount": { "Ref": "UIDesiredCount" },
-        "TaskDefinition" : { "Ref":"UITaskDefinition" }
-      }
-    },
-    "APIService": {
-      "Type": "AWS::ECS::Service",
-      "Properties" : {
-        "Cluster": { "Ref": "ECSCluster" },
-        "DesiredCount": { "Ref": "APIDesiredCount" },
-        "TaskDefinition" : { "Ref":"APITaskDefinition" }
       }
     }
   },
