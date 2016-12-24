@@ -13,3 +13,5 @@ hs_err_pid*
 
 # Some stupid temp file I use
 dscontent
+*.pem
+zcreds.csv

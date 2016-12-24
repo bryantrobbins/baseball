@@ -4,6 +4,14 @@ import boto3
 import json
 import os
 import time
+import scipy as sp
+import rpy2.robjects as ro
+
+from numpy import *
+from pandas import *
+from rpy2.robjects.packages import importr
+from rpy2.robjects import pandas2ri
+
 from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
 
@@ -24,7 +32,10 @@ def extractSingleJob(jobId):
 
 print('Starting job')
 
-# Temp for testing; will come from job config
+# Needed for R <-> Python conversions
+pandas2ri.activate()
+
+# TODO: Set these through ECS task/container defs
 os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
 os.environ["JOB_TABLE"] = "baseball-jobs"
 os.environ["JOB_QUEUE"] = "baseball-jobs-queue"
@@ -50,5 +61,5 @@ while True:
                 # Call R
                 # Do upload
                 # Update DB entry
-                # Delete message                
+                # Delete message
                 print('Doing the work')
