@@ -29,7 +29,6 @@ if ('fields' %in% names(query$export)) {
 	out.tab <- out.tab[order(out.tab[[query$export$fields[[1]]$value[1]]], decreasing = decr),]
 }
 
-
 #fix POS variable
 if('POS' %in% colnames(out.tab)) {
 	ref.v <- c('P' = 1, 'C' = 2, '1B' = 3, '2B' = 4, '3B' = 5, 'SS' = 6, 'LF' = 7, 'CF' = 8, 'RF' = 9, 'OF' = 10, 'DH' = 11)
