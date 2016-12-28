@@ -15,3 +15,7 @@ hs_err_pid*
 dscontent
 *.pem
 zcreds.csv
+
+# R packages
+Rcpp
+plyr
