@@ -4,9 +4,11 @@ import boto3
 import json
 import os
 import time
+import pyparsing
 
 from boto3.dynamodb.conditions import Key, Attr
 from botocore.exceptions import ClientError
+from pyparsing import Word, alphas, ParseException
 
 def extractSingleJob(jobId):
     print('Processing job {}'.format(jobId))
@@ -22,6 +24,19 @@ def extractSingleJob(jobId):
     else:
         item = response['Item']
         return item
+
+def parseExpression(expr):
+    greet = Word( alphas ) + "," + Word( alphas ) + "!" # <-- grammar defined here
+    try:
+        parsed = greet.parseString(expr)
+        return(True)
+    except ParseException, e:
+        print('Parse exception')
+        return(False)
+
+def errorOut(message):
+    print(message)
+    # TODO: Update db row to report error
 
 print('Starting job')
 
@@ -53,5 +68,11 @@ jobQueue = os.environ['JOB_QUEUE']
 #                # Update DB entry
 #                # Delete message
 #                print('Doing the work')
-jobInfo = '{ "key1": "value1"}'
+jobInfo = '{ "colDefs": [ { "colName": "custom1", "expr": "Hello, World!"}, { "colName": "custom2", "expr": "Fuck, Me!" } ] }'
 config = json.loads(jobInfo)
+# Validate column definitions
+for c in config['colDefs']:
+    result = parseExpression(c['expr'])
+    if ( not result ):
+        errorOut('Expression for column {} does not parse. Please report this error (or at least stop trying to hack the backend).'.format(c['colName']))
+# If we make it this far, we can start calling R

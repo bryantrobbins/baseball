@@ -29,12 +29,36 @@ groupRowsSum <- function(d, colName, ...) {
 	return(rename(res, c("grouped"=newCol)))
 }
 
+addCustomCol <- function(d, colName, sexpr, ...) {
+  sexpr_u = sexpr
+  for ( v in colnames(d)) {
+    vx = sprintf("x$%s", v)
+    sexpr_u = gsub(v, vx, c(sexpr_u))[1]
+  }
+  e = parse(text = sexpr_u)
+	res <- ddply(d, 'id', function(x) {
+		cc <- eval(e)
+  	data.frame(x, computed = cc)
+	})
+	return(rename(res, c("computed"=colName)))
+}
+
 # Select rows
 subA <- selectRows(baseball, 'year', 'gt', '2000')
 
 # Select columns
 subB <- selectColumns(subA, 'id', 'team', 'year', 'hr')
 
+# Define new columns
+subC <- addCustomCol(subB, 'custom', '(2*(hr))')
+
 # Group rows
-subC <- groupRowsSum(subB, 'hr', 'year', 'team')
-head(subC)
+subD <- groupRowsSum(subC, 'custom', 'year', 'team')
+head(subD)
+
+# Produce Leaderboard CSV
+
+# Produce Histogram
+
+# Produce Bivariate Plot
+
