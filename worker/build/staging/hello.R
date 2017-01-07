@@ -12,7 +12,7 @@ selectRows <- function(d, colName, cond, val) {
   )
   sexpr = sprintf("%s %s %s", colName, condStr, val)
 	e = parse(text = sexpr)
-	return(subset(baseball, eval(e)))
+	return(subset(d, eval(e)))
 }
 
 selectColumns <- function(d, ... ) {
@@ -31,30 +31,37 @@ groupRowsSum <- function(d, colName, ...) {
 
 addCustomCol <- function(d, colName, sexpr, ...) {
   sexpr_u = sexpr
-  for ( v in colnames(d)) {
+  cols = c(...)
+  for (v in cols) {
     vx = sprintf("x$%s", v)
     sexpr_u = gsub(v, vx, c(sexpr_u))[1]
   }
   e = parse(text = sexpr_u)
-	res <- ddply(d, 'id', function(x) {
+	res <- ddply(d, 'playerID', function(x) {
 		cc <- eval(e)
   	data.frame(x, computed = cc)
 	})
+  head(res)
 	return(rename(res, c("computed"=colName)))
 }
 
-# Select rows
-subA <- selectRows(baseball, 'year', 'gt', '2000')
+# Load data into a dataframe
+lahman_Batting= read.csv("lahman/Batting.csv")
+head(lahman_Batting)
 
 # Select columns
-subB <- selectColumns(subA, 'id', 'team', 'year', 'hr')
+lahman_Batting <- selectColumns(lahman_Batting, 'playerID', 'yearID', 'teamID', 'HR')
+
+# Select rows
+lahman_Batting <- selectRows(lahman_Batting, 'yearID', 'eq', '2000')
 
 # Define new columns
-subC <- addCustomCol(subB, 'custom', '(2*(hr))')
+lahman_Batting <- addCustomCol(lahman_Batting, 'custom', '(2*(HR))', 'HR')
+head(lahman_Batting)
 
 # Group rows
-subD <- groupRowsSum(subC, 'custom', 'year', 'team')
-head(subD)
+#subD <- groupRowsSum(subC, 'custom', 'year', 'team')
+#head(subD)
 
 # Produce Leaderboard CSV
 
