@@ -19,3 +19,7 @@ zcreds.csv
 # R packages
 Rcpp
 plyr
+
+# Extracted data
+lahman
+gamelogs

@@ -68,11 +68,12 @@ jobQueue = os.environ['JOB_QUEUE']
 #                # Update DB entry
 #                # Delete message
 #                print('Doing the work')
-jobInfo = '{ "colDefs": [ { "colName": "custom1", "expr": "Hello, World!"}, { "colName": "custom2", "expr": "Fuck, Me!" } ] }'
+
+jobInfo = '{ "colDefs": [ { "colName": "custom1", "expr": "Hello, World!"}, { "colName": "custom2", "expr": "Hello, Me!" } ] }'
 config = json.loads(jobInfo)
 # Validate column definitions
 for c in config['colDefs']:
     result = parseExpression(c['expr'])
     if ( not result ):
-        errorOut('Expression for column {} does not parse. Please report this error (or at least stop trying to hack the backend).'.format(c['colName']))
+        errorOut('Expression for column {} does not parse. Please report this error (or stop trying to hack the backend).'.format(c['colName']))
 # If we make it this far, we can start calling R
