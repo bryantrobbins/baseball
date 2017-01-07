@@ -54,10 +54,11 @@ lahman_Batting <- selectColumns(lahman_Batting, 'playerID', 'yearID', 'teamID', 
 
 # Select rows
 lahman_Batting <- selectRows(lahman_Batting, 'yearID', 'eq', '2000')
+head(lahman_Batting)
 
 # Define new columns
-lahman_Batting <- addCustomCol(lahman_Batting, 'custom', '(2*(HR))', 'HR')
-head(lahman_Batting)
+#lahman_Batting <- addCustomCol(lahman_Batting, 'custom', '(2*(HR))', 'HR')
+#head(lahman_Batting)
 
 # Group rows
 #subD <- groupRowsSum(subC, 'custom', 'year', 'team')
