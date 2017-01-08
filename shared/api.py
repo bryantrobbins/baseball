@@ -3,6 +3,7 @@ from __future__ import print_function
 import boto3
 import json
 import os
+import btr3baseball
 
 jobTable = os.environ['JOB_TABLE']
 jobQueue = os.environ['JOB_QUEUE']
