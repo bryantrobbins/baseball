@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install build tools
+apt-get install -y zip
+
 # Build package and dependencies
 pip install -t .
 
