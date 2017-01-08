@@ -18,7 +18,7 @@ def submitJob(event, context):
     response = queue.send_message(MessageBody=jobId)
 
     # Update the DB entry with sqs message ID for traceability
-    repo.updateWithMessageId(jobId, response.get('MessageId')) 
+    return repo.updateWithMessageId(jobId, response.get('MessageId')) 
 
 def getJob(event, context):
-    repo.getJob(event['jobId'])
+    return repo.getJob(event['jobId'])
