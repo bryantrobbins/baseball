@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # Install build tools
 apt-get update
