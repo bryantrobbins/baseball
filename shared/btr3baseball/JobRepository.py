@@ -62,7 +62,7 @@ class JobRepository:
                 "#K":"message-id"
             },
             ExpressionAttributeValues={
-                ':m': response.get('MessageId'),
+                ':m': messageId,
             },
             ReturnValues="ALL_NEW"
         )
