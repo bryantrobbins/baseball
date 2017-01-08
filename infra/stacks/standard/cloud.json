@@ -5,7 +5,7 @@
 
   "Parameters" : {
 
-    "DockerInstanceType" : {
+    "InstanceType" : {
       "Description" : "Docker Host EC2 instance type",
       "Type" : "String",
       "Default" : "m3.medium",
@@ -303,45 +303,27 @@
       }
     },
 
-    "ECSCluster": {
-      "Type": "AWS::ECS::Cluster"
-    },
-
-    "ECSAutoScalingGroup" : {
-      "Type" : "AWS::AutoScaling::AutoScalingGroup",
-      "Properties" : {
-        "VPCZoneIdentifier" : [{ "Ref" : "Subnet" }],
-        "LaunchConfigurationName" : { "Ref" : "ContainerInstanceConfiguration" },
-        "MinSize" : "1",
-        "MaxSize" : "1",
-        "DesiredCapacity" : "1"
-      },
-      "UpdatePolicy": {
-        "AutoScalingRollingUpdate": {
-          "MinInstancesInService": "1",
-          "MaxBatchSize": "1",
-          "PauseTime" : "PT15M",
-          "WaitOnResourceSignals": "true"
-        }
-      }
-    },
-    "ContainerInstanceConfiguration": {
-      "Type": "AWS::AutoScaling::LaunchConfiguration",
+    "Instance": {
+      "Type": "AWS::EC2::Instance",
       "Properties": {
-        "AssociatePublicIpAddress" : "true",
+    		"NetworkInterfaces": [ {
+      		"AssociatePublicIpAddress": "true",
+      		"DeviceIndex": "0",
+        		"GroupSet" : [{ "Ref" : "SecurityGroupWebService" }, { "Ref": "CommonSecurityGroup" }],
+      			"SubnetId": { "Ref" : "Subnet" }
+    		} ],
         "ImageId" : { "Fn::FindInMap" : [ "AWSRegionToECSAMI", { "Ref" : "AWS::Region" }, "AMIID" ] },
-        "InstanceType"   : { "Ref" : "DockerInstanceType" },
+        "InstanceType" : { "Ref" : "InstanceType" },
         "IamInstanceProfile": { "Ref": "ContainerInstanceProfile" },
-        "KeyName"        : { "Ref" : "KeyName" },
-        "SecurityGroups" : [{ "Ref" : "SecurityGroupWebService" }, { "Ref": "CommonSecurityGroup" }],
-        "UserData"       : { "Fn::Base64" : { "Fn::Join" : ["", [
-             "#!/bin/bash -xe\n",
-						 "echo ECS_CLUSTER=\"", {"Ref": "ECSCluster"}, "\" >> /etc/ecs/ecs.config"
-        ]]}}
+        "KeyName" : { "Ref" : "KeyName" }
       }
     }
   },
 
   "Outputs" : {
+		"InstanceIp": {
+			"Description": "Public IP of instance (for SSH access)",
+			"Value": { "Fn::GetAtt" : [ "Instance" , "PublicIp" ] }
+		}
   }
 }
