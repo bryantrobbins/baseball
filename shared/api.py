@@ -20,5 +20,5 @@ def submitJob(event, context):
     # Update the DB entry with sqs message ID for traceability
     repo.updateWithMessageId(jobId, response.get('MessageId')) 
 
-def getJobInfo():
+def getJob(event, context):
     repo.getJob(event['jobId'])
