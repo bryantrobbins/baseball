@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # Install build tools
+apt-get update
 apt-get install -y zip
 
 # Build package and dependencies
-pip install -t .
+pip install -t packages .
 
 # Build zip
 cd packages
