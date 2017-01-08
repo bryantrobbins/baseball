@@ -23,7 +23,7 @@ class JobRepository:
         # Generate job ID uuid
         jobId = str(uuid.uuid4())
 
-        response = dynamo.put_item(
+        response = self.table.put_item(
             Item={
                 'job-id': jobId,
                 'job-details': config
