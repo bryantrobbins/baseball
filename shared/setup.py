@@ -9,7 +9,6 @@ setup(name='btr3baseball',
       license='ApacheV2',
       packages=['btr3baseball'],
       install_requires=[
-          'rpy2',
           'boto3'
       ],
       zip_safe=False)
