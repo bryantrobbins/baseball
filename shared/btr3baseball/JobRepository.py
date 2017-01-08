@@ -53,7 +53,7 @@ class JobRepository:
         print('Updating job record for error')
 
     def updateWithMessageId(self, jobId, messageId):
-        response =  table.update_item(
+        response =  self.table.update_item(
             Key={
                 'job-id': jobId
             },
