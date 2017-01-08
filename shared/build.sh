@@ -4,7 +4,7 @@
 pip install -t .
 
 # Build zip
-pushd packages
+cd packages
 cp ../api.py .
 zip -r btr3baseball.zip *
-popd
+cd ..
