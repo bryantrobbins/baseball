@@ -14,15 +14,15 @@ dsRepo = btr3baseball.DatasourceRepository()
 def main(event, context):
     method = event['method']
     if method == 'submitJob':
-        return submitJob(event, context)
+        return submitJob(event['data'], context)
     elif method == 'getJob':
-        return getJob(event, context)
+        return getJob(event['data'], context)
     elif method == 'listDatasources':
-        return listDatasources(event, context)
+        return listDatasources(event['data'], context)
     elif method == 'getDatasource':
-        return getDatasource(event, context)
+        return getDatasource(event['data'], context)
     else:
-        return null 
+        return None
 
 def submitJob(event, context):
     # Put initial entry in dynamo db
