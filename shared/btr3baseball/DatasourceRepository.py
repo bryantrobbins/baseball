@@ -8,7 +8,7 @@ class DatasourceRepository:
     def __init__(self):
         self.availableSources = json.loads(pkg_resources.resource_string(resource_package, resource_path_format.format('all')))['available']
         self.data = {}
-        for source in availableSources:
+        for source in self.availableSources:
             self.data[source] = json.loads(pkg_resources.resource_string(resource_package, resource_path_format.format(source)))
     
     def listDatasources(self):
