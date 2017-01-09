@@ -18,6 +18,8 @@ def main(event, context):
     else:
         data = None
 
+    print(data)
+
     if method == 'submitJob':
         return submitJob(data, context)
     elif method == 'getJob':
