@@ -11,6 +11,19 @@ queue = boto3.resource('sqs').get_queue_by_name(QueueName=jobQueue)
 jobRepo = btr3baseball.JobRepository(jobTable)
 dsRepo = btr3baseball.DatasourceRepository()
 
+def main(event, context):
+    method = event['method']
+    if method == 'submitJob':
+        return submitJob(event, context)
+    elif method == 'getJob':
+        return getJob(event, context)
+    elif method == 'listDatasources':
+        return listDatasources(event, context)
+    elif method == 'getDatasource':
+        return getDatasource(event, context)
+    else:
+        return null 
+
 def submitJob(event, context):
     # Put initial entry in dynamo db
     jobId = jobRepo.createJob(event)

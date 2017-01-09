@@ -11,7 +11,7 @@ class DatasourceRepository:
         for source in availableSources:
             self.data[source] = json.loads(pkg_resources.resource_string(resource_package, resource_path_format.format(source)))
     
-    def getAllDatasources(self):
+    def listDatasources(self):
         return self.availableSources
 
     def getDatasource(self, sourceId):
