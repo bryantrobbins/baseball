@@ -13,14 +13,19 @@ dsRepo = btr3baseball.DatasourceRepository()
 
 def main(event, context):
     method = event['method']
+    if 'data' in event:
+        data = event['data']
+    else:
+        data = None
+
     if method == 'submitJob':
-        return submitJob(event['data'], context)
+        return submitJob(data, context)
     elif method == 'getJob':
-        return getJob(event['data'], context)
+        return getJob(data, context)
     elif method == 'listDatasources':
-        return listDatasources(event['data'], context)
+        return listDatasources(data, context)
     elif method == 'getDatasource':
-        return getDatasource(event['data'], context)
+        return getDatasource(data, context)
     else:
         return None
 
