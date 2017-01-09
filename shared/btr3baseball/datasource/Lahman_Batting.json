@@ -1,0 +1,122 @@
+{
+    "id": "Lahman_Batting",
+    "source": "data/lahman/Batting.csv",
+    "columns": [
+        {
+            "name": "playerID",
+            "type": "S",
+            "description": "A unique ID for the player whose stats are indicated on this row"
+        },
+        {
+            "name": "yearID",
+            "type": "N",
+            "description": "Year"
+        },
+        {
+            "name": "stint",
+            "type": "N",
+            "description": "An id, unique to a player and year combination, for a partial or full season spent by the player with a team"
+        },
+        {
+            "name": "teamID",
+            "type": "S",
+            "description": "Unique ID for the team with which the stats in this row were accumulated"
+        },
+        {
+            "name": "lgID",
+            "type": "S",
+            "description": "Unique ID for the league with which the stats in this row were accumulated"
+        },
+        {
+            "name": "G",
+            "type": "N",
+            "description": "Number of games played"
+        },
+        {
+            "name": "G_batting",
+            "type": "N",
+            "description": "Number of games registered as batter"
+        },
+        {
+            "name": "AB",
+            "type": "N",
+            "description": "Number of at-bats"
+        },
+        {
+            "name": "R",
+            "type": "N",
+            "description": "Number of runs scored"
+        },
+        {
+            "name": "H",
+            "type": "N",
+            "description": "Number of hits"
+        },
+        {
+            "name": "2B",
+            "type": "N",
+            "description": "Number of doubles"
+        },
+        {
+            "name": "3B",
+            "type": "N",
+            "description": "Number of triples"
+        },
+        {
+            "name": "HR",
+            "type": "N",
+            "description": "Number of home runs"
+        },
+        {
+            "name": "RBI",
+            "type": "N",
+            "description": "Number of runs batted in"
+        },
+        {
+            "name": "SB",
+            "type": "N",
+            "description": "Number of stolen bases"
+        },
+        {
+            "name": "CS",
+            "type": "N",
+            "description": "Number of times caught stealing"
+        },
+        {
+            "name": "BB",
+            "type": "N",
+            "description": "Number of walks (Base on Balls)"
+        },
+        {
+            "name": "SO",
+            "type": "N",
+            "description": "Number of Strikeouts"
+        },
+        {
+            "name": "IBB",
+            "type": "N",
+            "description": "Number of Intentional Walks"
+        },
+        {
+            "name": "HBP",
+            "type": "N",
+            "description": "Number of times Hit By Pitch"
+        },
+        {
+            "name": "SH",
+            "type": "N",
+            "description": "Number of Sacrifice Hits"
+        },
+        {
+            "name": "SF",
+            "type": "N",
+            "description": "Number of Sacrifice Flies"
+        },
+        {
+            "name": "GIDP",
+            "type": "N",
+            "description": "Number of times Grounded into Double Play"
+        }
+    ],
+    "keyCols": ["playerID", "stint", "yearID"]
+}
