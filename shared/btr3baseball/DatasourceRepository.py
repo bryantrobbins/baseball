@@ -1,5 +1,4 @@
 import json
-import pkg_resources
 
 resource_package = __name__
 resource_path_format = 'datasource/{}.json'
