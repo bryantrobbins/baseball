@@ -1,3 +1,4 @@
+import pkg_resources
 import json
 
 resource_package = __name__
