@@ -8,6 +8,7 @@ setup(name='btr3baseball',
       author_email='bryantrobbins@gmail.com',
       license='ApacheV2',
       packages=['btr3baseball'],
+      include_package_data=True,
       install_requires=[
           'boto3',
           'setuptools'
