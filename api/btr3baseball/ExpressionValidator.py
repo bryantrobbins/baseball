@@ -3,18 +3,23 @@ from pyparsing import Literal,CaselessLiteral,Word,Combine,Group,Optional,\
 
 point = Literal( "." )
 fnumber = Combine( Word( "+-"+nums, nums ) + Optional( point + Optional( Word( nums ) ) ) )
+const = Literal( "CONST").suppress()
+quote = Literal("'").suppress()
+ident = Word(alphas, alphas+nums)
 plus  = Literal( "+" )
 minus = Literal( "-" )
 mult  = Literal( "*" )
 div   = Literal( "/" )
 lpar  = Literal( "(" ).suppress()
 rpar  = Literal( ")" ).suppress()
+num_const = const + lpar + fnumber + rpar
+str_const = const + lpar + quote + ident + quote + rpar
 addop  = plus | minus
 multop = mult | div
 expop = Literal( "^" )
 
 expr = Forward()
-atom = fnumber
+atom = num_const | str_const
 factor = Forward()
 factor << atom
 term = factor + ZeroOrMore( ( multop + factor ))
@@ -45,5 +50,5 @@ class ExpressionValidatorResult:
             return 'In expression "{}": {}'.format(self.expression, self.message)
 
 vv = ExpressionValidator()
-result = vv.parseExpression("2.3-6")
+result = vv.parseExpression("CONST(2) * CONST('HR')")
 print(result)
