@@ -1,9 +1,15 @@
 # Baseball Workbench
-An upcoming web-based tool for sabermetrics. The tool will have a cooler name and URL at some point.
+Baseball Workbench is an upcoming Web-based tool for Sabermetrics research.
 
-The idea is to have an open-source tool that can leverage free data sources from across the Web, and make them available via a "nice" interfaces, such as a JavaScript UI and a web-hosted API.
+The software for Baseball Workbench will be open-source, and will integrate with freely available data sources.
 
-## Get updates
+The hosted tool will have associated infrastructure costs, but we may look to offset these with sponsors,
+ads, or fees at some point.
+
+## Release Date
+The "Alpha" version of Baseball Workbench will be released by MLB Opening Day 2017 (April 2).
+
+## Get development updates
 
 If you're a Github user, "Watch" this project to get updates.
 
@@ -12,5 +18,5 @@ https://groups.google.com/forum/#!forum/btr-baseball
 
 ## Check out the website
 
-Not much here yet:
+This simple site also describes the project, in lieu of the live site due April 2:
 http://bryantrobbins.github.io/baseball/
