@@ -22,7 +22,7 @@ expr = Forward()
 atom = num_const | str_const
 factor = Forward()
 factor << atom
-term = factor + ZeroOrMore( ( multop + factor ))
+term = str_const | factor + ZeroOrMore( ( multop + factor ))
 expr << term + ZeroOrMore( ( addop + term ))
 
 class ExpressionValidator:
@@ -49,6 +49,10 @@ class ExpressionValidatorResult:
         if self.message != None:
             return 'In expression "{}": {}'.format(self.expression, self.message)
 
+# Some quick tests (temp)
 vv = ExpressionValidator()
-result = vv.parseExpression("CONST(2) * CONST('HR')")
-print(result)
+ee = ["CONST('JOHNNY')", "CONST(2) * CONST('HR')"]
+
+for ex in ee:
+    result = vv.parseExpression(ex)
+    print('{} => {}'.format(ex, result))
