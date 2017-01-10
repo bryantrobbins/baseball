@@ -35,14 +35,15 @@ class ExpressionValidatorResult:
     def __init__(self, expression = None, tokens = None, exception = None):
         self.expression = expression
         self.tokens = tokens
-        self.message = str(exception)
-        self.location = exception.loc
+        if exception != None:
+            self.message = str(exception)
+            self.location = exception.loc
     def __str__(self):
         if self.tokens != None:
-            return tokens.__str__
+            return self.tokens.__str__()
         if self.message != None:
             return 'In expression "{}": {}'.format(self.expression, self.message)
 
 vv = ExpressionValidator()
-result = vv.parseExpression("2.3^6")
+result = vv.parseExpression("2.3-6")
 print(result)
