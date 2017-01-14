@@ -19,8 +19,9 @@ multop = mult | div
 expop = Literal( "^" )
 
 expr = Forward()
+col = ident
 func = ident + lpar + Optional( expr + ZeroOrMore( (comma + expr) ) ) + rpar
-atom = Optional('-') + ( num_const | func )
+atom = Optional('-') + ( num_const | func | col )
 parfactor = ( atom | lpar + atom + rpar )
 factor = Forward()
 factor << ( parfactor + ZeroOrMore(expop + parfactor) )
