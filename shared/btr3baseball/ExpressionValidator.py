@@ -21,8 +21,9 @@ expop = Literal( "^" )
 expr = Forward()
 func = ident + lpar + Optional( expr + ZeroOrMore( (comma + expr) ) ) + rpar
 atom = Optional('-') + ( num_const | func )
+parfactor = ( atom | lpar + atom + rpar )
 factor = Forward()
-factor << atom
+factor << ( parfactor + ZeroOrMore(expop + parfactor) )
 term = factor + ZeroOrMore( ( multop + factor ))
 expr << (term + ZeroOrMore( ( addop + term ))  | str_const)
 
