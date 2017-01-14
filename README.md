@@ -7,15 +7,11 @@ The hosted tool will have associated infrastructure costs, but we may look to of
 ads, or fees at some point.
 
 ## Release Date
-The "Alpha" version of Baseball Workbench will be released by MLB Opening Day 2017 (April 2).
+A hosted Alpha version of Baseball Workbench will be released by MLB Opening Day 2017 (April 2). Alpha access may be private to help control
+costs - if so, invite information will be posted to this README.
 
 ## Get development updates
 
 If you're a Github user, you can "Watch" this project to get updates.
 
 You can also check out the content on the [Github Wiki](https://github.com/bryantrobbins/baseball/wiki).
-
-## Check out the website
-
-This simple site also describes the project, in lieu of the live site due April 2:
-http://bryantrobbins.github.io/baseball/
