@@ -20,7 +20,7 @@ expop = Literal( "^" )
 
 expr = Forward()
 func = ident + lpar + Optional( expr + ZeroOrMore( (comma + expr) ) ) + rpar
-atom = num_const | func
+atom = Optional('-') + ( num_const | func )
 factor = Forward()
 factor << atom
 term = factor + ZeroOrMore( ( multop + factor ))
@@ -58,6 +58,7 @@ ee = [
 		"'BRYAN'",
 		"hi(2)",
 		"hi(2,3,4)",
+		"-hi(2,3,4)",
 ]
 
 for ex in ee:
