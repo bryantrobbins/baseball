@@ -1,7 +1,6 @@
-import btr3baseball
+from ExpressionValidator import ExpressionValidator
 
-# Some quick tests (temp)
-vv = btr3baseball.ExpressionValidator()
+vv = ExpressionValidator()
 ee = [
     "2 * COL('HR')",
     "2",
