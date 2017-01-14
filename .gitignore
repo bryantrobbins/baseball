@@ -37,3 +37,6 @@ gamelogs
 
 # vscode
 .vscode
+
+# build dir
+shared/packages
