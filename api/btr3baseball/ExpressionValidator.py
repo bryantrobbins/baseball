@@ -3,27 +3,28 @@ from pyparsing import Literal,CaselessLiteral,Word,Combine,Group,Optional,\
 
 point = Literal( "." )
 fnumber = Combine( Word( "+-"+nums, nums ) + Optional( point + Optional( Word( nums ) ) ) )
-const = Literal( "CONST").suppress()
 quote = Literal("'").suppress()
-ident = Word(alphas, alphas+nums)
+comma = Literal(",")
+ident = Word(alphas)
 plus  = Literal( "+" )
 minus = Literal( "-" )
 mult  = Literal( "*" )
 div   = Literal( "/" )
-lpar  = Literal( "(" ).suppress()
-rpar  = Literal( ")" ).suppress()
-num_const = const + lpar + fnumber + rpar
-str_const = const + lpar + quote + ident + quote + rpar
+lpar  = Literal( "(" )
+rpar  = Literal( ")" )
+num_const = fnumber
+str_const = quote + ident + quote
 addop  = plus | minus
 multop = mult | div
 expop = Literal( "^" )
 
 expr = Forward()
-atom = num_const | str_const
+func = ident + lpar + Optional( expr + ZeroOrMore( (comma + expr) ) ) + rpar
+atom = num_const | func
 factor = Forward()
 factor << atom
-term = str_const | factor + ZeroOrMore( ( multop + factor ))
-expr << term + ZeroOrMore( ( addop + term ))
+term = factor + ZeroOrMore( ( multop + factor ))
+expr << (term + ZeroOrMore( ( addop + term ))  | str_const)
 
 class ExpressionValidator:
     def __init__(self):
@@ -51,7 +52,13 @@ class ExpressionValidatorResult:
 
 # Some quick tests (temp)
 vv = ExpressionValidator()
-ee = ["CONST('JOHNNY')", "CONST(2) * CONST('HR')"]
+ee = [
+    "2 * COL('HR')",
+    "2",
+		"'BRYAN'",
+		"hi(2)",
+		"hi(2,3,4)",
+]
 
 for ex in ee:
     result = vv.parseExpression(ex)
