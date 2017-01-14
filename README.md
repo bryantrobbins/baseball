@@ -11,10 +11,9 @@ The "Alpha" version of Baseball Workbench will be released by MLB Opening Day 20
 
 ## Get development updates
 
-If you're a Github user, "Watch" this project to get updates.
+If you're a Github user, you can "Watch" this project to get updates.
 
-You can also join the Google Group:
-https://groups.google.com/forum/#!forum/btr-baseball
+You can also check out the content on the [Github Wiki](https://github.com/bryantrobbins/baseball/wiki).
 
 ## Check out the website
 
