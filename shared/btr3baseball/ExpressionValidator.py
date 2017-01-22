@@ -7,7 +7,12 @@ from pyparsing import Literal,CaselessLiteral,Word,Combine,Group,Optional,\
 #   http://pyparsing.wikispaces.com/file/view/fourFn.py
 #   https://sourceforge.net/p/pyparsing/mailman/message/28157062
 class ExpressionValidator:
-    def __init__(self):
+    def __init__(self, funcs = [], cols = []):
+        self.grammar = self.buildGrammar()
+        self.funcs = funcs
+        self.cols = cols
+
+    def buildGrammar(self):
         point = Literal( "." )
         fnumber = Combine( Word( "+-"+nums, nums ) + Optional( point + Optional( Word( nums ) ) ) )
         quote = Literal("'")
@@ -35,16 +40,20 @@ class ExpressionValidator:
         term << ( ( factor + multop + term ) | factor ).setParseAction(Term)
         numexpr << ( ( term + addop + numexpr ) | term ).setParseAction(NumExpr)
         expr = ( numexpr | str_const ).setParseAction(Expr)
-        self.grammar = expr
+
+        return expr
+
+    def validateExpression(self, strEx):
+        try:
+            results = self.parseExpression(strEx)
+            ast = results.asList()[0]
+            self.crawlTree(ast, Col, self.validateColumnName)
+            return ExpressionValidatorResult(tokens = results.dump(), ast = ast )
+        except Exception as e:
+            return ExpressionValidatorResult(expression = strEx, exception = e)
 
     def parseExpression(self, strEx):
-        try:
-            results = self.grammar.parseString(strEx, parseAll=True)
-            t = results.dump()
-            a = results.asList()
-            return ExpressionValidatorResult(expression = strEx, tokens = t, ast = a[0] )
-        except ParseException as e:
-            return ExpressionValidatorResult(expression = strEx, exception = e)
+            return self.grammar.parseString(strEx, parseAll=True)
 
     def crawlTree(self, ast, checkType, checkFunc):
         for k, v in ast.__dict__.items():
@@ -53,19 +62,27 @@ class ExpressionValidator:
                     checkFunc(v)
                 self.crawlTree(v, checkType, checkFunc)
 
+    def validateColumnName(self, a):
+        if a.name.value not in self.cols:
+            raise UnknownColumnException(a.name.value)
+
+class UnknownColumnException(Exception):
+    def __init__(self, colName):
+        super(UnknownColumnException, self).__init__('Unknown column name {}'.format(colName))
+
 class ExpressionValidatorResult:
-    def __init__(self, expression = None, tokens = None, ast = None, exception = None):
+    def __init__(self, expression = None, tokens = None, ast = None, exception = None, message = None):
         self.expression = expression
+        self.message = message
         self.tokens = tokens
         self.ast = ast
         if exception != None:
             self.message = str(exception)
-            self.location = exception.loc
     def __str__(self):
-        if self.tokens != None:
-            return self.tokens.__str__()
         if self.message != None:
             return 'In expression "{}": {}'.format(self.expression, self.message)
+        else:
+            return self.tokens.__str__()
 
 class ASTNode(object):
     def __init__(self, tokens):

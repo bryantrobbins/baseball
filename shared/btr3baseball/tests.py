@@ -2,7 +2,7 @@ from __future__ import print_function
 from ExpressionValidator import ExpressionValidator, Atom
 import unittest
 
-vv = ExpressionValidator()
+vv = ExpressionValidator(funcs = ['hi'], cols = ['HR'])
 
 ee = [
     "2",
@@ -19,10 +19,9 @@ ee = [
     "2 * $('HR')",
     "2 * 3 * $('HR')",
     "(2 + 5) * 3",
+    "$('BAD')",
 ] 
 
-check = lambda a: (print(a))
 for ex in ee:
-    result = vv.parseExpression(ex)
+    result = vv.validateExpression(ex)
     print('{} => {}'.format(ex, result))
-    vv.crawlTree(result.ast, Atom, check)
