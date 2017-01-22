@@ -67,7 +67,7 @@ class ExpressionValidator:
         colName = a.name.value
         if colName not in [ c['name'] for c in self.cols ]:
             raise UnknownColumnException(colName)
-        colInfo = filter(lambda c : c['name'] == colName, self.cols)[0]
+        colInfo = next(filter(lambda c : c['name'] == colName, self.cols))
         if colInfo['type'] != 'N':
             raise ColumnTypeMismatchException(colName, 'N', colInfo['type'])
 
@@ -75,7 +75,7 @@ class ExpressionValidator:
         if a.name not in [f['name'] for f in self.funcs]:
             raise UnknownFunctionException(a.name)
         argc = len(a.argList)
-        funcInfo = filter(lambda c : c['name'] == a.name, self.funcs)[0]
+        funcInfo = next(filter(lambda c : c['name'] == a.name, self.funcs))
         if funcInfo['argc'] != argc:
             raise FunctionArgumentCountMismatchException(a.name, funcInfo['argc'], argc) 
 

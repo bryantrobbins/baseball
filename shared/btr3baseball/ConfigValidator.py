@@ -2,15 +2,15 @@ from __future__ import print_function
 from ExpressionValidator import *
 
 class ConfigValidator:
-    self.funcs = []
-    self.cols = [] 
 
-    def __init__(self, config):
+    def __init__(self, config = {}):
         self.config = config
+        self.funcs = []
+        self.cols = [] 
 
     def validateConfig(self):
         for t in config.transforms:
-            validateTransform(t)
+            self.validateTransform(t)
 
     def validateTransform(self, trans):
         if trans.type == 'selectCols':
