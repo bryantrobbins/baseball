@@ -24,15 +24,17 @@ class ExpressionValidator:
         expop = Literal( "^" )
 
         expr = Forward()
+        numexpr = Forward()
         term = Forward()
         factor = Forward()
         str_const = ( quote + ident + quote ).setParseAction(Str)
         col = ( colmarker + lpar + str_const + rpar ).setParseAction(Col)
-        func = ( ident + lpar + Optional( expr + ZeroOrMore( (comma + expr) ) ) + rpar ).setParseAction(Func)
-        atom = ( Optional('-') + ( ( fnumber | func | col ) | ( lpar + expr + rpar ) ) ).setParseAction(Atom)
+        func = ( ident + lpar + Optional( numexpr + ZeroOrMore( (comma + numexpr) ) ) + rpar ).setParseAction(Func)
+        atom = ( Optional('-') + ( ( fnumber | func | col ) | ( lpar + numexpr + rpar ) ) ).setParseAction(Atom)
         factor <<  ( ( atom + expop + factor ) | atom ).setParseAction(Factor)
         term << ( ( factor + multop + term ) | factor ).setParseAction(Term)
-        expr << ( ( term + addop + expr ) | term | str_const ).setParseAction(Expr)
+        numexpr << ( ( term + addop + numexpr ) | term ).setParseAction(NumExpr)
+        expr << ( numexpr | str_const ).setParseAction(Expr)
         self.grammar = expr
 
     def parseExpression(self, strEx):
@@ -109,11 +111,16 @@ class Term(ASTNode):
             self.rterm = self.tokens[2]
         del self.tokens
 
-class Expr(ASTNode):
+class NumExpr(ASTNode):
     def assignFields(self):
         self.lterm = self.tokens[0]
         if (len(self.tokens) > 1):
             self.op = self.tokens[1]
             self.rexpr = self.tokens[2]
+        del self.tokens
+
+class Expr(ASTNode):
+    def assignFields(self):
+        self.body = self.tokens[0]
         del self.tokens
 
