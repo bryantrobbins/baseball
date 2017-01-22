@@ -1,3 +1,4 @@
+from __future__ import print_function
 from pyparsing import Literal,CaselessLiteral,Word,Combine,Group,Optional,\
     ZeroOrMore,Forward,nums,alphas,ParseException
 
@@ -23,7 +24,6 @@ class ExpressionValidator:
         multop = mult | div
         expop = Literal( "^" )
 
-        expr = Forward()
         numexpr = Forward()
         term = Forward()
         factor = Forward()
@@ -34,20 +34,30 @@ class ExpressionValidator:
         factor <<  ( ( atom + expop + factor ) | atom ).setParseAction(Factor)
         term << ( ( factor + multop + term ) | factor ).setParseAction(Term)
         numexpr << ( ( term + addop + numexpr ) | term ).setParseAction(NumExpr)
-        expr << ( numexpr | str_const ).setParseAction(Expr)
+        expr = ( numexpr | str_const ).setParseAction(Expr)
         self.grammar = expr
 
     def parseExpression(self, strEx):
         try:
-            results = self.grammar.parseString(strEx, parseAll=True).dump()
-            return ExpressionValidatorResult(expression = strEx, tokens = results)
+            results = self.grammar.parseString(strEx, parseAll=True)
+            t = results.dump()
+            a = results.asList()
+            return ExpressionValidatorResult(expression = strEx, tokens = t, ast = a[0] )
         except ParseException as e:
             return ExpressionValidatorResult(expression = strEx, exception = e)
 
+    def crawlTree(self, ast, checkType, checkFunc):
+        for k, v in ast.__dict__.items():
+            if isinstance(v , ASTNode) :
+                if type(v) == checkType:
+                    checkFunc(v)
+                self.crawlTree(v, checkType, checkFunc)
+
 class ExpressionValidatorResult:
-    def __init__(self, expression = None, tokens = None, exception = None):
+    def __init__(self, expression = None, tokens = None, ast = None, exception = None):
         self.expression = expression
         self.tokens = tokens
+        self.ast = ast
         if exception != None:
             self.message = str(exception)
             self.location = exception.loc
@@ -121,6 +131,6 @@ class NumExpr(ASTNode):
 
 class Expr(ASTNode):
     def assignFields(self):
-        self.body = self.tokens[0]
+        self.value = self.tokens[0]
         del self.tokens
 
