@@ -13,13 +13,27 @@ class ConfigValidator:
             validateTransform(t)
 
     def validateTransform(self, trans):
-        if trans.type == 'load':
-            loadDataset(trans)
         if trans.type == 'selectCols':
-            selectCols(trans)
+            self.selectCols(trans)
         if trans.type == 'selectRows':
-            selectRows(trans)
+            self.selectRows(trans)
         if trans.type == 'groupCols':
-            groupCols(trans)
+            self.groupCols(trans)
         if trans.type == 'defineCol':
-            defineCol(trans)
+            self.defineCol(trans)
+
+    def loadDataset(self, dsName):
+        print('Loading dataset with name {}'.format(dsName))
+    
+    def selectCols(self, trans):
+        print('Performing selectCol transform')
+    
+    def selectRows(self, trans):
+        print('Performing selectRow transform')
+    
+    def groupCols(self, trans):
+        print('Performing groupCols transform')
+
+    def defineCol(self, trans):
+        print('Performing defineCol transform')
+
