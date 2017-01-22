@@ -2,7 +2,7 @@ from __future__ import print_function
 from ExpressionValidator import ExpressionValidator, Atom
 import unittest
 
-vv = ExpressionValidator(funcs = ['hi'], cols = ['HR'])
+vv = ExpressionValidator(funcs = ['hi'], cols = [{ 'name': 'HR', 'type': 'N' }, {'name': 'playerId', 'type': 'S'}])
 
 ee = [
     "2",
@@ -20,6 +20,8 @@ ee = [
     "2 * 3 * $('HR')",
     "(2 + 5) * 3",
     "$('BAD')",
+    "bad(2)",
+    "2 * $('playerId')",
 ] 
 
 for ex in ee:

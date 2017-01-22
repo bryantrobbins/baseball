@@ -47,7 +47,8 @@ class ExpressionValidator:
         try:
             results = self.parseExpression(strEx)
             ast = results.asList()[0]
-            self.crawlTree(ast, Col, self.validateColumnName)
+            self.crawlTree(ast, Col, self.validateCol)
+            self.crawlTree(ast, Func, self.validateFunc)
             return ExpressionValidatorResult(tokens = results.dump(), ast = ast )
         except Exception as e:
             return ExpressionValidatorResult(expression = strEx, exception = e)
@@ -62,13 +63,29 @@ class ExpressionValidator:
                     checkFunc(v)
                 self.crawlTree(v, checkType, checkFunc)
 
-    def validateColumnName(self, a):
-        if a.name.value not in self.cols:
-            raise UnknownColumnException(a.name.value)
+    def validateCol(self, a):
+        colName = a.name.value
+        if colName not in [ c['name'] for c in self.cols ]:
+            raise UnknownColumnException(colName)
+        colInfo = filter(lambda c : c['name'] == colName, self.cols)[0]
+        if colInfo['type'] != 'N':
+            raise ColumnTypeMismatchException(colName, 'N', colInfo['type'])
+
+    def validateFunc(self, a):
+        if a.name not in self.funcs:
+            raise UnknownFunctionException(a.name)
 
 class UnknownColumnException(Exception):
     def __init__(self, colName):
         super(UnknownColumnException, self).__init__('Unknown column name {}'.format(colName))
+
+class ColumnTypeMismatchException(Exception):
+    def __init__(self, colName, expectedType, actualType):
+        super(ColumnTypeMismatchException, self).__init__('Column with name "{}" has type "{}" but type "{}" expected'.format(colName, actualType, expectedType))
+
+class UnknownFunctionException(Exception):
+    def __init__(self, funcName):
+        super(UnknownFunctionException, self).__init__('Unknown function name {}'.format(funcName))
 
 class ExpressionValidatorResult:
     def __init__(self, expression = None, tokens = None, ast = None, exception = None, message = None):
