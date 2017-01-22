@@ -2,6 +2,9 @@ from pyparsing import Literal,CaselessLiteral,Word,Combine,Group,Optional,\
     ZeroOrMore,Forward,nums,alphas,ParseException
 
 
+# Grammar and parsing here adapted from public pyparsing examples:
+#   http://pyparsing.wikispaces.com/file/view/fourFn.py
+#   https://sourceforge.net/p/pyparsing/mailman/message/28157062
 class ExpressionValidator:
     def __init__(self):
         point = Literal( "." )
@@ -73,7 +76,7 @@ class Func(ASTNode):
 
 class Str(ASTNode):
     def assignFields(self):
-        self.body = self.tokens[1]
+        self.value = self.tokens[1]
         del self.tokens
 
 class Atom(ASTNode):
@@ -81,17 +84,21 @@ class Atom(ASTNode):
         self.negate = False
         if (self.tokens[0] == '-'):
             self.negate = True
-            self.body = self.tokens[1]
+            self.value = self.tokens[1:]
         else:
-            self.body = self.tokens[0]
+            self.value = self.tokens
+
+        if (self.value[0] == '('):
+            self.value = self.value[1]
+        else:
+            self.value = self.value[0]
         del self.tokens
 
 class Factor(ASTNode):
     def assignFields(self):
         self.latom = self.tokens[0]
         if (len(self.tokens) > 1):
-            self.op = self.tokens[1]
-            self.rfactor = self.tokens[2]
+            self.exponent = self.tokens[2]
         del self.tokens
 
 class Term(ASTNode):
