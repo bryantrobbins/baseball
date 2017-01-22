@@ -72,8 +72,12 @@ class ExpressionValidator:
             raise ColumnTypeMismatchException(colName, 'N', colInfo['type'])
 
     def validateFunc(self, a):
-        if a.name not in self.funcs:
+        if a.name not in [f['name'] for f in self.funcs]:
             raise UnknownFunctionException(a.name)
+        argc = len(a.argList)
+        funcInfo = filter(lambda c : c['name'] == a.name, self.funcs)[0]
+        if funcInfo['argc'] != argc:
+            raise FunctionArgumentCountMismatchException(a.name, funcInfo['argc'], argc) 
 
 class UnknownColumnException(Exception):
     def __init__(self, colName):
@@ -82,6 +86,10 @@ class UnknownColumnException(Exception):
 class ColumnTypeMismatchException(Exception):
     def __init__(self, colName, expectedType, actualType):
         super(ColumnTypeMismatchException, self).__init__('Column with name "{}" has type "{}" but type "{}" expected'.format(colName, actualType, expectedType))
+
+class FunctionArgumentCountMismatchException(Exception):
+    def __init__(self, funcName, expectedCount, actualCount):
+        super(FunctionArgumentCountMismatchException, self).__init__('Function with name "{}" called with {} arguments, but {} expected'.format(funcName, actualCount, expectedCount))
 
 class UnknownFunctionException(Exception):
     def __init__(self, funcName):
