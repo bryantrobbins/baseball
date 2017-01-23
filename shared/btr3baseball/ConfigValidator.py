@@ -22,8 +22,36 @@ class ConfigValidator:
         if trans.type == 'defineCol':
             self.defineCol(trans)
 
-    def loadDataset(self, dsName):
-        print('Loading dataset with name {}'.format(dsName))
+    def loadDataset(self):
+        if('dataset' not in config):
+            raise MissingConfigItemException('dataset')
+        ds = config.dataset
+        print('Loading dataset with name {}'.format(ds))
+        if(ds not in dataRepo.getDatasetIds()):
+            raise UnknownDatasetException(ds)
+        self.cols = DatasetRepository.getDataset(ds)
+
+    def selectRows(self, trans):
+        if('column' not in trans):
+            raise MissingTransformConfigItemException('selectRows', 'column')
+        if(trans.column not in colnames()):
+            raise UnknownColumnException(trans.column)
+        
+        col = getColumn(trans.column)
+        
+        if('operator' not in trans):
+            raise MissingTransformConfigItemException('selectRows', 'column')
+        if(trans.operator not in self.selectRowOps):
+            raise UnknownSelectRowsOperator(trans.operator)
+        
+        if(criteria not in trans):
+            raise MissingTransformConfigItemException('selectRows', 'criteria')
+        
+        utype = criType(trans.criteria)
+        if(utype != col.type):
+            raise SelectRowsCriteriaTypeException (col.name, col.type, utype)
+
+    def loadDataset(self, dsName):        
     
     def selectCols(self, trans):
         print('Performing selectCol transform')
