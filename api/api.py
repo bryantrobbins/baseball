@@ -9,7 +9,7 @@ jobTable = os.environ['JOB_TABLE']
 jobQueue = os.environ['JOB_QUEUE']
 queue = boto3.resource('sqs').get_queue_by_name(QueueName=jobQueue)
 jobRepo = btr3baseball.JobRepository(jobTable)
-dsRepo = btr3baseball.DatasourceRepository()
+dsRepo = btr3baseball.DatasetRepository()
 
 def main(event, context):
     method = event['method']
@@ -24,10 +24,10 @@ def main(event, context):
         return submitJob(data, context)
     elif method == 'getJob':
         return getJob(data, context)
-    elif method == 'listDatasources':
-        return listDatasources(data, context)
-    elif method == 'getDatasource':
-        return getDatasource(data, context)
+    elif method == 'listDatasets':
+        return listDatasets(data, context)
+    elif method == 'getDataset':
+        return getDataset(data, context)
     else:
         return None
 
@@ -44,8 +44,8 @@ def submitJob(event, context):
 def getJob(event, context):
     return jobRepo.getJob(event['jobId'])
 
-def listDatasources(event, context):
-    return dsRepo.listDatasources()
+def listDatasets(event, context):
+    return dsRepo.listDatasets()
 
-def getDatasource(event, context):
-    return dsRepo.getDatasource(event['datasourceId'])
+def getDataset(event, context):
+    return dsRepo.getDataset(event['datasourceId'])

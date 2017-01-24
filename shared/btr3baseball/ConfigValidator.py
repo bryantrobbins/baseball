@@ -1,16 +1,19 @@
 from __future__ import print_function
-from ExpressionValidator import *
+from ExpressionValidator import ExpressionValidator
+from DatasetRepository import DatasetRepository
 
 class ConfigValidator:
 
     def __init__(self, config = {}):
         self.config = config
+        self.dataRepo = DatasetRepository()
         self.funcs = []
-        self.cols = [] 
+        self.cols = []
 
     def validateConfig(self):
-        for t in config.transforms:
-            self.validateTransform(t)
+        self.loadDataset()
+#        for t in config.transforms:
+#            self.validateTransform(t)
 
     def validateTransform(self, trans):
         if trans.type == 'selectCols':
@@ -23,15 +26,16 @@ class ConfigValidator:
             self.defineCol(trans)
 
     def loadDataset(self):
-        if('dataset' not in config):
+        if('dataset' not in self.config):
             raise MissingConfigItemException('dataset')
-        ds = config.dataset
+        ds = self.config['dataset']
         print('Loading dataset with name {}'.format(ds))
-        if(ds not in dataRepo.getDatasetIds()):
+        if(ds not in self.dataRepo.listDatasets()):
             raise UnknownDatasetException(ds)
-        self.cols = DatasetRepository.getDataset(ds)
+        self.cols = self.dataRepo.getDataset(ds)
 
     def selectRows(self, trans):
+        print('Performing selectRow transform')
         if('column' not in trans):
             raise MissingTransformConfigItemException('selectRows', 'column')
         if(trans.column not in colnames()):
@@ -51,13 +55,8 @@ class ConfigValidator:
         if(utype != col.type):
             raise SelectRowsCriteriaTypeException (col.name, col.type, utype)
 
-    def loadDataset(self, dsName):        
-    
     def selectCols(self, trans):
         print('Performing selectCol transform')
-    
-    def selectRows(self, trans):
-        print('Performing selectRow transform')
     
     def groupCols(self, trans):
         print('Performing groupCols transform')
