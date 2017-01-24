@@ -17,7 +17,7 @@ strConfig = '''
     {
       "type": "rowSelect",
       "column": "yearID",
-      "operator": ">=",
+      "operator": "ge",
       "criteria": "2000"
     },
     {
