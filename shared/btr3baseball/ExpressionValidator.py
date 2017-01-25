@@ -3,7 +3,7 @@ from pyparsing import Literal,CaselessLiteral,Word,Combine,Group,Optional,\
     ZeroOrMore,Forward,nums,alphas,ParseException
 
 
-# Grammar and parsing here adapted from public pyparsing examples:
+# Grammar and parsing here adapted from a couple of public pyparsing examples:
 #   http://pyparsing.wikispaces.com/file/view/fourFn.py
 #   https://sourceforge.net/p/pyparsing/mailman/message/28157062
 class ExpressionValidator:
@@ -44,14 +44,11 @@ class ExpressionValidator:
         return expr
 
     def validateExpression(self, strEx):
-        try:
-            results = self.parseExpression(strEx)
-            ast = results.asList()[0]
-            self.crawlTree(ast, Col, self.validateCol)
-            self.crawlTree(ast, Func, self.validateFunc)
-            return ExpressionValidatorResult(tokens = results.dump(), ast = ast )
-        except Exception as e:
-            return ExpressionValidatorResult(expression = strEx, exception = e)
+        results = self.parseExpression(strEx)
+        ast = results.asList()[0]
+        self.crawlTree(ast, Col, self.validateCol)
+        self.crawlTree(ast, Func, self.validateFunc)
+        return ExpressionValidatorResult(tokens = results.dump(), ast = ast )
 
     def parseExpression(self, strEx):
             return self.grammar.parseString(strEx, parseAll=True)
@@ -79,6 +76,14 @@ class ExpressionValidator:
         if funcInfo['argc'] != argc:
             raise FunctionArgumentCountMismatchException(a.name, funcInfo['argc'], argc) 
 
+class ExpressionValidatorResult:
+    def __init__(self, expression = None, tokens = None, ast = None, exception = None, message = None):
+        self.expression = expression
+        self.tokens = tokens
+        self.ast = ast
+    def __str__(self):
+        return self.tokens.__str__()
+
 class UnknownColumnException(Exception):
     def __init__(self, colName):
         super(UnknownColumnException, self).__init__('Unknown column name {}'.format(colName))
@@ -94,20 +99,6 @@ class FunctionArgumentCountMismatchException(Exception):
 class UnknownFunctionException(Exception):
     def __init__(self, funcName):
         super(UnknownFunctionException, self).__init__('Unknown function name {}'.format(funcName))
-
-class ExpressionValidatorResult:
-    def __init__(self, expression = None, tokens = None, ast = None, exception = None, message = None):
-        self.expression = expression
-        self.message = message
-        self.tokens = tokens
-        self.ast = ast
-        if exception != None:
-            self.message = str(exception)
-    def __str__(self):
-        if self.message != None:
-            return 'In expression "{}": {}'.format(self.expression, self.message)
-        else:
-            return self.tokens.__str__()
 
 class ASTNode(object):
     def __init__(self, tokens):

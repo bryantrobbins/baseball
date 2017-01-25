@@ -1,5 +1,13 @@
 from __future__ import print_function
-from ExpressionValidator import ExpressionValidator, Atom
+from ExpressionValidator import (
+    ExpressionValidator,
+    Atom, 
+    UnknownColumnException,
+    ColumnTypeMismatchException,
+    UnknownFunctionException,
+    FunctionArgumentCountMismatchException
+)
+
 import unittest
 
 class TestExpressionValidator(unittest.TestCase):
@@ -14,6 +22,10 @@ class TestExpressionValidator(unittest.TestCase):
         result = validator.validateExpression(ex)
         #print('{} => {}'.format(ex, result))
         return result
+
+    def helper_testString_Exception(self, ex, exc):
+        with self.assertRaises(exc):
+            self.helper_testString(ex)
 
     def helper_assertAstTypeAndNext(self, ast, typeName, attrNext):
         self.assertEqual(typeName, ast.__class__.__name__)
@@ -74,7 +86,7 @@ class TestExpressionValidator(unittest.TestCase):
         res = self.helper_assertAstTypeAndNext(res, "Factor", "latom")
         self.helper_assertAstTypeAndValue(res, "Atom", "negate", False)
         self.helper_assertAstTypeAndValue(res, "Atom", "value", '3')
-        
+
     def testMultAndAdd(self):
         result = self.helper_testString("2*3 + 5*4")       
 
@@ -97,16 +109,16 @@ class TestExpressionValidator(unittest.TestCase):
         result = self.helper_testString("(2 + 5) * 3")
 
     def testColumnFail(self):
-        result = self.helper_testString("$('BAD')")
+        self.helper_testString_Exception("$('BAD')", UnknownColumnException)
 
     def testColumnTypeFail(self):
-        result = self.helper_testString("2 * $('playerId')")
+        self.helper_testString_Exception("2 * $('playerId')", ColumnTypeMismatchException)
 
     def testFuncNameFail(self):
-        result = self.helper_testString("bad(2)")
+        self.helper_testString_Exception("bad(2)", UnknownFunctionException)
 
     def testFuncArgcFail(self):
-        result = self.helper_testString("hi(2)")
+        self.helper_testString_Exception("hi(2)", FunctionArgumentCountMismatchException)
 
 if __name__ == '__main__':
     unittest.main()
