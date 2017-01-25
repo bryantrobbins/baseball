@@ -59,14 +59,14 @@ class ConfigValidator:
             raise SelectRowsCriteriaTypeException (col['name'], col['type'], utype)
 
     def columnSelect(self, trans):
-        print('Performing selectCol transform')
+        print('Performing columnSelect transform')
     
     def rowSum(self, trans):
-        print('Performing sumRows transform')
+        print('Performing rowSum transform')
 
     def columnDefine(self, trans):
-        print('Performing defineCol transform')
-    
+        print('Performing columnDefine transform')
+
     def colnames(self):
         return [ c['name'] for c in self.cols ]
     

@@ -2,13 +2,25 @@ from __future__ import print_function
 from ExpressionValidator import ExpressionValidator, Atom
 import unittest
 
-fdata = [ {'name': 'hi', 'argc': 2} ]
-cdata = [{ 'name': 'HR', 'type': 'N' }, {'name': 'playerId', 'type': 'S'}]
-vv = ExpressionValidator(funcs = fdata, cols = cdata)
+class TestExpressionValidator(unittest.TestCase):
+
+    def createSimpleValidator(self):
+        fdata = [ {'name': 'hi', 'argc': 2} ]
+        cdata = [{ 'name': 'HR', 'type': 'N' }, {'name': 'playerId', 'type': 'S'}]
+        return ExpressionValidator(funcs = fdata, cols = cdata)
+
+    def helper_testString(self, ex):
+        validator = self.createSimpleValidator()
+        result = validator.validateExpression(ex)
+        print('{} => {}'.format(ex, result))
+
+    def testInteger(self):
+        self.helper_testString("2")
+
+    def testFloat(self):
+        self.helper_testString("3.14")
 
 ee = [
-    "2",
-    "3.14",
     "'Hey'",
     "-2",
     "2*3",
@@ -26,6 +38,5 @@ ee = [
     "hi(2)",
 ] 
 
-for ex in ee:
-    result = vv.validateExpression(ex)
-    print('{} => {}'.format(ex, result))
+if __name__ == '__main__':
+    unittest.main()
