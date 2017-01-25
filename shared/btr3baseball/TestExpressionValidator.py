@@ -87,11 +87,26 @@ class TestExpressionValidator(unittest.TestCase):
         self.helper_assertAstTypeAndValue(res, "Atom", "negate", False)
         self.helper_assertAstTypeAndValue(res, "Atom", "value", '3')
 
-    def testMultAndAdd(self):
-        result = self.helper_testString("2*3 + 5*4")       
-
     def testMultMany(self):
         result = self.helper_testString("2*3*4")
+        res = self.helper_assertAstTypeAndNext(result.ast, "Expr", 'value')
+        res = self.helper_assertAstTypeAndNext(res, "NumExpr", "lterm")
+
+        self.helper_assertAstTypeAndValue(res, "Term", "op", "*")
+        leftres = self.helper_assertAstTypeAndNext(res, "Term", "lfactor")
+        rightres = self.helper_assertAstTypeAndNext(res, "Term", "rterm")
+
+        res = self.helper_assertAstTypeAndNext(leftres, "Factor", "latom")
+        self.helper_assertAstTypeAndValue(res, "Atom", "negate", False)
+        self.helper_assertAstTypeAndValue(res, "Atom", "value", '2')
+
+        res = self.helper_assertAstTypeAndNext(rightres, "Term", "lfactor")
+        res = self.helper_assertAstTypeAndNext(res, "Factor", "latom")
+        self.helper_assertAstTypeAndValue(res, "Atom", "negate", False)
+        self.helper_assertAstTypeAndValue(res, "Atom", "value", '3')
+
+    def testMultAndAdd(self):
+        result = self.helper_testString("2*3 + 5*4")
 
     def testExponent(self):
         result = self.helper_testString("5^2")
