@@ -4,8 +4,17 @@ import unittest
 import json
 
 class TestConfigValidator(unittest.TestCase):
+
+    def createSimpleValidator(self, strConfig):
+        return ConfigValidator()
+
+    def helper_testString(self, strConfig):
+      cv = self.createSimpleValidator(strConfig)
+      cv.validateConfig()
+      return cv
+    
     def testHappy(self):
-        strConfigHappy = '''
+        strConfig = '''
         {
           "dataset": "Lahman_Batting",
           "transformations": [
@@ -43,10 +52,16 @@ class TestConfigValidator(unittest.TestCase):
           }
         }
         '''
-        config = json.loads(strConfigHappy)
-        vv = ConfigValidator(config)
-        vv.validateConfig()
-        self.assertEqual(23, len(vv.cols))
+        cv = self.helper_testString(strConfig)
+        self.assertEqual(23, len(cv.cols))
+
+    def testBadDataset(self):
+        strConfig= '''
+        {
+          "dataset": "BAD"
+        }
+        '''
+        cv = self.helper_testString(strConfig)
 
 if __name__ == '__main__':
     unittest.main()

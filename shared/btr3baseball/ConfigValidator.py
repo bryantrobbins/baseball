@@ -17,6 +17,8 @@ class ConfigValidator:
         self.loadDataset()
         for t in self.config['transformations']:
             self.validateTransform(t)
+        
+        return True
 
     def validateTransform(self, trans):
         if trans['type'] == 'columnSelect':
@@ -39,12 +41,7 @@ class ConfigValidator:
 
     def rowSelect(self, trans):
         print('Performing selectRow transform')
-        if('column' not in trans):
-            raise MissingTransformConfigItemException('selectRows', 'column')
-        if(trans['column'] not in self.colnames()):
-            raise UnknownColumnException(trans['column'])
-        
-        col = self.getColumn(trans['column'])
+        col = self.getColumn(trans)
         
         if('operator' not in trans):
             raise MissingTransformConfigItemException('selectRows', 'column')
@@ -60,7 +57,7 @@ class ConfigValidator:
 
     def columnSelect(self, trans):
         print('Performing columnSelect transform')
-    
+
     def rowSum(self, trans):
         print('Performing rowSum transform')
 
@@ -69,10 +66,15 @@ class ConfigValidator:
 
     def colnames(self):
         return [ c['name'] for c in self.cols ]
-    
-    def getColumn(self, colname):
-        return next(filter(lambda c : c['name'] == colname, self.cols))
-    
+
+    def getColumn(self, trans):
+        if('column' not in trans):
+            raise MissingTransformConfigItemException(trans['type'], trans['column'])
+        if(trans['column'] not in self.colnames()):
+            raise UnknownColumnException(trans['column'])
+
+        return next(filter(lambda c : c['name'] == trans['column'], self.cols))
+
     def criType(self, criteria):
         matchResult = re.match(r'\d+\.?(\d+)?', criteria)
         if matchResult:
