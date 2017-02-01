@@ -1,18 +1,23 @@
 from __future__ import print_function
-from ConfigValidator import ConfigValidator
+from ConfigValidator import (
+    ConfigValidator,
+    UnknownDatasetException,
+    UnknownSelectRowsOperatorException
+)
 import unittest
 import json
 
 class TestConfigValidator(unittest.TestCase):
 
-    def createSimpleValidator(self, strConfig):
-        return ConfigValidator()
-
     def helper_testString(self, strConfig):
-      cv = self.createSimpleValidator(strConfig)
+      cv = ConfigValidator(strConfig)
       cv.validateConfig()
       return cv
     
+    def helper_testString_Exception(self, ex, exc):
+        with self.assertRaises(exc):
+            self.helper_testString(ex)
+
     def testHappy(self):
         strConfig = '''
         {
@@ -22,7 +27,8 @@ class TestConfigValidator(unittest.TestCase):
               "type": "columnSelect",
               "columns": [
                 "HR",
-                "lgID"
+                "yearID",
+                "playerID"
               ]
             },
             {
@@ -33,15 +39,20 @@ class TestConfigValidator(unittest.TestCase):
             },
             {
               "type": "columnDefine",
-              "column": "custom",
-              "expression": "2*(HR)"
+              "column": "2HR",
+              "expression": "2*$('HR')"
+            },
+            {
+              "type": "columnDefine",
+              "column": "myString",
+              "expression": "'BRYAN'"
             },
             {
               "type": "rowSum",
               "columns": [
                 "playerID",
                 "yearID",
-                "lgID"
+                "myString"
               ]
             }
           ],
@@ -53,7 +64,7 @@ class TestConfigValidator(unittest.TestCase):
         }
         '''
         cv = self.helper_testString(strConfig)
-        self.assertEqual(23, len(cv.cols))
+        self.assertEqual(5, len(cv.cols))
 
     def testBadDataset(self):
         strConfig= '''
@@ -61,11 +72,24 @@ class TestConfigValidator(unittest.TestCase):
           "dataset": "BAD"
         }
         '''
-        cv = self.helper_testString(strConfig)
+        cv = self.helper_testString_Exception(strConfig, UnknownDatasetException)
+
+    def testBadRowSelectOp(self):
+        strConfig = '''
+        {
+          "dataset": "Lahman_Batting",
+          "transformations": [
+            {
+              "type": "rowSelect",
+              "column": "yearID",
+              "operator": "bad",
+              "criteria": "2000"
+            }
+          ] 
+        }
+        '''
+        cv = self.helper_testString_Exception(strConfig, UnknownSelectRowsOperatorException)
 
 if __name__ == '__main__':
     unittest.main()
-
-
-
 
