@@ -1,11 +1,7 @@
 #!/bin/bash -v
 
-# Add R build steps here (if any)
-#pushd extract
-#./extract.sh
-#popd
-#Rscript Build.R
-#mv baseball/staging
+# Data bundle version
+version="data-data%3A55a8fba4-c190-4e77-a379-a09f53e372ec.zip"
 
 # Install packer
 pversion="0.12.1"
@@ -13,14 +9,15 @@ purl="https://releases.hashicorp.com/packer/${pversion}/packer_${pversion}_linux
 wget $purl
 unzip packer_${pversion}_linux_amd64.zip
 
-# Extract and stage data
-cd ../extract
-chmod 700 extract.sh
-./extract.sh
-mkdir ../build/staging
-mv lahman ../build/staging
-mv gamelogs ../build/staging
-cd ../build
+# Create staging dir
+mkdir staging
+
+# Pull extracted data
+cd staging
+aws s3 cp s3://${version}
+unzip ${version}
+rm ${version}
+cd ..
 
 # Fetch AWS ECR variables
 version=${IMAGE_VERSION}
