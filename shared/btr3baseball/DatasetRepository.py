@@ -2,7 +2,7 @@ import pkg_resources
 import json
 
 resource_package = __name__
-resource_path_format = 'datasource/{}.json'
+resource_path_format = 'dataset/{}.json'
 
 class DatasetRepository:
     def __init__(self):
