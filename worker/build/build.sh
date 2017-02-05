@@ -19,6 +19,9 @@ unzip ${version}
 rm ${version}
 cd ..
 
+# Copy over additional scripts
+mv prepare.R staging
+
 # Fetch AWS ECR variables
 version=${IMAGE_VERSION}
 chmod 700 fetch.sh
