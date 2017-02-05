@@ -14,7 +14,7 @@ mkdir staging
 
 # Pull extracted data
 cd staging
-aws s3 cp s3://${version}
+aws s3 cp s3://${version} .
 unzip ${version}
 rm ${version}
 cd ..
