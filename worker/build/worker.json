@@ -14,7 +14,7 @@
   "provisioners": [
     {
       "type": "shell",
-      "inline": ["mkdir /workdir"]
+      "inline": ["mkdir /workdir", "mkdir -p /tmp/rpackages"]
     },
     {
       "type": "file",
