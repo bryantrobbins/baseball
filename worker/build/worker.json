@@ -27,7 +27,7 @@
     },
     {
       "type": "shell",
-      "inline": ["chmod 700 /workdir/*.sh"]
+      "inline": ["chmod 700 /workdir/*.py"]
     }
   ],
   "post-processors": [

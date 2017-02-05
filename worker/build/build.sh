@@ -21,6 +21,7 @@ cd ..
 
 # Copy over additional scripts
 mv prepare.R staging
+mv ../service.py staging
 
 # Fetch AWS ECR variables
 version=${IMAGE_VERSION}
