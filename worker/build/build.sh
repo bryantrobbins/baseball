@@ -1,4 +1,4 @@
-#!/bin/bash -v
+#!/bin/bash -e
 
 # Data bundle version
 version="data-data%3A55a8fba4-c190-4e77-a379-a09f53e372ec.zip"
