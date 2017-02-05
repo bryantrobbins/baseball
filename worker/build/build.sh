@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 # Data bundle version
-version="data/data-data:55a8fba4-c190-4e77-a379-a09f53e372ec.zip"
+version="data-data:55a8fba4-c190-4e77-a379-a09f53e372ec.zip"
 
 # Install packer
 pversion="0.12.1"
