@@ -13,6 +13,15 @@ purl="https://releases.hashicorp.com/packer/${pversion}/packer_${pversion}_linux
 wget $purl
 unzip packer_${pversion}_linux_amd64.zip
 
+# Extract and stage data
+cd ../extract
+chmod 700 extract.sh
+./extract.sh
+mkdir ../build/staging
+mv lahman ../build/staging
+mv gamelogs ../build/staging
+cd ../build
+
 # Fetch AWS ECR variables
 version=${IMAGE_VERSION}
 chmod 700 fetch.sh
