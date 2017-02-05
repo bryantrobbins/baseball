@@ -20,8 +20,12 @@ def main(event, context):
 
     print(data)
 
-    if method == 'submitJob':
+    if method == 'getOutputImage':
+        return getOutputImage(data, context)
+    elif method == 'submitJob':
         return submitJob(data, context)
+    elif method == 'validateJob':
+        return validateJob(data, context)
     elif method == 'getJob':
         return getJob(data, context)
     elif method == 'listDatasets':
@@ -30,6 +34,9 @@ def main(event, context):
         return getDataset(data, context)
     else:
         return None
+
+def getOutputImage(event, context):
+    jobId = event['jobId']
 
 def submitJob(event, context):
     # Validate configuration object
