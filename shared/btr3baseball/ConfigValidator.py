@@ -8,8 +8,12 @@ class ConfigValidator:
 
     selectRowOps = ['lt', 'gt', 'le', 'ge', 'eq', 'neq']
 
-    def __init__(self, configStr = ""):
-        self.config = json.loads(configStr)
+    def __init__(self, configStr = "", configObj = None):
+        if configObj != None:
+            self.config = json.loads(configStr)
+        else if configStr != "":
+            self.config = json.loads(configStr)
+
         self.dataRepo = DatasetRepository()
         self.funcs = []
         self.cols = []

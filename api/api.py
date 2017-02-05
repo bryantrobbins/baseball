@@ -32,6 +32,10 @@ def main(event, context):
         return None
 
 def submitJob(event, context):
+    # Validate configuration object
+    configValidator = btr3baseball.ConfigValidator(configObj = event)
+    configValidator.validateConfig()
+
     # Put initial entry in dynamo db
     jobId = jobRepo.createJob(event)
 
@@ -40,6 +44,16 @@ def submitJob(event, context):
 
     # Update the DB entry with sqs message ID for traceability
     return jobRepo.updateWithMessageId(jobId, response.get('MessageId')) 
+
+def validateJob(event, context):
+    res = {}
+
+    # Validate configuration object
+    configValidator = btr3baseball.ConfigValidator(configObj = event)
+    configValidator.validateConfig()
+
+    res['result'] = True
+    return res
 
 def getJob(event, context):
     return jobRepo.getJob(event['jobId'])
