@@ -1,1 +1,1 @@
-include btr3baseball/datasource/*.json
+include btr3baseball/dataset/*.json

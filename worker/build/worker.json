@@ -23,7 +23,7 @@
     },
     {
       "type": "shell",
-      "inline": ["apt-get update", "apt-get install -y python-pip", "pip install awscli boto3 rpy2", "Rscript /workdir/prepare.R"]
+      "inline": ["apt-get update", "apt-get install -y python-pip", "pip install awscli boto3 rpy2 flask", "Rscript /workdir/prepare.R"]
     },
     {
       "type": "shell",

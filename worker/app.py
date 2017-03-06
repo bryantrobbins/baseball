@@ -12,14 +12,12 @@ app = Flask(__name__)
 # TODO: Set these through external environment variables
 os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
 os.environ["JOB_TABLE"] = "baseball-jobs"
-os.environ["JOB_QUEUE"] = "baseball-jobs-queue"
 
 # Load vars
 jobQueue = os.environ['JOB_QUEUE']
 jobTable = os.environ['JOB_TABLE']
 
 # Init clients
-queue = boto3.resource('sqs').get_queue_by_name(QueueName=jobQueue)
 s3 = boto3.resource('s3')
 repo = btr3baseball.JobRespotory(jobTable)
 

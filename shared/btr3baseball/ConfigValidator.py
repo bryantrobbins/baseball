@@ -11,7 +11,7 @@ class ConfigValidator:
     def __init__(self, configStr = "", configObj = None):
         if configObj != None:
             self.config = json.loads(configStr)
-        else if configStr != "":
+        elif configStr != "":
             self.config = json.loads(configStr)
 
         self.dataRepo = DatasetRepository()
