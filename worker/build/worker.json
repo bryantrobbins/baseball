@@ -8,7 +8,12 @@
     {
       "type": "docker",
       "image": "rocker/r-base",
-      "commit": "true"
+      "commit": "true",
+      "changes": [
+        "WORKDIR /workdir",
+        "EXPOSE 5000",
+        "CMD [\"python\", \"app.py\"]"
+      ]
     }
   ],
   "provisioners": [
@@ -23,7 +28,7 @@
     },
     {
       "type": "shell",
-      "inline": ["apt-get update", "apt-get install -y python-pip", "pip install awscli boto3 rpy2 flask", "Rscript /workdir/prepare.R"]
+      "inline": ["apt-get update", "apt-get install -y python-pip libcairo2-dev", "pip install awscli boto3 rpy2 flask", "Rscript /workdir/prepare.R"]
     },
     {
       "type": "shell",
@@ -35,13 +40,13 @@
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
-	      "force": false
+	    "force": false
       },
       {
         "type": "docker-tag",
         "repository": "{{user `aws_ecs_repo`}}",
         "tag": "{{user `image_version`}}",
-	      "force": false
+	    "force": false
       },
       {
         "type": "docker-push",

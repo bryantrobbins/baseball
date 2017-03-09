@@ -14,12 +14,11 @@ os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
 os.environ["JOB_TABLE"] = "baseball-jobs"
 
 # Load vars
-jobQueue = os.environ['JOB_QUEUE']
 jobTable = os.environ['JOB_TABLE']
 
 # Init clients
 s3 = boto3.resource('s3')
-repo = btr3baseball.JobRespotory(jobTable)
+repo = btr3baseball.JobRepository(jobTable)
 
 pre ='''
 .libPaths( "/tmp/rpackages" )
@@ -65,7 +64,7 @@ def create_task():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=80)
 
 def doJob(jobId, config):
     # Create working directory
