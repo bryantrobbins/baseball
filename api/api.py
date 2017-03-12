@@ -4,12 +4,20 @@ import boto3
 import json
 import os
 import btr3baseball
+import logging
 
-jobTable = os.environ['JOB_TABLE']
-jobQueue = os.environ['JOB_QUEUE']
-queue = boto3.resource('sqs').get_queue_by_name(QueueName=jobQueue)
-jobRepo = btr3baseball.JobRepository(jobTable)
+logging.basicConfig(level=logging.INFO)
+
+jobTable = os.environ.get('JOB_TABLE')
+jobQueue = os.environ.get('JOB_QUEUE')
+jobBucket = os.environ.get('JOB_BUCKET')
 dsRepo = btr3baseball.DatasetRepository()
+if jobQueue:
+    queue = boto3.resource('sqs').get_queue_by_name(QueueName=jobQueue)
+if jobTable:
+    jobRepo = btr3baseball.JobRepository(jobTable)
+if jobBucket:
+    s3_client = boto3.client('s3')
 
 def main(event, context):
     method = event['method']
@@ -21,26 +29,29 @@ def main(event, context):
     print(data)
 
     if method == 'getOutputImage':
-        return getOutputImage(data, context)
+        return getOutputImage(data['jobId'])
     elif method == 'submitJob':
-        return submitJob(data, context)
+        return submitJob(data)
     elif method == 'validateJob':
-        return validateJob(data, context)
+        return validateJob(data)
     elif method == 'getJob':
-        return getJob(data, context)
+        return getJob(data['jobId'])
     elif method == 'listDatasets':
-        return listDatasets(data, context)
+        return listDatasets()
     elif method == 'getDataset':
-        return getDataset(data, context)
+        return getDataset(data['datasetId'])
     else:
         return None
 
-def getOutputImage(event, context):
-    jobId = event['jobId']
+def getOutputImage(jobId):
+    logging.info("Downloading image for job {}".format(jobId))
+    response = s3_client.get_object(Bucket=jobBucket,Key="jobs/{}/output.svg".format(jobId))
+    contents = response['Body'].read()
+    return contents
 
-def submitJob(event, context):
+def submitJob(configBodyString):
     # Validate configuration object
-    configValidator = btr3baseball.ConfigValidator(configObj = event)
+    configValidator = btr3baseball.ConfigValidator(configObj = configBodyString)
     configValidator.validateConfig()
 
     # Put initial entry in dynamo db
@@ -52,21 +63,21 @@ def submitJob(event, context):
     # Update the DB entry with sqs message ID for traceability
     return jobRepo.updateWithMessageId(jobId, response.get('MessageId')) 
 
-def validateJob(event, context):
+def validateJob(configBodyString):
     res = {}
 
     # Validate configuration object
-    configValidator = btr3baseball.ConfigValidator(configObj = event)
+    configValidator = btr3baseball.ConfigValidator(configObj = configBodyString)
     configValidator.validateConfig()
 
     res['result'] = True
     return res
 
-def getJob(event, context):
-    return jobRepo.getJob(event['jobId'])
+def getJob(jobId):
+    return jobRepo.getJob(jobId)
 
-def listDatasets(event, context):
+def listDatasets():
     return dsRepo.listDatasets()
 
-def getDataset(event, context):
-    return dsRepo.getDataset(event['datasourceId'])
+def getDataset(datasetId):
+    return dsRepo.getDataset(datasetId)
