@@ -15,6 +15,7 @@ dsRepo = btr3baseball.DatasetRepository()
 if jobQueue:
     queue = boto3.resource('sqs').get_queue_by_name(QueueName=jobQueue)
 if jobTable:
+    print(jobTable)
     jobRepo = btr3baseball.JobRepository(jobTable)
 if jobBucket:
     s3_client = boto3.client('s3')
@@ -48,17 +49,18 @@ def getOutputImage(jobId):
     response = s3_client.get_object(Bucket=jobBucket,Key="jobs/{}/output.svg".format(jobId))
     contents = response['Body'].read()
     ind1 = contents.find('\n')
-    contents = contents[ind1+1:]
+    contents = contents[ind1+1:].replace('\n', '')
     print(contents)
     return contents
 
 def submitJob(configBodyString):
+    print(configBodyString)
     # Validate configuration object
-    configValidator = btr3baseball.ConfigValidator(configObj = configBodyString)
+    configValidator = btr3baseball.ConfigValidator(configStr = configBodyString)
     configValidator.validateConfig()
 
     # Put initial entry in dynamo db
-    jobId = jobRepo.createJob(event)
+    jobId = jobRepo.createJob(configBodyString)
 
     # Put the job ID on the SQS queue
     response = queue.send_message(MessageBody=jobId)
