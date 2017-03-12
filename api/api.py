@@ -47,6 +47,9 @@ def getOutputImage(jobId):
     logging.info("Downloading image for job {}".format(jobId))
     response = s3_client.get_object(Bucket=jobBucket,Key="jobs/{}/output.svg".format(jobId))
     contents = response['Body'].read()
+    ind1 = contents.find('\n')
+    contents = contents[ind1+1:]
+    print(contents)
     return contents
 
 def submitJob(configBodyString):
