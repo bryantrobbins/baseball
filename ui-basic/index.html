@@ -5,12 +5,48 @@
         <title>Baseball Workbench - Simple UI</title>
         <script src="http://code.jquery.com/jquery-2.2.3.min.js"></script>
         <script>
+          function getOutputImage(jobId) {
+              $("#outputImage").load("https://npeirgln72.execute-api.us-east-1.amazonaws.com/api/job/" + jobId + "/output")
+          }
+          
           $(document).ready(function() {
-            alert("Hello world !! document is ready");
+              getOutputImage("904d656f-2a7a-4209-a41e-f058c37842b3")
           });
         </script>
+        <style>
+.container {
+    width: 60%;
+    height: 300px;
+    margin: auto;
+    padding: 10px;
+}
+.one {
+    width: 25%;
+    height: 300px;
+    float: left;
+}
+.two {
+    margin-left: 30%;
+    height: 300px;
+}
+.fill {
+    height: 100%;
+    width: 100%;
+}
+    </style>
     </head>
     <body>
-                
+        
+<section class="container">
+    <div class="one">
+<textarea class="fill">
+Place your job configuration here. 
+</textarea><br>
+<button type="button">Submit</button>
+    </div>
+    <div id="imageWrapper" class="two">
+        <svg id="outputImage" width=300px height=300px ></svg>
+    </div>
+</section>
     </body>
 </html>
