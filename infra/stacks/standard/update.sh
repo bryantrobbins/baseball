@@ -3,6 +3,7 @@
 # Get options
 tname="cloud.json"
 tfile="$(cd "$(dirname "${tname}")"; pwd)/$(basename "${tname}")"
+sname=${1:-BTR-standard}
 kname="builder"
 
 # Determine if running on Windows (affects template file argument to aws cli)
@@ -15,4 +16,6 @@ else
 fi
 
 # Create stack
-aws cloudformation update-stack --stack-name BTR-standard --template-body "file://${tfile}" --parameters ParameterKey=KeyName,ParameterValue=${kname} --capabilities CAPABILITY_IAM
+cmd="aws cloudformation update-stack --stack-name $sname --template-body "file://${tfile}" --parameters ParameterKey=KeyName,ParameterValue=${kname} --capabilities CAPABILITY_IAM"
+
+echo $cmd
