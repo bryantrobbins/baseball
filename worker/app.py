@@ -6,6 +6,7 @@ import os
 import shutil
 import time
 import btr3baseball
+import logging
 
 app = Flask(__name__)
 
@@ -40,7 +41,7 @@ generateLeaderboard <- function(d, sortCol, sortDir, keyCols) {
   leaders <- filter(leaders, row_number() <= 10L)
   p <- tableGrob(leaders)
   gp <- grid.arrange(p)
-  ggsave(filename="output.svg", gp)
+  ggsave(filename="output.svg", width=3, height=3, dpi=100, gp)
 }
 
 selectWithKeys <- function(d, keyCols, ...) {
@@ -48,23 +49,8 @@ selectWithKeys <- function(d, keyCols, ...) {
   return(select(d, one_of(allCols)))
 }
 '''
-dfMap = { 'ROOT': '/tmp/datasources', 'Lahman_Batting': { 'source': 'data/lahman/Batting.csv', 'keyCols': ['playerID', 'stint', 'yearID'] } }
+dfMap = { 'ROOT': '/datasets', 'Lahman_Batting': { 'source': 'lahman/Batting.csv', 'keyCols': ['playerID', 'stint', 'yearID'] } }
 
-@app.route('/baseball/work', methods=['POST'])
-def create_task():
-    if not request.json or not 'jobId' in request.json:
-        abort(400)
-    jobId = message.body
-    jobInfo = repo.getJob(jobId)
-    if jobInfo is not None:
-        print('Doing the work')
-        doJob(jobId, jobInfo['job-details'])
-        repo.updateForSuccess(jobId)
-    return jsonify({'task': task}), 201
-
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
 
 def doJob(jobId, config):
     # Create working directory
@@ -143,3 +129,19 @@ def doJob(jobId, config):
     # Remove output files
     shutil.rmtree('{}/'.format(workdir))
 
+
+@app.route('/baseball/work', methods=['POST'])
+def create_task():
+    if not request.json or not 'jobId' in request.json:
+        abort(400)
+    jobId = request.json['jobId']
+    jobInfo = repo.getJob(jobId)
+    if jobInfo is not None:
+        print('Doing the work')
+        doJob(jobId, jobInfo['job-details'])
+        repo.updateForSuccess(jobId)
+    return jsonify({'task': task}), 201
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=80)
