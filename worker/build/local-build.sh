@@ -10,11 +10,12 @@ pip install . -t packages
 cd ../worker/build
 
 # Create staging dir
-rm -rf staging
+rm -rf staging data
 mkdir staging
+mkdir data
 
 # Pull extracted data
-cd staging
+cd data
 aws s3 cp s3://baseball-workbench-builds/data/${version} .
 unzip ${version}
 rm ${version}

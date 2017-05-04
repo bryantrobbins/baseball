@@ -19,12 +19,17 @@
   "provisioners": [
     {
       "type": "shell",
-      "inline": ["mkdir /workdir", "mkdir -p /tmp/rpackages"]
+      "inline": ["mkdir /workdir", "mkdir -p /tmp/rpackages", "mkdir -p /datasets"]
     },
     {
       "type": "file",
       "source": "staging/",
       "destination": "/workdir"
+    },
+    {
+      "type": "file",
+      "source": "data/",
+      "destination": "/datasets"
     },
     {
       "type": "shell",
