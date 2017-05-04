@@ -25,7 +25,7 @@
   "Mappings" : {
 
     "AWSRegionToECSAMI" : {
-      "us-east-1"      : { "AMIID" : "ami-6df8fe7a" }
+      "us-east-1"      : { "AMIID" : "ami-275ffe31" }
     }
   },
 
