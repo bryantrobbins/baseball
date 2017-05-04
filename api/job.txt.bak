@@ -1,0 +1,38 @@
+{
+  \"dataset\": \"Lahman_Batting\",
+  \"transformations\": [
+    {
+      \"type\": \"columnSelect\",
+      \"columns\": [
+        \"HR\",
+        \"lgID\"
+      ]
+    },
+
+    {
+      \"type\": \"rowSelect\",
+      \"column\": \"yearID\",
+      \"operator\": \">=\",
+      \"criteria\": \"2000\"
+    },
+    {
+      \"type\": \"columnDefine\",
+      \"column\": \"custom\",
+      \"expression\": \"2*(HR)\"
+    },
+    {
+      \"type\": \"rowSum\",
+      \"columns\": [
+        \"playerID\",
+        \"yearID\",
+        \"lgID\"
+      ]
+    }
+  ],
+
+  \"output\": {
+    \"type\": \"leaderboard\",
+    \"column\": \"HR\",
+    \"direction\": \"desc\"
+  }
+}

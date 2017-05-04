@@ -1,0 +1,24 @@
+{
+  \"dataset\": \"Lahman_Batting\",
+  \"transformations\": [
+    {
+      \"type\": \"columnSelect\",
+      \"columns\": [
+        \"HR\",
+        \"lgID\"
+      ]
+    },
+    {
+      \"type\": \"rowSelect\",
+      \"column\": \"yearID\",
+      \"operator\": \"ge\",
+      \"criteria\": \"2000\"
+    }
+  ],
+
+  \"output\": {
+    \"type\": \"leaderboard\",
+    \"column\": \"HR\",
+    \"direction\": \"desc\"
+  }
+}
