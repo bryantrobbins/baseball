@@ -1,5 +1,7 @@
 import boto3
 import uuid
+from boto3.dynamodb.conditions import Key, Attr
+from botocore.exceptions import ClientError
 
 class JobRepository:
     def __init__(self, jobTable):

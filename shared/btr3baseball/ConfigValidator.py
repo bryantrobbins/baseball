@@ -17,6 +17,7 @@ class ConfigValidator:
         self.dataRepo = DatasetRepository()
         self.funcs = []
         self.cols = []
+        self.keyCols = []
 
     def validateConfig(self):
         self.loadDataset()
@@ -45,6 +46,7 @@ class ConfigValidator:
         if(ds not in self.dataRepo.listDatasets()):
             raise UnknownDatasetException(ds)
         self.cols = self.dataRepo.getDataset(ds)['columns']
+        self.keyCols = self.dataRepo.getDataset(ds)['keyCols']
 
     def checkOutput(self):
         if('output' not in self.config):
@@ -142,6 +144,9 @@ class ConfigValidator:
         for col in trans['columns']:
             if(col not in self.colnames()):
                 raise UnknownColumnException(trans['column'])
+            cols.append(self.colFilter(col))
+
+        for col in self.keyCols:
             cols.append(self.colFilter(col))
 
         return cols
