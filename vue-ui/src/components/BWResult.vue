@@ -1,15 +1,15 @@
 <template>
-  <div class="bw-textarea">
-        <textarea rows="4" cols="50">{{ msg }}</textarea>
-  </div>
+    <figure class="image is-square">
+      <img v-if="result" src="http://bulma.io/images/placeholders/128x128.png">
+    </figure>
 </template>
 
 <script>
 export default {
-  name: 'bw-textarea',
+  name: 'bw-result',
   data () {
     return {
-      msg: 'Enter your job configuration here.'
+      result: false
     }
   }
 }

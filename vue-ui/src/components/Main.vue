@@ -1,20 +1,30 @@
 <template>
   <div class="main">
     <h1>{{ msg }}</h1>
-    <bw-textarea></bw-textarea>
+    <div class="columns">
+      <div class="column is-5 is-offset-1">
+          <bw-jobtext :text="jobText"></bw-jobtext>
+      </div>
+      <div class="column is-5">
+          <bw-result></bw-result>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import BWTextarea from '../components/BWTextarea.vue'
+import BWJobtext from '../components/BWJobtext.vue'
+import BWResult from '../components/BWResult.vue'
 export default {
   components: {
-    'bw-textarea': BWTextarea
+    'bw-jobtext': BWJobtext,
+    'bw-result': BWResult
   },
   name: 'main',
   data () {
     return {
-      msg: 'Welcome to the Baseball Workbench'
+      msg: 'Welcome to the Baseball Workbench',
+      jobText: 'Initial Text for Job'
     }
   }
 }
@@ -22,21 +32,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>
