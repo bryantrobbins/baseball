@@ -3,7 +3,7 @@
     <h1>{{ msg }}</h1>
     <div class="columns">
       <div class="column is-5 is-offset-1">
-          <bw-jobtext :text="jobText"></bw-jobtext>
+          <bw-jobtext></bw-jobtext>
       </div>
       <div class="column is-5">
           <bw-result></bw-result>
@@ -23,8 +23,7 @@ export default {
   name: 'main',
   data () {
     return {
-      msg: 'Welcome to the Baseball Workbench',
-      jobText: 'Initial Text for Job'
+      msg: 'Welcome to the Baseball Workbench'
     }
   }
 }

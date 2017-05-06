@@ -1,16 +1,25 @@
 <template>
 <div id="job-config" class="field">
   <p class="control">
-    <textarea class="textarea" placeholder="Enter your job configuration here."></textarea>
+    <textarea class="textarea" placeholder="Enter your job configuration here." v-model="text"></textarea>
   </p>
-   <a class="button">Submit Job</a>
+   <a class="button" @click="onSubmit">Submit Job</a>
 </div>
 </template>
 
 <script>
 export default {
   name: 'bw-jobtext',
-  props: ['text']
+  data () {
+    return {
+      text: ''
+    }
+  },
+  methods: {
+    onSubmit () {
+      alert('Job submitted with text:  ' + this.text)
+    }
+  }
 }
 </script>
 
