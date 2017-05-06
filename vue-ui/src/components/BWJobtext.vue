@@ -9,20 +9,29 @@
 
 <script>
 export default {
+
   name: 'bw-jobtext',
+
   data () {
     return {
       text: ''
     }
   },
+
   methods: {
+
     onSubmit () {
-      alert('Job submitted with text:  ' + this.text)
+      window.EventBus.$emit('jobComplete', {jobId: 'somefakejob'})
     }
+
   }
+
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+textarea {
+  height: 300px;
+}
 </style>
