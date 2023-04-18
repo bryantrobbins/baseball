@@ -16,9 +16,5 @@
     }
   ],
 
-  \"output\": {
-    \"type\": \"leaderboard\",
-    \"column\": \"HR\",
-    \"direction\": \"desc\"
-  }
+
 }
